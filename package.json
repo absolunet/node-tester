@@ -1,0 +1,27 @@
+ {
+  "name":        "@absolunet/tester",
+  "version":     "0.0.1",
+  "description": "Test suite for node projects",
+  "definition":  "",
+  "homepage":    "https://github.com/absolunet/node-tester",
+  "author":      { "name": "Absolunet", "url": "http://absolunet.com/" },
+
+  "license":    "MIT",
+  "repository": { "url":   "git://github.com/absolunet/node-tester.git", "type":"git" },
+  "bugs":       { "url": "https://github.com/absolunet/node-tester/issues" },
+
+  "engines": { "node": ">= 7.7.3" },
+  "scripts": {
+    "test": "mocha"
+  },
+
+  "devDependencies": {},
+
+  "dependencies": {
+    "glob-all":     "3.1.0",
+    "mocha":        "3.2.0",
+    "mocha-eslint": "3.0.1",
+
+    "@absolunet/eslint-config-node": "0.0.1"
+  }
+}
