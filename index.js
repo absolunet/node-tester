@@ -35,7 +35,7 @@ module.exports = class Tester {
 		/* eslint-disable prefer-arrow-callback */
 
 		describe('bash', function() {
-			globAll.sync(patterns).forEach((file) => {
+			globAll.sync(patterns, { nodir:true }).forEach((file) => {
 				it(`should have no errors in ${file}`, function(done) {
 					exec(`bash -n ${fs.realpathSync(`./${file}`)}`, {}, function(err/* , stdout, stderr */) {
 						done(err);
