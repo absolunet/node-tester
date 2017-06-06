@@ -7,5 +7,58 @@
 
 > Test suite for node projects
 
-## License 
-See the [license](https://github.com/absolunet/node-tester/blob/master/license).
+
+## Install
+
+```sh
+$ npm install @absolunet/tester
+```
+
+
+## Usage
+
+```js
+const tester = require('@absolunet/tester');
+
+tester.lintJs(Object.assign({}, tester.ALL_JS, ['bin/*']));
+
+tester.lintBash(['install-scripts/**/*']);
+```
+
+
+## API
+
+### ALL_JS
+
+Returns an `Array` with default paths for javascript files.
+
+### ALL_BASH
+
+Returns an `Array` with default paths for bash files.
+
+### lintJs([patterns])
+
+Lints files with ESLint via a [Mocha](https://mochajs.org/) test<br>
+Uses [@absolunet/eslint-config-node](https://www.npmjs.com/package/@absolunet/eslint-config-node) shareable config
+
+#### patterns
+
+Type: `Array`<br>
+Default: `ALL_JS`<br>
+glob patterns
+
+### lintBash([patterns])
+
+Lints files with `bash -n` via a [Mocha](https://mochajs.org/) test
+
+#### patterns
+
+Type: `Array`<br>
+Default: `ALL_BASH`<br>
+glob patterns
+
+
+
+## License
+
+MIT © [Absolunet](https://absolunet.com)

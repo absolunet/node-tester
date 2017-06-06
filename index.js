@@ -10,7 +10,7 @@ const globAll  = require('glob-all');
 
 
 /* eslint-env mocha */
-module.exports = class Tester {
+module.exports = class {
 
 	//-- All js files
 	static get ALL_JS() {
