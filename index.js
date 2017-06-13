@@ -3,11 +3,12 @@
 //--------------------------------------------------------
 'use strict';
 
-const fs       = require('fs');
-const { exec } = require('child_process');
-const eslint   = require('mocha-eslint');
-const globAll  = require('glob-all');
-
+const { CLIEngine } = require('eslint');
+const { exec }      = require('child_process');
+const fs            = require('fs');
+const globAll       = require('glob-all');
+const indentString  = require('indent-string');
+const replaceAll    = require('replaceall');
 
 /* eslint-env mocha */
 module.exports = class {
@@ -26,7 +27,27 @@ module.exports = class {
 	//-- Lint via ESLint
 	//-- ex: tester.lintJs([...tester.ALLJS, '**!(vendor)/*.js']);
 	static lintJs(patterns = this.ALL_JS) {
-		eslint(patterns, { strict:true });
+		/* eslint-disable prefer-arrow-callback */
+		const cli = new CLIEngine({});
+
+		describe('eslint', function() {
+			globAll.sync(patterns, { nodir:true }).forEach((file) => {
+				it(`should have no errors in ${file}`, function(done) {
+					const report    = cli.executeOnFiles([file]);
+					const formatter = cli.getFormatter();
+
+					if (report) {
+						if (report.errorCount > 0 || report.warningCount > 0) {
+							done(new Error(indentString(`\n${replaceAll(`${process.cwd()}/`, '', formatter(report.results))}`, 6)));
+						} else {
+							done();
+						}
+					}
+				});
+			});
+		});
+
+		/* eslint-enable prefer-arrow-callback */
 	}
 
 	//-- Lint via 'bash -n'
