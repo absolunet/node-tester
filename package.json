@@ -20,13 +20,12 @@
     "node": ">= 8.1.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "ava"
   },
   "devDependencies": {},
   "dependencies": {
+    "ava": "^0.19.1",
     "glob-all": "^3.1.0",
-    "indent-string": "^3.1.0",
-    "mocha": "^3.4.2",
     "replaceall": "^0.1.6",
     "@absolunet/eslint-config-node": "0.1.1"
   }

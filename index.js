@@ -7,8 +7,8 @@ const { CLIEngine } = require('eslint');
 const { exec }      = require('child_process');
 const fs            = require('fs');
 const globAll       = require('glob-all');
-const indentString  = require('indent-string');
 const replaceAll    = require('replaceall');
+const ava           = require('ava');
 
 /* eslint-env mocha */
 module.exports = class {
@@ -27,45 +27,42 @@ module.exports = class {
 	//-- Lint via ESLint
 	//-- ex: tester.lintJs([...tester.ALLJS, '**!(vendor)/*.js']);
 	static lintJs(patterns = this.ALL_JS) {
-		/* eslint-disable prefer-arrow-callback */
 		const cli = new CLIEngine({});
 
-		describe('eslint', function() {
-			globAll.sync(patterns, { nodir:true }).forEach((file) => {
-				it(`should have no errors in ${file}`, function(done) {
-					const report    = cli.executeOnFiles([file]);
-					const formatter = cli.getFormatter();
+		globAll.sync(patterns, { nodir:true }).forEach((file) => {
+			ava.test(`ESLint on ${file}`, (t) => {
+				const report = cli.executeOnFiles([file]);
 
-					if (report) {
-						if (report.errorCount > 0 || report.warningCount > 0) {
-							done(new Error(indentString(`\n${replaceAll(`${process.cwd()}/`, '', formatter(report.results))}`, 6)));
-						} else {
-							done();
-						}
-					}
-				});
+				if (report.errorCount > 0 || report.warningCount > 0) {
+					const output = replaceAll(`${process.cwd()}/`, '', cli.getFormatter()(report.results));
+
+					t.fail(output);
+
+				} else {
+					t.pass();
+				}
 			});
 		});
-
-		/* eslint-enable prefer-arrow-callback */
 	}
+
 
 	//-- Lint via 'bash -n'
 	//-- ex: tester.lintBash([...tester.ALL_BASH, '**bin/*']);
 	static lintBash(patterns = this.ALL_BASH) {
-		/* eslint-disable prefer-arrow-callback */
 
-		describe('bash', function() {
-			globAll.sync(patterns, { nodir:true }).forEach((file) => {
-				it(`should have no errors in ${file}`, function(done) {
-					exec(`bash -n ${fs.realpathSync(`./${file}`)}`, {}, function(err/* , stdout, stderr */) {
-						done(err);
-					});
+		globAll.sync(patterns, { nodir:true }).forEach((file) => {
+			ava.test(`Bash syntax check on ${file}`, (t) => {
+				exec(`bash -n ${fs.realpathSync(`./${file}`)}`, {}, (err/* , stdout, stderr */) => {
+					if (err) {
+
+						t.fail(err);
+
+					} else {
+						t.pass();
+					}
 				});
 			});
 		});
-
-		/* eslint-enable prefer-arrow-callback */
 	}
 
 };
