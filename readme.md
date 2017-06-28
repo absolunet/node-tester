@@ -1,9 +1,9 @@
 # @absolunet/tester
 
 [![NPM version](https://img.shields.io/npm/v/@absolunet/tester.svg)](https://www.npmjs.com/package/@absolunet/tester)
-[![Travis build](https://api.travis-ci.org/absolunet/node-tester.svg?branch=master)](https://travis-ci.org/absolunet/node-tester/builds)
-[![Dependencies](https://david-dm.org/absolunet/node-tester/status.svg)](https://david-dm.org/absolunet/node-tester)
-[![Dev dependencies](https://david-dm.org/absolunet/node-tester/dev-status.svg)](https://david-dm.org/absolunet/node-tester?type=dev)
+[![Travis build](https://img.shields.io/travis/absolunet/node-tester/master.svg)](https://travis-ci.org/absolunet/node-tester/builds)
+[![Dependencies](https://img.shields.io/david/absolunet/node-tester.svg)](https://david-dm.org/absolunet/node-tester)
+[![Code style](https://img.shields.io/badge/code_style-@absolunet/node-463fd4.svg)](https://github.com/absolunet/eslint-config-node)
 
 > Test suite for node projects
 
