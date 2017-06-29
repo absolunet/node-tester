@@ -5,7 +5,7 @@
 [![Dependencies](https://img.shields.io/david/absolunet/node-tester.svg)](https://david-dm.org/absolunet/node-tester)
 [![Code style](https://img.shields.io/badge/code_style-@absolunet/node-463fd4.svg)](https://github.com/absolunet/eslint-config-node)
 
-> Test suite for node projects via [AVA 🚀](https://ava.li)
+> Test suite for node projects via [🚀AVA](https://ava.li)
 
 
 ## Install
@@ -38,7 +38,7 @@ Returns an `Array` with default paths for bash files.
 
 ### lintJs([patterns])
 
-Lints files with ESLint via a [AVA](https://ava.li) test<br>
+Lints files with ESLint via an [AVA](https://ava.li) test<br>
 Uses [@absolunet/eslint-config-node](https://www.npmjs.com/package/@absolunet/eslint-config-node) shareable config
 
 #### patterns
@@ -49,7 +49,7 @@ glob patterns
 
 ### lintBash([patterns])
 
-Lints files with `bash -n` via a [AVA](https://ava.li) test
+Lints files with `bash -n` via an [AVA](https://ava.li) test
 
 #### patterns
 
