@@ -10,7 +10,7 @@ const globAll       = require('glob-all');
 const replaceAll    = require('replaceall');
 const ava           = require('ava');
 
-/* eslint-env mocha */
+
 module.exports = class {
 
 	//-- All js files
@@ -52,7 +52,11 @@ module.exports = class {
 
 		globAll.sync(patterns, { nodir:true }).forEach((file) => {
 			ava.test(`Bash syntax check on ${file}`, (t) => {
-				exec(`bash -n ${fs.realpathSync(`./${file}`)}`, {}, (err/* , stdout, stderr */) => {
+				return new Promise((resolve) => {
+					exec(`bash -n ${fs.realpathSync(`./${file}`)}`, {}, (err/* , stdout, stderr */) => {
+						resolve(err);
+					});
+				}).then((err) => {
 					if (err) {
 
 						t.fail(err);
