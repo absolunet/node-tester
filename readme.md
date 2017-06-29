@@ -5,7 +5,7 @@
 [![Dependencies](https://img.shields.io/david/absolunet/node-tester.svg)](https://david-dm.org/absolunet/node-tester)
 [![Code style](https://img.shields.io/badge/code_style-@absolunet/node-463fd4.svg)](https://github.com/absolunet/eslint-config-node)
 
-> Test suite for node projects
+> Test suite for node projects via [AVA](https://ava.li)
 
 
 ## Install
