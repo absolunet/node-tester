@@ -32,6 +32,10 @@ tester.lintBash(['install-scripts/**/*']);
 
 Returns an `Array` with default paths for javascript files.
 
+### ALL_SCSS
+
+Returns an `Array` with default paths for SCSS files.
+
 ### ALL_BASH
 
 Returns an `Array` with default paths for bash files.
@@ -46,6 +50,22 @@ Uses [@absolunet/eslint-config-node](https://www.npmjs.com/package/@absolunet/es
 Type: `Array`<br>
 Default: `ALL_JS`<br>
 glob patterns
+
+### lintScss([patterns], configFile)
+
+Lints files with stylelint via an [AVA](https://ava.li) test<br>
+Uses user-defined config
+
+#### patterns
+
+Type: `Array`<br>
+Default: `ALL_SCSS`<br>
+glob patterns
+
+#### configFile
+
+Type: `String`<br>
+Path to config file
 
 ### lintBash([patterns])
 
