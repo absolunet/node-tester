@@ -40,7 +40,7 @@ Returns an `Array` with default paths for SCSS files.
 
 Returns an `Array` with default paths for bash files.
 
-### lintJs([patterns])
+### lintJs([patterns], { cwd })
 
 Lints files with ESLint via an [AVA](https://ava.li) test<br>
 Uses [@absolunet/eslint-config-node](https://www.npmjs.com/package/@absolunet/eslint-config-node) shareable config
@@ -51,7 +51,7 @@ Type: `Array`<br>
 Default: `ALL_JS`<br>
 glob patterns
 
-### lintScss([patterns], configFile)
+### lintScss([patterns], { cwd, configFile })
 
 Lints files with stylelint via an [AVA](https://ava.li) test<br>
 Uses user-defined config
@@ -67,7 +67,7 @@ glob patterns
 Type: `String`<br>
 Path to config file
 
-### lintBash([patterns])
+### lintBash([patterns], { cwd })
 
 Lints files with `bash -n` via an [AVA](https://ava.li) test
 

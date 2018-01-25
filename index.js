@@ -31,12 +31,12 @@ module.exports = class {
 
 	//-- Lint via ESLint
 	//-- ex: tester.lintJs([...tester.ALLJS, '**!(vendor)/*.js']);
-	static lintJs(patterns = this.ALL_JS) {
+	static lintJs(patterns = this.ALL_JS, { cwd = process.cwd() } = {}) {
 		const cli = new CLIEngine({});
 
-		globAll.sync(patterns, { nodir:true }).forEach((file) => {
+		globAll.sync(patterns, { nodir:true, cwd:cwd }).forEach((file) => {
 			ava.test(`ESLint on ${file}`, (t) => {
-				const report = cli.executeOnFiles([file]);
+				const report = cli.executeOnFiles([`${cwd}/${file}`]);
 
 				if (report.errorCount > 0 || report.warningCount > 0) {
 					const output = replaceAll(`${process.cwd()}/`, '', cli.getFormatter()(report.results));
@@ -53,13 +53,13 @@ module.exports = class {
 
 	//-- Lint via stylelint
 	//-- ex: tester.lintScss([...tester.ALL_SCSS, '**!(vendor)/*.scss'], './.stylelintrc.yaml');
-	static lintScss(patterns = this.ALL_SCSS, configFile) {
+	static lintScss(patterns = this.ALL_SCSS, { cwd = process.cwd(), configFile } = {}) {
 		const stylelint = require('stylelint'); // eslint-disable-line global-require
 
-		globAll.sync(patterns, { nodir:true }).forEach((file) => {
+		globAll.sync(patterns, { nodir:true, cwd:cwd }).forEach((file) => {
 			ava.test(`stylelint on ${file}`, (t) => {
 				return stylelint.lint({
-					files:      file,
+					files:      `${cwd}/${file}`,
 					configFile: configFile,
 					syntax:     'scss',
 					formatter:  'string'
@@ -86,9 +86,9 @@ module.exports = class {
 
 	//-- Lint via 'bash -n'
 	//-- ex: tester.lintBash([...tester.ALL_BASH, '**bin/*']);
-	static lintBash(patterns = this.ALL_BASH) {
+	static lintBash(patterns = this.ALL_BASH, { cwd = process.cwd() } = {}) {
 
-		globAll.sync(patterns, { nodir:true }).forEach((file) => {
+		globAll.sync(patterns, { nodir:true, cwd:cwd }).forEach((file) => {
 			ava.test(`Bash syntax check on ${file}`, (t) => {
 				return new Promise((resolve) => {
 					exec(`bash -n ${fs.realpathSync(`./${file}`)}`, {}, (err/* , stdout, stderr */) => {
