@@ -1,6 +1,6 @@
 {
   "name": "@absolunet/tester",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Test suite for node projects",
   "definition": "",
   "homepage": "https://github.com/absolunet/node-tester",
@@ -17,16 +17,16 @@
     "url": "https://github.com/absolunet/node-tester/issues"
   },
   "engines": {
-    "node": ">= 9.4.0"
+    "node": ">= 9.7.1"
   },
   "scripts": {
     "test": "ava"
   },
   "devDependencies": {},
   "dependencies": {
-    "ava": "^0.22.0",
+    "ava": "^0.25.0",
     "glob-all": "^3.1.0",
     "replaceall": "^0.1.6",
-    "@absolunet/eslint-config-node": "0.2.0"
+    "@absolunet/eslint-config-node": "0.3.0"
   }
 }
