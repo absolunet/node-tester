@@ -31,8 +31,8 @@ module.exports = class {
 
 	//-- Lint via ESLint
 	//-- ex: tester.lintJs([...tester.ALLJS, '**!(vendor)/*.js']);
-	static lintJs(patterns = this.ALL_JS, { cwd = process.cwd() } = {}) {
-		const cli = new CLIEngine({});
+	static lintJs(patterns = this.ALL_JS, { cwd = process.cwd(), configFile, configPreset } = {}) {
+		const cli = new CLIEngine({ configFile:configFile || configPreset || undefined });
 
 		globAll.sync(patterns, { nodir:true, cwd:cwd }).forEach((file) => {
 			ava.test(`ESLint on ${file}`, (t) => {
@@ -53,7 +53,7 @@ module.exports = class {
 
 	//-- Lint via stylelint
 	//-- ex: tester.lintScss([...tester.ALL_SCSS, '**!(vendor)/*.scss'], './.stylelintrc.yaml');
-	static lintScss(patterns = this.ALL_SCSS, { cwd = process.cwd(), configFile } = {}) {
+	static lintScss(patterns = this.ALL_SCSS, { cwd = process.cwd(), configFile, configPreset } = {}) {
 		const stylelint = require('stylelint'); // eslint-disable-line global-require
 
 		globAll.sync(patterns, { nodir:true, cwd:cwd }).forEach((file) => {
@@ -61,6 +61,7 @@ module.exports = class {
 				return stylelint.lint({
 					files:      `${cwd}/${file}`,
 					configFile: configFile,
+					config:     configPreset ? { 'extends':configPreset } : undefined,
 					syntax:     'scss',
 					formatter:  'string'
 				})
