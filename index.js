@@ -18,6 +18,11 @@ module.exports = class {
 		return  ['**!(node_modules)/*.js', '*.js'];
 	}
 
+	//-- All json files
+	static get ALL_JSON() {
+		return  ['**!(node_modules)/*.json', '*.json', '!package-lock.json'];
+	}
+
 	//-- All scss files
 	static get ALL_SCSS() {
 		return  ['**!(node_modules)/*.scss', '*.scss'];
@@ -36,6 +41,28 @@ module.exports = class {
 
 		globAll.sync(patterns, { nodir:true, cwd:cwd }).forEach((file) => {
 			ava.test(`ESLint on ${file}`, (t) => {
+				const report = cli.executeOnFiles([`${cwd}/${file}`]);
+
+				if (report.errorCount > 0 || report.warningCount > 0) {
+					const output = replaceAll(`${process.cwd()}/`, '', cli.getFormatter()(report.results));
+
+					t.fail(output);
+
+				} else {
+					t.pass();
+				}
+			});
+		});
+	}
+
+
+	//-- Lint via ESLint - JSON
+	//-- ex: tester.lintJson([...tester.ALLJSON, '**!(vendor)/*.json']);
+	static lintJson(patterns = this.ALL_JSON, { cwd = process.cwd() } = {}) {
+		const cli = new CLIEngine({ plugins:['json'], extensions:['.json'], useEslintrc:false });
+
+		globAll.sync(patterns, { nodir:true, cwd:cwd }).forEach((file) => {
+			ava.test(`ESLint (JSON) on ${file}`, (t) => {
 				const report = cli.executeOnFiles([`${cwd}/${file}`]);
 
 				if (report.errorCount > 0 || report.warningCount > 0) {
