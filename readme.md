@@ -32,6 +32,10 @@ tester.lintBash(['install-scripts/**/*']);
 
 Returns an `Array` with default paths for javascript files.
 
+### ALL_JSON
+
+Returns an `Array` with default paths for JSON files.
+
 ### ALL_SCSS
 
 Returns an `Array` with default paths for SCSS files.
@@ -51,6 +55,12 @@ Type: `Array`<br>
 Default: `ALL_JS`<br>
 glob patterns
 
+#### cwd
+
+Type: `String`<br>
+Default: `process.cwd()`<br>
+Base directory for patterns
+
 #### configFile
 
 Type: `String`<br>
@@ -60,6 +70,27 @@ Path to config file
 
 Type: `String`<br>
 Name of shareable config
+
+
+
+### lintJson([patterns, { cwd }])
+
+Lints files with ESLint via an [AVA](https://ava.li) test<br>
+Uses [JSON](https://www.npmjs.com/package/eslint-plugin-json) plugin
+
+#### patterns
+
+Type: `Array`<br>
+Default: `ALL_JSON`<br>
+glob patterns
+
+#### cwd
+
+Type: `String`<br>
+Default: `process.cwd()`<br>
+Base directory for patterns
+
+
 
 ### lintScss([patterns, { cwd, configFile, configPreset }])
 
@@ -72,6 +103,12 @@ Type: `Array`<br>
 Default: `ALL_SCSS`<br>
 glob patterns
 
+#### cwd
+
+Type: `String`<br>
+Default: `process.cwd()`<br>
+Base directory for patterns
+
 #### configFile
 
 Type: `String`<br>
@@ -82,6 +119,8 @@ Path to config file
 Type: `String`<br>
 Name of extendable config
 
+
+
 ### lintBash([patterns, { cwd }])
 
 Lints files with `bash -n` via an [AVA](https://ava.li) test
@@ -91,6 +130,13 @@ Lints files with `bash -n` via an [AVA](https://ava.li) test
 Type: `Array`<br>
 Default: `ALL_BASH`<br>
 glob patterns
+
+#### cwd
+
+Type: `String`<br>
+Default: `process.cwd()`<br>
+Base directory for patterns
+
 
 
 
