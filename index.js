@@ -3,39 +3,49 @@
 //--------------------------------------------------------
 'use strict';
 
-const { CLIEngine } = require('eslint');
+const ava           = require('ava');
 const { exec }      = require('child_process');
+const { CLIEngine } = require('eslint');
 const fs            = require('fs');
 const globAll       = require('glob-all');
 const replaceAll    = require('replaceall');
-const ava           = require('ava');
+const yamlLint      = require('yaml-lint');
+
+
+
+
 
 
 module.exports = class {
 
-	//-- All js files
+	//-- All JS files
 	static get ALL_JS() {
 		return  ['**!(node_modules)/*.js', '*.js'];
 	}
 
-	//-- All json files
+	//-- All JSON files
 	static get ALL_JSON() {
 		return  ['**!(node_modules)/*.json', '*.json', '!package-lock.json'];
 	}
 
-	//-- All scss files
+	//-- All YAML files
+	static get ALL_YAML() {
+		return  ['**!(node_modules)/*.{yaml,yml}', '*.{yaml,yml}'];
+	}
+
+	//-- All SCSS files
 	static get ALL_SCSS() {
 		return  ['**!(node_modules)/*.scss', '*.scss'];
 	}
 
-	//-- All bash files
+	//-- All BASH files
 	static get ALL_BASH() {
 		return  ['**!(node_modules)/*.sh', '*.sh'];
 	}
 
 
 	//-- Lint via ESLint
-	//-- ex: tester.lintJs([...tester.ALLJS, '**!(vendor)/*.js']);
+	//-- ex: tester.lintJs([...tester.ALL_JS, '**!(vendor)/*.js']);
 	static lintJs(patterns = this.ALL_JS, { cwd = process.cwd(), configFile, configPreset } = {}) {
 		const cli = new CLIEngine({ configFile:configFile || configPreset || undefined });
 
@@ -57,11 +67,11 @@ module.exports = class {
 
 
 	//-- Lint via ESLint - JSON
-	//-- ex: tester.lintJson([...tester.ALLJSON, '**!(vendor)/*.json']);
+	//-- ex: tester.lintJson([...tester.ALL_JSON, '**!(vendor)/*.json']);
 	static lintJson(patterns = this.ALL_JSON, { cwd = process.cwd() } = {}) {
 		const cli = new CLIEngine({ plugins:['json'], extensions:['.json'], useEslintrc:false });
 
-		globAll.sync(patterns, { nodir:true, cwd:cwd }).forEach((file) => {
+		globAll.sync(patterns, { nodir:true, dot:true, cwd:cwd }).forEach((file) => {
 			ava.test(`ESLint (JSON) on ${file}`, (t) => {
 				const report = cli.executeOnFiles([`${cwd}/${file}`]);
 
@@ -75,6 +85,26 @@ module.exports = class {
 				}
 			});
 		});
+	}
+
+
+	//-- Lint via YAML Lint
+	//-- ex: tester.lintYaml([...tester.ALL_YAML, '**!(vendor)/*.yaml']);
+	static lintYaml(patterns = this.ALL_YAML, { cwd = process.cwd() } = {}) {
+
+		globAll.sync(patterns, { nodir:true, dot:true, cwd:cwd }).forEach((file) => {
+			ava.test(`YAML Lint on ${file}`, (t) => {
+				return yamlLint.lintFile(`${cwd}/${file}`)
+					.then(() => {
+						t.pass();
+					})
+					.catch((e) => {
+						t.fail(e);
+					})
+				;
+			});
+		});
+
 	}
 
 
