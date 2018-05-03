@@ -36,6 +36,10 @@ Returns an `Array` with default paths for javascript files.
 
 Returns an `Array` with default paths for JSON files.
 
+### ALL_YAML
+
+Returns an `Array` with default paths for YAML files.
+
 ### ALL_SCSS
 
 Returns an `Array` with default paths for SCSS files.
@@ -44,7 +48,7 @@ Returns an `Array` with default paths for SCSS files.
 
 Returns an `Array` with default paths for bash files.
 
-### lintJs([patterns, { cwd, configFile, configPreset }])
+### lintJs(*[patterns, options]*)
 
 Lints files with ESLint via an [AVA](https://ava.li) test<br>
 Uses [@absolunet/eslint-config-node](https://www.npmjs.com/package/@absolunet/eslint-config-node) shareable config
@@ -55,25 +59,25 @@ Type: `Array`<br>
 Default: `ALL_JS`<br>
 glob patterns
 
-#### cwd
+#### options.cwd
 
 Type: `String`<br>
 Default: `process.cwd()`<br>
 Base directory for patterns
 
-#### configFile
+#### options.configFile
 
 Type: `String`<br>
 Path to config file
 
-#### configPreset
+#### options.configPreset
 
 Type: `String`<br>
 Name of shareable config
 
 
 
-### lintJson([patterns, { cwd }])
+### lintJson(*[patterns, options]*)
 
 Lints files with ESLint via an [AVA](https://ava.li) test<br>
 Uses [JSON](https://www.npmjs.com/package/eslint-plugin-json) plugin
@@ -84,7 +88,7 @@ Type: `Array`<br>
 Default: `ALL_JSON`<br>
 glob patterns
 
-#### cwd
+#### options.cwd
 
 Type: `String`<br>
 Default: `process.cwd()`<br>
@@ -92,7 +96,25 @@ Base directory for patterns
 
 
 
-### lintScss([patterns, { cwd, configFile, configPreset }])
+### lintYaml(*[patterns, options]*)
+
+Lints files with [YAML Lint](https://www.npmjs.com/package/yaml-lint) via an [AVA](https://ava.li) test
+
+#### patterns
+
+Type: `Array`<br>
+Default: `ALL_YAML`<br>
+glob patterns
+
+#### options.cwd
+
+Type: `String`<br>
+Default: `process.cwd()`<br>
+Base directory for patterns
+
+
+
+### lintScss(*[patterns, options]*)
 
 Lints files with stylelint via an [AVA](https://ava.li) test<br>
 Uses user-defined config
@@ -103,25 +125,25 @@ Type: `Array`<br>
 Default: `ALL_SCSS`<br>
 glob patterns
 
-#### cwd
+#### options.cwd
 
 Type: `String`<br>
 Default: `process.cwd()`<br>
 Base directory for patterns
 
-#### configFile
+#### options.configFile
 
 Type: `String`<br>
 Path to config file
 
-#### configPreset
+#### options.configPreset
 
 Type: `String`<br>
 Name of extendable config
 
 
 
-### lintBash([patterns, { cwd }])
+### lintBash(*[patterns, options]*)
 
 Lints files with `bash -n` via an [AVA](https://ava.li) test
 
@@ -131,7 +153,7 @@ Type: `Array`<br>
 Default: `ALL_BASH`<br>
 glob patterns
 
-#### cwd
+#### options.cwd
 
 Type: `String`<br>
 Default: `process.cwd()`<br>
