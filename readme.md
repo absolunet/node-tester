@@ -21,43 +21,48 @@ $ npm i @absolunet/tester
 ```js
 const tester = require('@absolunet/tester');
 
-tester.lintJs(Object.assign({}, tester.ALL_JS, ['bin/*']));
+tester.lint.js(Object.assign({}, tester.all.js, ['bin/*']));
 
-tester.lintBash(['install-scripts/**/*']);
+tester.lint.bash(['install-scripts/**/*']);
 ```
 
 
-## API
+## API - Patterns
 
-### ALL_JS
+### all.js
 
 Returns an `Array` with default paths for javascript files.
 
-### ALL_JSON
+### all.json
 
 Returns an `Array` with default paths for JSON files.
 
-### ALL_YAML
+### all.yaml
 
 Returns an `Array` with default paths for YAML files.
 
-### ALL_SCSS
+### all.scss
 
 Returns an `Array` with default paths for SCSS files.
 
-### ALL_BASH
+### all.bash
 
 Returns an `Array` with default paths for bash files.
 
-### lintJs(*[patterns, options]*)
+
+
+
+## API - Linters
+
+### lint.js(*[paths, options]*)
 
 Lints files with ESLint via an [AVA](https://ava.li) test<br>
 Uses [@absolunet/eslint-config-node](https://www.npmjs.com/package/@absolunet/eslint-config-node) shareable config
 
-#### patterns
+#### paths
 
 Type: `Array`<br>
-Default: `ALL_JS`<br>
+Default: `all.js`<br>
 glob patterns
 
 #### options.cwd
@@ -78,15 +83,15 @@ Name of shareable config
 
 
 
-### lintJson(*[patterns, options]*)
+### lint.json(*[paths, options]*)
 
 Lints files with ESLint via an [AVA](https://ava.li) test<br>
 Uses [JSON](https://www.npmjs.com/package/eslint-plugin-json) plugin
 
-#### patterns
+#### paths
 
 Type: `Array`<br>
-Default: `ALL_JSON`<br>
+Default: `all.json`<br>
 glob patterns
 
 #### options.cwd
@@ -97,14 +102,14 @@ Base directory for patterns
 
 
 
-### lintYaml(*[patterns, options]*)
+### lint.yaml(*[paths, options]*)
 
 Lints files with [YAML Lint](https://www.npmjs.com/package/yaml-lint) via an [AVA](https://ava.li) test
 
-#### patterns
+#### paths
 
 Type: `Array`<br>
-Default: `ALL_YAML`<br>
+Default: `all.yaml`<br>
 glob patterns
 
 #### options.cwd
@@ -115,15 +120,15 @@ Base directory for patterns
 
 
 
-### lintScss(*[patterns, options]*)
+### lint.scss(*[paths, options]*)
 
 Lints files with stylelint via an [AVA](https://ava.li) test<br>
 Uses user-defined config
 
-#### patterns
+#### paths
 
 Type: `Array`<br>
-Default: `ALL_SCSS`<br>
+Default: `all.scss`<br>
 glob patterns
 
 #### options.cwd
@@ -144,14 +149,14 @@ Name of extendable config
 
 
 
-### lintBash(*[patterns, options]*)
+### lint.bash(*[paths, options]*)
 
 Lints files with `bash -n` via an [AVA](https://ava.li) test
 
-#### patterns
+#### paths
 
 Type: `Array`<br>
-Default: `ALL_BASH`<br>
+Default: `all.bash`<br>
 glob patterns
 
 #### options.cwd
@@ -159,6 +164,15 @@ glob patterns
 Type: `String`<br>
 Default: `process.cwd()`<br>
 Base directory for patterns
+
+
+
+
+## API - npm package
+
+### npmPackage.validate()
+
+Validates a npm package repo with Absolunet's standards.
 
 
 
