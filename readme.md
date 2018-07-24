@@ -49,6 +49,10 @@ Returns an `Array` with default paths for SCSS files.
 
 Returns an `Array` with default paths for bash files.
 
+### all.editorconfig
+
+Returns an `Array` with default paths for EditorConfig files.
+
 
 
 
@@ -157,6 +161,24 @@ Lints files with `bash -n` via an [AVA](https://ava.li) test
 
 Type: `Array`<br>
 Default: `all.bash`<br>
+glob patterns
+
+#### options.cwd
+
+Type: `String`<br>
+Default: `process.cwd()`<br>
+Base directory for patterns
+
+
+
+### lint.editorconfig(*[paths, options]*)
+
+Lints files with [ECLint](https://www.npmjs.com/package/eclint) via an [AVA](https://ava.li) test
+
+#### paths
+
+Type: `Array`<br>
+Default: `all.editorconfig`<br>
 glob patterns
 
 #### options.cwd

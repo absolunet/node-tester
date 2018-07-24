@@ -1,7 +1,6 @@
 //--------------------------------------------------------
 //-- Tester
 //--------------------------------------------------------
-/* eslint-disable class-methods-use-this */
 'use strict';
 
 const linters    = require('./lib/linters');
