@@ -3,6 +3,6 @@
 //--------------------------------------------------------
 'use strict';
 
-const tester = require('../index');
+const tester = require('..');
 
 tester.npmPackage.validate();
