@@ -196,6 +196,9 @@ Base directory for patterns
 
 Validates a npm package repo with Absolunet's standards.
 
+### npmPackage.validateEslintConfig()
+
+Validates a npm package repo for ESLint config with Absolunet's standards.
 
 
 
