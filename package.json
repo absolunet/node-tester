@@ -1,6 +1,6 @@
 {
   "name": "@absolunet/tester",
-  "version": "2.0.3",
+  "version": "2.1.0",
   "description": "Test suite for Node.js projects",
   "definition": "",
   "homepage": "https://github.com/absolunet/node-tester",
@@ -8,6 +8,17 @@
     "name": "Absolunet",
     "url": "https://absolunet.com"
   },
+  "keywords": [
+    "bower",
+    "eclint",
+    "editorconfig",
+    "eslint",
+    "json",
+    "lint",
+    "linter",
+    "stylelint",
+    "yaml"
+  ],
   "license": "MIT",
   "repository": {
     "url": "git://github.com/absolunet/node-tester.git",
@@ -25,7 +36,8 @@
   },
   "devDependencies": {},
   "dependencies": {
-    "@absolunet/eslint-config-node": "1.1.0",
+    "@absolunet/eslint-config-library": "1.1.1",
+    "@absolunet/eslint-config-node": "1.1.1",
     "ava": "^0.25.0",
     "eclint": "^2.8.0",
     "eslint-plugin-json": "^1.2.0",
