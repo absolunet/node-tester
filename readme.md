@@ -200,6 +200,10 @@ Validates a npm package repo with Absolunet's standards.
 
 Validates a npm package repo for ESLint config with Absolunet's standards.
 
+### npmPackage.validateStylelintConfig()
+
+Validates a npm package repo for stylelint config with Absolunet's standards.
+
 ### npmPackage.validateLibrary()
 
 Validates a npm package repo for JS Library with Absolunet's standards.
