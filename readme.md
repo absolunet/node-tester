@@ -4,7 +4,7 @@
 [![npm dependencies](https://david-dm.org/absolunet/node-tester/status.svg)](https://david-dm.org/absolunet/node-tester)
 [![npms](https://badges.npms.io/%40absolunet%2Ftester.svg)](https://npms.io/search?q=%40absolunet%2Ftester)
 [![Travis CI](https://api.travis-ci.org/absolunet/node-tester.svg?branch=master)](https://travis-ci.org/absolunet/node-tester/builds)
-[![Code style](https://img.shields.io/badge/code_style-@absolunet/node-659d32.svg)](https://github.com/absolunet/eslint-config-node)
+[![Code style](https://img.shields.io/badge/code_style-@absolunet/node-659d32.svg)](https://github.com/absolunet/eslint-config)
 
 > Test suite for Node.js projects via [🚀AVA](https://ava.li)
 
@@ -12,7 +12,7 @@
 ## Install
 
 ```sh
-$ npm i @absolunet/tester
+$ npm install @absolunet/tester
 ```
 
 
@@ -192,9 +192,17 @@ Base directory for patterns
 
 ## API - npm package
 
+### npmPackage.multiPackagesPaths
+
+Returns an `Array` with each package path in a multi-packages project.
+
 ### npmPackage.validate()
 
 Validates a npm package repo with Absolunet's standards.
+
+### npmPackage.validateMulti()
+
+Validates a multi-packages repo with Absolunet's standards. (Only the wrapper not the packages inside)
 
 ### npmPackage.validateEslintConfig()
 
