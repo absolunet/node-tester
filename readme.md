@@ -196,25 +196,111 @@ Base directory for patterns
 
 Returns an `Array` with each package path in a multi-packages project.
 
-### npmPackage.validate()
+### npmPackage.validate(*[options]*)
 
 Validates a npm package repo with Absolunet's standards.
 
-### npmPackage.validateMulti()
+#### options.cwd
+
+Type: `String`<br>
+Default: `process.cwd()`<br>
+Base directory for validation
+
+#### options.scope
+
+Type: `String`<br>
+Default: `''`<br>
+Scope for matrix testing
+
+#### options.js
+
+Type: `Array`<br>
+Default: `all.js`<br>
+glob patterns
+
+#### options.json
+
+Type: `Array`<br>
+Default: `all.json`<br>
+glob patterns
+
+#### options.yaml
+
+Type: `Array`<br>
+Default: `all.yaml`<br>
+glob patterns
+
+#### options.bash
+
+Type: `Array`<br>
+Default: `all.bash`<br>
+glob patterns
+
+#### options.editorconfig
+
+Type: `Array`<br>
+Default: `all.editorconfig`<br>
+glob patterns
+
+
+
+
+### npmPackage.validateMulti(*[options]*)
 
 Validates a multi-packages repo with Absolunet's standards. (Only the wrapper not the packages inside)
 
-### npmPackage.validateEslintConfig()
+#### options.cwd
+
+Type: `String`<br>
+Default: `process.cwd()`<br>
+Base directory for validation
+
+
+### npmPackage.validateSub(*[options]*)
+
+Validate a single package inside a multi-packages project with Absolunet's standards.
+
+#### options.cwd
+
+Type: `String`<br>
+Default: `process.cwd()`<br>
+Base directory for validation
+
+
+
+### npmPackage.validateEslintConfig(*[options]*)
 
 Validates a npm package repo for ESLint config with Absolunet's standards.
 
-### npmPackage.validateStylelintConfig()
+#### options.cwd
+
+Type: `String`<br>
+Default: `process.cwd()`<br>
+Base directory for validation
+
+
+
+### npmPackage.validateStylelintConfig(*[options]*)
 
 Validates a npm package repo for stylelint config with Absolunet's standards.
 
-### npmPackage.validateLibrary()
+#### options.cwd
+
+Type: `String`<br>
+Default: `process.cwd()`<br>
+Base directory for validation
+
+
+
+### npmPackage.validateLibrary(*[options]*)
 
 Validates a npm package repo for JS Library with Absolunet's standards.
+
+#### options.cwd
+
+Type: `String`<br>
+Default: `process.cwd()`<br>
+Base directory for validation
 
 
 
