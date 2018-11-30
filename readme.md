@@ -242,6 +242,11 @@ Type: `Array`<br>
 Default: `all.editorconfig`<br>
 glob patterns
 
+#### options.scss
+
+Type: `Array`<br>
+glob patterns
+
 
 
 
@@ -255,6 +260,48 @@ Type: `String`<br>
 Default: `process.cwd()`<br>
 Base directory for validation
 
+#### options.scope
+
+Type: `String`<br>
+Default: `''`<br>
+Scope for matrix testing
+
+#### options.js
+
+Type: `Array`<br>
+Default: `all.js`<br>
+glob patterns
+
+#### options.json
+
+Type: `Array`<br>
+Default: `all.json`<br>
+glob patterns
+
+#### options.yaml
+
+Type: `Array`<br>
+Default: `all.yaml`<br>
+glob patterns
+
+#### options.bash
+
+Type: `Array`<br>
+Default: `all.bash`<br>
+glob patterns
+
+#### options.editorconfig
+
+Type: `Array`<br>
+Default: `all.editorconfig`<br>
+glob patterns
+
+#### options.scss
+
+Type: `Array`<br>
+glob patterns
+
+
 
 ### npmPackage.validateSub(*[options]*)
 
@@ -265,6 +312,47 @@ Validate a single package inside a multi-packages project with Absolunet's stand
 Type: `String`<br>
 Default: `process.cwd()`<br>
 Base directory for validation
+
+#### options.scope
+
+Type: `String`<br>
+Default: `''`<br>
+Scope for matrix testing
+
+#### options.js
+
+Type: `Array`<br>
+Default: `all.js`<br>
+glob patterns
+
+#### options.json
+
+Type: `Array`<br>
+Default: `all.json`<br>
+glob patterns
+
+#### options.yaml
+
+Type: `Array`<br>
+Default: `all.yaml`<br>
+glob patterns
+
+#### options.bash
+
+Type: `Array`<br>
+Default: `all.bash`<br>
+glob patterns
+
+#### options.editorconfig
+
+Type: `Array`<br>
+Default: `all.editorconfig`<br>
+glob patterns
+
+#### options.scss
+
+Type: `Array`<br>
+glob patterns
 
 
 
