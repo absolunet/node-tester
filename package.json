@@ -1,6 +1,6 @@
 {
   "name": "@absolunet/tester",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "description": "Test suite for Node.js projects",
   "definition": "",
   "homepage": "https://github.com/absolunet/node-tester",
@@ -28,7 +28,7 @@
     "url": "https://github.com/absolunet/node-tester/issues"
   },
   "engines": {
-    "node": ">= 11.2.0"
+    "node": ">= 11.3.0"
   },
   "main": "index.js",
   "scripts": {
@@ -36,12 +36,12 @@
   },
   "devDependencies": {},
   "dependencies": {
-    "@absolunet/eslint-config-library": "1.2.0",
-    "@absolunet/eslint-config-node": "1.2.0",
-    "@absolunet/fss": "^1.3.2",
+    "@absolunet/eslint-config-library": "1.2.2",
+    "@absolunet/eslint-config-node": "1.2.2",
+    "@absolunet/fss": "^1.3.3",
     "ava": "^0.25.0",
     "eclint": "^2.8.1",
-    "eslint-plugin-json": "^1.2.1",
+    "eslint-plugin-json": "^1.3.2",
     "glob-all": "^3.1.0",
     "gulp-reporter": "^2.9.0",
     "read-package-json": "^2.0.13",
