@@ -1,12 +1,10 @@
-bower_components
-ressources
-src
+export
+lib
 test
-vendor
 .editorconfig
 .eslintignore
 .eslintrc.yaml
 .gitignore
 .travis.yml
-bower.json
+index.js
 webpack.config.js
