@@ -27,6 +27,15 @@ tester.lint.bash(['install-scripts/**/*']);
 ```
 
 
+## API - Dependencies
+
+### ava
+Returns `ava` instance
+
+
+
+<br>
+
 ## API - Patterns
 
 ### all.js

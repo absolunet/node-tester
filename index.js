@@ -3,6 +3,8 @@
 //--------------------------------------------------------
 'use strict';
 
+const ava = require('ava');
+
 const linters    = require('./lib/linters');
 const npmPackage = require('./lib/npm-package');
 const patterns   = require('./lib/patterns');
@@ -13,6 +15,12 @@ const patterns   = require('./lib/patterns');
 
 
 class Tester {
+
+	//-- Expose ava
+	get ava() {
+		return ava;
+	}
+
 
 	//-- All patterns
 	get all() {
