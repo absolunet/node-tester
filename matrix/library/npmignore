@@ -1,5 +1,4 @@
 .DS_Store
-export
 lib
 test
 .editorconfig
