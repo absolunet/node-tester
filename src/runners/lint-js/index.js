@@ -1,8 +1,6 @@
 //--------------------------------------------------------
-//-- Tests
+//-- Lint JS runner
 //--------------------------------------------------------
-'use strict';
+import runner from '../../helpers/runner';
 
-const tester = require('..');
-
-tester.npmPackage.validate();
+export default runner.create(__dirname);

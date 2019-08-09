@@ -9,10 +9,10 @@
     "url": "https://absolunet.com"
   },
   "keywords": [
-    "bower",
     "eclint",
     "editorconfig",
     "eslint",
+    "jest",
     "json",
     "lint",
     "linter",
@@ -30,28 +30,41 @@
   "engines": {
     "node": ">= 12.9.1"
   },
-  "main": "index.js",
+  "main": "dist/node",
   "scripts": {
-    "test": "ava test/index.js",
-    "installer": "node manager.js --task=installer",
-    "outdated": "node manager.js --task=outdated",
-    "build": "node manager.js --task=build",
-    "deploy": "node manager.js --task=deploy"
+    "test": "jest --config=./dist/node/config.js",
+    "manager:install": "node manager.js --task=install",
+    "manager:outdated": "node manager.js --task=outdated",
+    "manager:build": "node manager.js --task=build",
+    "manager:watch": "node manager.js --task=watch",
+    "manager:documentation": "node manager.js --task=documentation",
+    "manager:prepare": "node manager.js --task=prepare",
+    "manager:rebuild": "node manager.js --task=rebuild",
+    "manager:publish": "node manager.js --task=publish",
+    "manager:publish:unsafe": "node manager.js --task=publish:unsafe"
   },
   "devDependencies": {
-    "@absolunet/manager": "1.1.0"
+    "@absolunet/manager": "2.0.0-alpha.1"
   },
   "dependencies": {
-    "@absolunet/eslint-config-library": "1.3.0",
-    "@absolunet/eslint-config-node": "1.3.0",
+    "@absolunet/eslint-config-node": "1.4.0-beta.3",
+    "@absolunet/eslint-config-package": "1.4.0-beta.3",
+    "@absolunet/eslint-config-test": "1.4.0-beta.3",
     "@absolunet/fss": "^1.6.1",
-    "ava": "^2.3.0",
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "babel-jest": "^24.9.0",
+    "chalk": "^2.4.2",
+    "create-jest-runner": "^0.5.3",
     "eclint": "^2.8.1",
     "eslint-plugin-json": "^1.4.0",
-    "glob-all": "^3.1.0",
     "gulp-reporter": "^2.10.0",
+    "jest": "^24.9.0",
+    "jest-chain": "^1.1.2",
+    "jest-expect-message": "^1.0.2",
+    "jest-extended": "^0.11.2",
     "read-package-json": "^2.1.0",
-    "replaceall": "^0.1.6",
+    "semver": "^6.3.0",
     "vinyl-fs": "^3.0.3",
     "yaml-lint": "^1.2.4"
   }
