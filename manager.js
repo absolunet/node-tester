@@ -5,4 +5,8 @@
 
 const manager = require('@absolunet/manager');
 
-manager.singleScriptsRunner();
+manager.singleScriptsRunner({
+	dist: {
+		node: true
+	}
+});
