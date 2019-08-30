@@ -4,10 +4,10 @@
 import fss from '@absolunet/fss';
 
 
-const __ = {
-	root:        fss.realpath(`${__dirname}/../../..`),
-	projectRoot: fss.realpath(`.`)
-};
+const __ = {};
+__.root        = fss.realpath(`${__dirname}/../../..`);
+__.code        = `${__.root}/dist/node`;
+__.projectRoot = fss.realpath(`.`);
 
 
 
@@ -42,22 +42,22 @@ class Paths {
 
 
 	/**
+	 * Config root path.
+	 *
+	 * @type {string}
+	 */
+	get config() {
+		return `${__.code}/config`;
+	}
+
+
+	/**
 	 * Runners root path.
 	 *
 	 * @type {string}
 	 */
 	get runners() {
-		return `${__.root}/dist/node/runners`;
-	}
-
-
-	/**
-	 * Transformers root path.
-	 *
-	 * @type {string}
-	 */
-	get transformers() {
-		return `${__.root}/dist/node/transformers`;
+		return `${__.code}/runners`;
 	}
 
 
@@ -67,7 +67,17 @@ class Paths {
 	 * @type {string}
 	 */
 	get tests() {
-		return `${__.root}/dist/node/tests`;
+		return `${__.code}/tests`;
+	}
+
+
+	/**
+	 * Transformers root path.
+	 *
+	 * @type {string}
+	 */
+	get transformers() {
+		return `${__.code}/transformers`;
 	}
 
 

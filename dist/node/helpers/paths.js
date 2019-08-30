@@ -9,10 +9,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //--------------------------------------------------------
 //-- Paths
 //--------------------------------------------------------
-const __ = {
-  root: _fss.default.realpath(`${__dirname}/../../..`),
-  projectRoot: _fss.default.realpath(`.`)
-};
+const __ = {};
+__.root = _fss.default.realpath(`${__dirname}/../../..`);
+__.code = `${__.root}/dist/node`;
+__.projectRoot = _fss.default.realpath(`.`);
 /**
  * Paths.
  *
@@ -39,6 +39,16 @@ class Paths {
     return `${__.root}/matrix`;
   }
   /**
+   * Config root path.
+   *
+   * @type {string}
+   */
+
+
+  get config() {
+    return `${__.code}/config`;
+  }
+  /**
    * Runners root path.
    *
    * @type {string}
@@ -46,17 +56,7 @@ class Paths {
 
 
   get runners() {
-    return `${__.root}/dist/node/runners`;
-  }
-  /**
-   * Transformers root path.
-   *
-   * @type {string}
-   */
-
-
-  get transformers() {
-    return `${__.root}/dist/node/transformers`;
+    return `${__.code}/runners`;
   }
   /**
    * Tests root path.
@@ -66,7 +66,17 @@ class Paths {
 
 
   get tests() {
-    return `${__.root}/dist/node/tests`;
+    return `${__.code}/tests`;
+  }
+  /**
+   * Transformers root path.
+   *
+   * @type {string}
+   */
+
+
+  get transformers() {
+    return `${__.code}/transformers`;
   }
   /**
    * Current project paths.

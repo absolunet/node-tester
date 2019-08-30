@@ -87,16 +87,19 @@ class PackageJson {
 		}
 
 		expect(config.scripts, 'Scripts must be valid').toContainEntries([
-//			['test',                   'node manager.js --task=test'],
-			['manager:install',        'node manager.js --task=install'],
-			['manager:outdated',       'node manager.js --task=outdated'],
-			['manager:build',          'node manager.js --task=build'],
-			['manager:watch',          'node manager.js --task=watch'],
-			['manager:documentation',  'node manager.js --task=documentation'],
-			['manager:prepare',        'node manager.js --task=prepare'],
-			['manager:rebuild',        'node manager.js --task=rebuild'],
-			['manager:publish',        'node manager.js --task=publish'],
-			['manager:publish:unsafe', 'node manager.js --task=publish:unsafe']
+			['manager:install',        'node manager --task=install'],
+			['manager:outdated',       'node manager --task=outdated'],
+			['manager:build',          'node manager --task=build'],
+			['manager:watch',          'node manager --task=watch'],
+			['manager:documentation',  'node manager --task=documentation'],
+			['manager:prepare',        'node manager --task=prepare'],
+			['manager:rebuild',        'node manager --task=rebuild'],
+			['manager:publish',        'node manager --task=publish'],
+			['manager:publish:unsafe', 'node manager --task=publish:unsafe'],
+			['test',                   'node test --scope=all'],
+			['test:standard',          'node test --scope=standard'],
+			['test:feature',           'node test --scope=feature'],
+			['test:unit',              'node test --scope=unit']
 		]);
 
 		expect(config.files, 'Files must not be defined').toBeUndefined();
