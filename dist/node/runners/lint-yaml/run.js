@@ -19,10 +19,7 @@ var _default = ({
   const testResult = _runner.default.initTestResult({
     testPath,
     title: 'YAML Lint'
-  }); //	if (cli.isPathIgnored(testPath)) {
-  //		return skip(testResult());
-  //	}
-
+  });
 
   return _yamlLint.default.lintFile(testPath).then(() => {
     return (0, _createJestRunner.pass)(testResult());

@@ -11,7 +11,7 @@ exports.default = void 0;
  *
  * @hideconstructor
  */
-class Environment {
+class EnvironmentHelper {
   /**
    * Temporary env variable to pass custom config to Jest.
    *
@@ -23,7 +23,7 @@ class Environment {
 
 }
 
-var _default = new Environment();
+var _default = new EnvironmentHelper();
 
 exports.default = _default;
 module.exports = exports.default;

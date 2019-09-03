@@ -5,6 +5,28 @@ import env    from '../helpers/environment';
 import runner from '../helpers/runner';
 
 
+/**
+ * Types of repositories: 'single-package', 'multi-package'.
+ *
+ * @typedef {string} RepositoryType
+ */
+const REPOSITORY_TYPE = {
+	singlePackage: 'single-package'
+};
+
+
+/**
+ * Types of package: 'common'.
+ *
+ * @typedef {string} PackageType
+ */
+const PACKAGE_TYPE = {
+	common: 'common'
+};
+
+
+
+
 const STANDARD = [
 	runner.config.lintJS,
 	runner.config.lintJSON,
@@ -26,7 +48,13 @@ const UNIT = [
 
 
 
-
+/**
+ * Options to customize the testing process.
+ *
+ * @typedef {object} TesterOptions
+ * @property {RepositoryType} repositoryType - Type of repository.
+ * @property {PackageType} packageType - Type of package.
+ */
 const runners = [];
 const { repositoryType, packageType, scope } = JSON.parse(process.env[env.jestConfigVariable]);  // eslint-disable-line no-process-env
 
@@ -34,7 +62,7 @@ const { repositoryType, packageType, scope } = JSON.parse(process.env[env.jestCo
 //-- Repository type
 switch (repositoryType) {
 
-	case 'single-package':
+	case REPOSITORY_TYPE.singlePackage:
 		STANDARD.push(...[
 			runner.config.validateSinglePackage
 		]);
@@ -49,7 +77,7 @@ switch (repositoryType) {
 //-- Package type
 switch (packageType) {
 
-	case 'common':
+	case PACKAGE_TYPE.common:
 		break;
 
 	default:

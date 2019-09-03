@@ -21,10 +21,7 @@ var _default = ({
   const testResult = _runner.default.initTestResult({
     testPath,
     title: 'bash -n'
-  }); //	if (cli.isPathIgnored(testPath)) {
-  //		return skip(testResult());
-  //	}
-
+  });
 
   return new Promise((resolve, reject) => {
     (0, _child_process.exec)(`bash -n ${_fss.default.realpath(testPath)}`, {}, (error

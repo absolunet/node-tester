@@ -10,10 +10,6 @@ export default ({ testPath }) => {
 
 	const testResult = runner.initTestResult({ testPath, title: 'YAML Lint' });
 
-//	if (cli.isPathIgnored(testPath)) {
-//		return skip(testResult());
-//	}
-
 	return yamlLint.lintFile(testPath)
 		.then(() => {
 			return pass(testResult());

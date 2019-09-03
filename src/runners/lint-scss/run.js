@@ -2,17 +2,12 @@
 //-- Lint SCSS runner - Run
 //--------------------------------------------------------
 import { pass, fail } from 'create-jest-runner';
+import stylelint      from 'stylelint';
 import runner         from '../../helpers/runner';
 
 
 export default ({ testPath }) => {
-	const stylelint = require('stylelint'); // eslint-disable-line global-require
-
 	const testResult = runner.initTestResult({ testPath, title: 'stylelint' });
-
-//	if (cli.isPathIgnored(testPath)) {
-//		return skip(testResult());
-//	}
 
 	return stylelint.lint({
 		files:     testPath,

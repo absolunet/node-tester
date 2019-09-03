@@ -23,10 +23,7 @@ var _default = ({
   const testResult = _runner.default.initTestResult({
     testPath,
     title: 'EditorConfig'
-  }); //	if (cli.isPathIgnored(testPath)) {
-  //		return skip(testResult());
-  //	}
-
+  });
 
   return new Promise((resolve, reject) => {
     _vinylFs.default.src(testPath).pipe(_eclint.default.check()).pipe((0, _gulpReporter.default)({

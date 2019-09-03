@@ -17,11 +17,20 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //--------------------------------------------------------
 
 /**
- * xyz
+ * Absolunet's npm packages tester.
+ *
+ * @hideconstructor
  */
 class Tester {
   /**
-   * xyz
+   * Initialize tests.
+   *
+   * @param {TesterOptions} options - Project options.
+   * @example
+   * tester.init({
+   * 		repositoryType: 'single-package',
+   * 		packageType:    'common'
+   * });
    */
   init(options = {}) {
     options.scope = (0, _minimist.default)(process.argv.slice(2)).scope;
@@ -34,6 +43,12 @@ class Tester {
   }
 
 }
+/**
+ * Exports an instance of {@link Tester}.
+ *
+ * @module @absolunet/tester
+ */
+
 
 var _default = new Tester();
 
