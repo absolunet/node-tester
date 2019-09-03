@@ -39,13 +39,20 @@ const matrix = (filename, type) => {
   return _fss.default.realpath(rootPath);
 };
 /**
- * xyz
+ * Arborescence validation helper.
+ *
+ * @hideconstructor
  */
 
 
-class Arborescence {
+class ArborescenceHelper {
   /**
-   * xyz
+   * Validates if file exists.
+   *
+   * @param {string} filename - Name of the file.
+   * @param {object} parameters - Parameters.
+   * @param {string} parameters.path - Absolute directory path to the file.
+   * @param {string} parameters.readablePath - Readable directory path to the file (for logging purposes).
    */
   fileExists(filename, {
     path,
@@ -56,44 +63,61 @@ class Arborescence {
     expect(exists, `'${readablePath}/${filename}' must exists`).toBeTrue();
   }
   /**
-   * xyz
+   * Validates if file is identical to a defined matrix.
+   *
+   * @param {string} filename - Name of the file.
+   * @param {object} parameters - Parameters.
+   * @param {string} parameters.path - Absolute directory path to the file.
+   * @param {string} parameters.readablePath - Readable directory path to the file (for logging purposes).
+   * @param {PackageType} parameters.packageType - Type of package.
    */
 
 
   fileIsMatrix(filename, {
     path,
     readablePath,
-    type
+    packageType
   }) {
     const content = _fss.default.readFile(`${path}/${filename}`, 'utf8');
 
-    const matrixContent = _fss.default.readFile(matrix(filename, type), 'utf8');
+    const matrixContent = _fss.default.readFile(matrix(filename, packageType), 'utf8');
 
     expect(content, `'${readablePath}/${filename}' must be identical to matrix`).toBe(matrixContent);
   }
   /**
-   * xyz
+   * Validates if file contains all entries in a defined matrix.
+   *
+   * @param {string} filename - Name of the file.
+   * @param {object} parameters - Parameters.
+   * @param {string} parameters.path - Absolute directory path to the file.
+   * @param {string} parameters.readablePath - Readable directory path to the file (for logging purposes).
+   * @param {PackageType} parameters.packageType - Type of package.
    */
 
 
   fileContainsMatrix(filename, {
     path,
     readablePath,
-    type
+    packageType
   }) {
     const entries = extractEntries(`${path}/${filename}`);
-    const matrixEntries = extractEntries(matrix(filename, type));
+    const matrixEntries = extractEntries(matrix(filename, packageType));
     expect(entries, `'${readablePath}/${filename}' must contain matrix`).toIncludeAllMembers(matrixEntries);
   }
   /**
-   * xyz
+   * Validates that the project's arborescence respect Absolunet's standards.
+   *
+   * @param {object} parameters - Parameters.
+   * @param {string} parameters.root - Absolute directory path to the file.
+   * @param {string} parameters.ignore - Readable directory path to the file (for logging purposes).
+   * @param {PackageType} parameters.packageType - Type of package.
    */
 
 
   validate({
     root,
     ignore = [],
-    type
+    packageType
   }) {
     describe(`Validate arborescence`, () => {
       const selfTest = true;
@@ -101,7 +125,7 @@ class Arborescence {
       const currentRoot = _fss.default.realpath(root);
 
       const options = {
-        type,
+        packageType,
         path: currentRoot,
         readablePath: currentRoot.startsWith(_paths.default.project.root) ? currentRoot.substring(_paths.default.project.root.length + 1) : currentRoot
       };
@@ -174,7 +198,7 @@ class Arborescence {
 
 }
 
-var _default = new Arborescence();
+var _default = new ArborescenceHelper();
 
 exports.default = _default;
 module.exports = exports.default;

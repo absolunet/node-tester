@@ -11,10 +11,6 @@ export default ({ testPath }) => {
 
 	const testResult = runner.initTestResult({ testPath, title: 'bash -n' });
 
-//	if (cli.isPathIgnored(testPath)) {
-//		return skip(testResult());
-//	}
-
 	return new Promise((resolve, reject) => {
 		exec(`bash -n ${fss.realpath(testPath)}`, {}, (error/* , stdout, stderr */) => {
 			if (error) {

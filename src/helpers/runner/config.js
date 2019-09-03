@@ -18,15 +18,19 @@ const JEST_TRANSFORM = {
 
 
 
-/**
- * xyz
- */
-class RunnerConfig {
+ /**
+  * Configurations for Jest {@link https://jestjs.io/docs/en/configuration#projects-array-string-projectconfig project} runners.
+  *
+  * @hideconstructor
+  */
+class RunnerHelperConfig {
 
 	/* eslint-disable unicorn/prevent-abbreviations */
 
 	/**
-	 * xyz
+	 * Configuration for linting JavaScript files.
+	 *
+	 * @type {object}
 	 */
 	get lintJS() {
 		return {
@@ -38,7 +42,9 @@ class RunnerConfig {
 	}
 
 	/**
-	 * xyz
+	 * Configuration for linting JSON files.
+	 *
+	 * @type {object}
 	 */
 	get lintJSON() {
 		return {
@@ -50,7 +56,9 @@ class RunnerConfig {
 	}
 
 	/**
-	 * xyz
+	 * Configuration for linting YAML files.
+	 *
+	 * @type {object}
 	 */
 	get lintYAML() {
 		return {
@@ -63,7 +71,9 @@ class RunnerConfig {
 	}
 
 	/**
-	 * xyz
+	 * Configuration for linting Bash files.
+	 *
+	 * @type {object}
 	 */
 	get lintBash() {
 		return {
@@ -76,7 +86,9 @@ class RunnerConfig {
 	}
 
 	/**
-	 * xyz
+	 * Configuration for linting SCSS files.
+	 *
+	 * @type {object}
 	 */
 	get lintSCSS() {
 		return {
@@ -89,7 +101,9 @@ class RunnerConfig {
 	}
 
 	/**
-	 * xyz
+	 * Configuration for linting files styling.
+	 *
+	 * @type {object}
 	 */
 	get lintFileStyles() {
 		const rawConfig   = fss.readFile(`${paths.project.root}/.editorconfig`, 'utf8');
@@ -108,7 +122,9 @@ class RunnerConfig {
 	}
 
 	/**
-	 * xyz
+	 * Configuration for validating a single package.
+	 *
+	 * @type {object}
 	 */
 	get validateSinglePackage() {
 		return {
@@ -119,7 +135,9 @@ class RunnerConfig {
 	}
 
 	/**
-	 * xyz
+	 * Configuration for running a project's custom feature tests.
+	 *
+	 * @type {object}
 	 */
 	get projectFeatureTests() {
 		return {
@@ -132,7 +150,9 @@ class RunnerConfig {
 
 
 	/**
-	 * xyz
+	 * Configuration for running a project's custom unit tests.
+	 *
+	 * @type {object}
 	 */
 	get projectUnitTests() {
 		return {
@@ -148,4 +168,4 @@ class RunnerConfig {
 }
 
 
-export default new RunnerConfig();
+export default new RunnerHelperConfig();

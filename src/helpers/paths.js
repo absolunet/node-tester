@@ -15,11 +15,11 @@ __.projectRoot = fss.realpath(`.`);
 
 
  /**
-  * Paths.
+  * Internal and project's paths.
   *
   * @hideconstructor
   */
-class Paths {
+class PathsHelper {
 
 	/**
 	 * Tester root.
@@ -84,13 +84,9 @@ class Paths {
 	/**
 	 * Current project paths.
 	 *
-	 * @typedef {object} ProjectPaths
+	 * @type {object}
 	 * @property {string} root - Project root.
-	 */
-	/**
-	 * Current project paths.
-	 *
-	 * @type {ProjectPaths}
+	 * @property {string} test - Project tests.
 	 */
 	get project() {
 		return {
@@ -102,4 +98,4 @@ class Paths {
 }
 
 
-export default new Paths();
+export default new PathsHelper();

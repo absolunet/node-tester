@@ -16,14 +16,18 @@ const JEST_TRANSFORM = {
   '\\.js$': `${_paths.default.transformers}/babel`
 };
 /**
- * xyz
+ * Configurations for Jest {@link https://jestjs.io/docs/en/configuration#projects-array-string-projectconfig project} runners.
+ *
+ * @hideconstructor
  */
 
-class RunnerConfig {
+class RunnerHelperConfig {
   /* eslint-disable unicorn/prevent-abbreviations */
 
   /**
-   * xyz
+   * Configuration for linting JavaScript files.
+   *
+   * @type {object}
    */
   get lintJS() {
     return {
@@ -34,7 +38,9 @@ class RunnerConfig {
     };
   }
   /**
-   * xyz
+   * Configuration for linting JSON files.
+   *
+   * @type {object}
    */
 
 
@@ -47,7 +53,9 @@ class RunnerConfig {
     };
   }
   /**
-   * xyz
+   * Configuration for linting YAML files.
+   *
+   * @type {object}
    */
 
 
@@ -61,7 +69,9 @@ class RunnerConfig {
     };
   }
   /**
-   * xyz
+   * Configuration for linting Bash files.
+   *
+   * @type {object}
    */
 
 
@@ -75,7 +85,9 @@ class RunnerConfig {
     };
   }
   /**
-   * xyz
+   * Configuration for linting SCSS files.
+   *
+   * @type {object}
    */
 
 
@@ -89,7 +101,9 @@ class RunnerConfig {
     };
   }
   /**
-   * xyz
+   * Configuration for linting files styling.
+   *
+   * @type {object}
    */
 
 
@@ -109,7 +123,9 @@ class RunnerConfig {
     };
   }
   /**
-   * xyz
+   * Configuration for validating a single package.
+   *
+   * @type {object}
    */
 
 
@@ -121,7 +137,9 @@ class RunnerConfig {
     };
   }
   /**
-   * xyz
+   * Configuration for running a project's custom feature tests.
+   *
+   * @type {object}
    */
 
 
@@ -134,7 +152,9 @@ class RunnerConfig {
     };
   }
   /**
-   * xyz
+   * Configuration for running a project's custom unit tests.
+   *
+   * @type {object}
    */
 
 
@@ -151,7 +171,7 @@ class RunnerConfig {
 
 }
 
-var _default = new RunnerConfig();
+var _default = new RunnerHelperConfig();
 
 exports.default = _default;
 module.exports = exports.default;

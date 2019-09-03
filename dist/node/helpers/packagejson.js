@@ -15,11 +15,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //--------------------------------------------------------
 
 /**
- * xyz
+ * Package.json validation helper.
+ *
+ * @hideconstructor
  */
-class PackageJson {
+class PackageJsonHelper {
   /**
-   * xyz
+   * Parse the package.json.
+   *
+   * @async
+   * @param {string} directoryPath - Path to the packge.json file.
+   * @returns {Promise<{ config: object, parsedConfig: object }>} Parsed package.json file: config by raw JSON, parsedConfig by npm's parser.
    */
   readConfig(directoryPath) {
     const filePath = `${directoryPath}/package.json`;
@@ -41,7 +47,10 @@ class PackageJson {
     });
   }
   /**
-   * xyz
+   * Validates that the raw JSON parsing is identical to npm's parsing.
+   *
+   * @param {object} config - Raw JSON parsing.
+   * @param {object} parsedConfig - Clean npm's parsing.
    */
 
 
@@ -51,7 +60,9 @@ class PackageJson {
     });
   }
   /**
-   * xyz
+   * Validates that the package.json contains all fields (no more, no less) and that their value is also respects the standards.
+   *
+   * @param {object} config - Parsed package.json.
    */
 
 
@@ -85,7 +96,7 @@ class PackageJson {
     expect(config.config, 'Config must not be defined').toBeUndefined();
   }
   /**
-   * xyz
+   * Validates that the package.json respect Absolunet's format and standards.
    */
 
 
@@ -115,7 +126,7 @@ class PackageJson {
 
 }
 
-var _default = new PackageJson();
+var _default = new PackageJsonHelper();
 
 exports.default = _default;
 module.exports = exports.default;

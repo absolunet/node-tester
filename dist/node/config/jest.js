@@ -11,9 +11,35 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //--------------------------------------------------------
 //-- Jest config
 //--------------------------------------------------------
+
+/**
+ * Types of repositories: 'single-package', 'multi-package'.
+ *
+ * @typedef {string} RepositoryType
+ */
+const REPOSITORY_TYPE = {
+  singlePackage: 'single-package'
+};
+/**
+ * Types of package: 'common'.
+ *
+ * @typedef {string} PackageType
+ */
+
+const PACKAGE_TYPE = {
+  common: 'common'
+};
 const STANDARD = [_runner.default.config.lintJS, _runner.default.config.lintJSON, _runner.default.config.lintYAML, _runner.default.config.lintBash, _runner.default.config.lintSCSS, _runner.default.config.lintFileStyles];
 const FEATURE = [_runner.default.config.projectFeatureTests];
 const UNIT = [_runner.default.config.projectUnitTests];
+/**
+ * Options to customize the testing process.
+ *
+ * @typedef {object} TesterOptions
+ * @property {RepositoryType} repositoryType - Type of repository.
+ * @property {PackageType} packageType - Type of package.
+ */
+
 const runners = [];
 exports.projects = runners;
 const {
@@ -24,7 +50,7 @@ const {
 //-- Repository type
 
 switch (repositoryType) {
-  case 'single-package':
+  case REPOSITORY_TYPE.singlePackage:
     STANDARD.push(...[_runner.default.config.validateSinglePackage]);
     break;
 
@@ -34,7 +60,7 @@ switch (repositoryType) {
 
 
 switch (packageType) {
-  case 'common':
+  case PACKAGE_TYPE.common:
     break;
 
   default:

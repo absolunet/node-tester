@@ -7,7 +7,7 @@
  *
  * @hideconstructor
  */
-class Environment {
+class EnvironmentHelper {
 
 	/**
 	 * Temporary env variable to pass custom config to Jest.
@@ -21,4 +21,4 @@ class Environment {
 }
 
 
-export default new Environment();
+export default new EnvironmentHelper();

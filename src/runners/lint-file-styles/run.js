@@ -12,10 +12,6 @@ export default ({ testPath }) => {
 
 	const testResult = runner.initTestResult({ testPath, title: 'EditorConfig' });
 
-//	if (cli.isPathIgnored(testPath)) {
-//		return skip(testResult());
-//	}
-
 	return new Promise((resolve, reject) => {
 		vfs.src(testPath)
 			.pipe(eclint.check())

@@ -4,6 +4,8 @@ exports.default = void 0;
 
 var _createJestRunner = require("create-jest-runner");
 
+var _stylelint = _interopRequireDefault(require("stylelint"));
+
 var _runner = _interopRequireDefault(require("../../helpers/runner"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -14,18 +16,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var _default = ({
   testPath
 }) => {
-  const stylelint = require('stylelint'); // eslint-disable-line global-require
-
-
   const testResult = _runner.default.initTestResult({
     testPath,
     title: 'stylelint'
-  }); //	if (cli.isPathIgnored(testPath)) {
-  //		return skip(testResult());
-  //	}
+  });
 
-
-  return stylelint.lint({
+  return _stylelint.default.lint({
     files: testPath,
     syntax: 'scss',
     formatter: 'string'

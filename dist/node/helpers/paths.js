@@ -14,12 +14,12 @@ __.root = _fss.default.realpath(`${__dirname}/../../..`);
 __.code = `${__.root}/dist/node`;
 __.projectRoot = _fss.default.realpath(`.`);
 /**
- * Paths.
+ * Internal and project's paths.
  *
  * @hideconstructor
  */
 
-class Paths {
+class PathsHelper {
   /**
    * Tester root.
    *
@@ -81,14 +81,9 @@ class Paths {
   /**
    * Current project paths.
    *
-   * @typedef {object} ProjectPaths
+   * @type {object}
    * @property {string} root - Project root.
-   */
-
-  /**
-   * Current project paths.
-   *
-   * @type {ProjectPaths}
+   * @property {string} test - Project tests.
    */
 
 
@@ -101,7 +96,7 @@ class Paths {
 
 }
 
-var _default = new Paths();
+var _default = new PathsHelper();
 
 exports.default = _default;
 module.exports = exports.default;

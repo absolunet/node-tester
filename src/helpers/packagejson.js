@@ -7,12 +7,18 @@ import fss             from '@absolunet/fss';
 
 
 /**
- * xyz
+ * Package.json validation helper.
+ *
+ * @hideconstructor
  */
-class PackageJson {
+class PackageJsonHelper {
 
 	/**
-	 * xyz
+	 * Parse the package.json.
+	 *
+	 * @async
+	 * @param {string} directoryPath - Path to the packge.json file.
+	 * @returns {Promise<{ config: object, parsedConfig: object }>} Parsed package.json file: config by raw JSON, parsedConfig by npm's parser.
 	 */
 	readConfig(directoryPath) {
 		const filePath = `${directoryPath}/package.json`;
@@ -35,7 +41,10 @@ class PackageJson {
 
 
 	/**
-	 * xyz
+	 * Validates that the raw JSON parsing is identical to npm's parsing.
+	 *
+	 * @param {object} config - Raw JSON parsing.
+	 * @param {object} parsedConfig - Clean npm's parsing.
 	 */
 	validateIntegrity(config, parsedConfig) {
 		Object.keys(config).forEach((key) => {
@@ -45,7 +54,9 @@ class PackageJson {
 
 
 	/**
-	 * xyz
+	 * Validates that the package.json contains all fields (no more, no less) and that their value is also respects the standards.
+	 *
+	 * @param {object} config - Parsed package.json.
 	 */
 	validateFields(config) {
 		expect(config.name, 'Name must be valid').toMatch(/^@absolunet\/(?<kebab1>[a-z][a-z0-9]*)(?<kebab2>-[a-z0-9]+)*$/u);
@@ -109,7 +120,7 @@ class PackageJson {
 
 
 	/**
-	 * xyz
+	 * Validates that the package.json respect Absolunet's format and standards.
 	 */
 	validate() {
 		describe(`Validate package.json`, () => {
@@ -142,4 +153,4 @@ class PackageJson {
 }
 
 
-export default new PackageJson();
+export default new PackageJsonHelper();

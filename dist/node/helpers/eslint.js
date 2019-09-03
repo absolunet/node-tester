@@ -17,11 +17,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //--------------------------------------------------------
 
 /**
- * xyz
+ * ESLint helper.
+ *
+ * @hideconstructor
  */
-class ESLint {
+class ESLintHelper {
   /**
-   * xyz
+   * Parse the package.json.
+   *
+   * @param {string} testPath - File to lint.
+   * @param {object} options - ESLint {@link https://eslint.org/docs/developer-guide/nodejs-api#cliengine CLIEngine} options.
+   * @returns {TestResult} Jest {@link https://github.com/facebook/jest/blob/4d3c1a187bd429fd8611f6b0f19e4aa486fa2a85/packages/jest-test-result/src/types.ts#L103-L135 TestResult} object.
    */
   run(testPath, options = {}) {
     const testResult = _runner.default.initTestResult({
@@ -59,7 +65,7 @@ class ESLint {
 
 }
 
-var _default = new ESLint();
+var _default = new ESLintHelper();
 
 exports.default = _default;
 module.exports = exports.default;

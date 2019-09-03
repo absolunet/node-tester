@@ -8,12 +8,21 @@ import paths        from './helpers/paths';
 
 
 /**
- * xyz
+ * Absolunet's npm packages tester.
+ *
+ * @hideconstructor
  */
 class Tester {
 
 	/**
-	 * xyz
+	 * Initialize tests.
+	 *
+	 * @param {TesterOptions} options - Project options.
+	 * @example
+	 * tester.init({
+	 * 		repositoryType: 'single-package',
+	 * 		packageType:    'common'
+	 * });
 	 */
 	init(options = {}) {
 		options.scope = minimist(process.argv.slice(2)).scope;
@@ -27,5 +36,9 @@ class Tester {
 
 }
 
-
+/**
+ * Exports an instance of {@link Tester}.
+ *
+ * @module @absolunet/tester
+ */
 export default new Tester();
