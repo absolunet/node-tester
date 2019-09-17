@@ -10,7 +10,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //-- Babel transformer
 //--------------------------------------------------------
 var _default = _babelJest.default.createTransformer({
-  presets: [['@babel/preset-env', {
+  presets: [[require.resolve('@babel/preset-env'), {
     targets: {
       node: 'current'
     }

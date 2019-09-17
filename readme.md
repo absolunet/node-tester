@@ -22,10 +22,12 @@ In your `./package.json` file add
 ```json
 {
 	"scripts": {
-		"test": "node test --scope=all",
-		"test:standard": "node test --scope=standard",
-		"test:feature": "node test --scope=feature",
-		"test:unit": "node test --scope=unit"
+		"test":             "node test --scope=all",
+		"test:standard":    "node test --scope=standard",
+		"test:unit":        "node test --scope=unit",
+		"test:feature":     "node test --scope=feature",
+		"test:integration": "node test --scope=integration",
+		"test:endtoend":    "node test --scope=endtoend"
 	}
 }
 ```
@@ -33,9 +35,12 @@ In your `./package.json` file add
 
 In a `./test/index.js` file
 ```js
-const tester = require('@absolunet/tester');
+import { tester } from '@absolunet/tester';
 
-tester.run(options);
+tester.init({
+	repositoryType: 'single-package',
+	packageType:    'common'
+});
 ```
 
 

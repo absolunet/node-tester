@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>helpers/eslint.js - @absolunet/tester API documentation</title>
+	<title>Tester.js - @absolunet/tester API documentation</title>
 
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<meta http-equiv="cleartype" content="on">
@@ -54,7 +54,7 @@
 
 		<div id="main">
 		
-			<h1 class="page-title">helpers/eslint.js</h1>
+			<h1 class="page-title">Tester.js</h1>
 		
 
 			
@@ -65,61 +65,109 @@
     <section>
         <article>
             <pre id="line" class="line-numbers"><code class="language-js">//--------------------------------------------------------
-//-- ESLint helper
+//-- Tester
 //--------------------------------------------------------
-import chalk                from 'chalk';
-import { pass, fail, skip } from 'create-jest-runner';
-import { CLIEngine }        from 'eslint';
-import runner               from './runner';
+import minimist     from 'minimist';
+import { terminal } from '@absolunet/terminal';
+import env          from './helpers/environment';
+import paths        from './helpers/paths';
+
+
+const customization = {};
+
+
+
+
 
 
 /**
- * ESLint helper.
- *
- * @hideconstructor
+ * Absolunet's npm packages tester.
  */
-class ESLintHelper {
+class Tester {
 
 	/**
-	 * Parse the package.json.
+	 * Customization options when extending.
 	 *
-	 * @param {string} testPath - File to lint.
-	 * @param {object} options - ESLint {@link https://eslint.org/docs/developer-guide/nodejs-api#cliengine CLIEngine} options.
-	 * @returns {TestResult} Jest {@link https://github.com/facebook/jest/blob/4d3c1a187bd429fd8611f6b0f19e4aa486fa2a85/packages/jest-test-result/src/types.ts#L103-L135 TestResult} object.
+	 * @param {object} [options] - Customization parameters.
+	 * @param {string} [options.nameScope='@absolunet'] - Package name scope.
+	 * @param {string} [options.source='github.com/absolunet'] - Package source.
+	 * @param {object&lt;string>} [options.author={ name: 'Absolunet', url: 'https://absolunet.com' }] - Package author.
+	 * @param {string} [options.license='MIT'] - Package license.
+	 * @param {CIEngine} [options.ciEngine='travis'] - Package CI engine.
 	 */
-	run(testPath, options = {}) {
-		const testResult = runner.initTestResult({ testPath, title: 'ESLint' });
+	constructor({ nameScope = '@absolunet', source, author, license, ciEngine } = {}) {
+		customization.nameScope = nameScope ? `${nameScope}/` : '';
+		customization.source    = source   || 'github.com/absolunet';
+		customization.author    = author   || { name: 'Absolunet', url: 'https://absolunet.com' };
+		customization.license   = license  || 'MIT';
+		customization.ciEngine  = ciEngine || env.CI_ENGINE.travis;
+	}
 
-		const cli = new CLIEngine(options);
 
-		if (cli.isPathIgnored(testPath)) {
-			return skip(testResult());
-		}
+	/**
+	 * List of subpackages.
+	 *
+	 * @type {object&lt;string>}
+	 */
+	get subpackages() {
+		return env.projectSubpackages;
+	}
 
-		const { results: [report] } = cli.executeOnFiles([testPath]);
-		const problemCount = report.errorCount + report.warningCount;
 
-		if (problemCount > 0) {
-			let output;
+	/**
+	 * Get a readable relative path from an absolute path.
+	 *
+	 * @param {string} absolutePath - Absolute path.
+	 * @returns {string} Stripped relative path to project root.
+	 */
+	getReadablePath(absolutePath) {
+		return env.getReadablePath(absolutePath);
+	}
 
-			if (problemCount > 100) {
-				output = `\n  [Too many to show...]\n\n${chalk.red.bold(`✖ ${problemCount} problems (${report.errorCount} error${report.errorCount === 1 ? '' : 's'}, ${report.warningCount} warning${report.errorCount === 1 ? '' : 's'})`)}\n\n\n`;
-			} else {
-				const rawOutput = cli.getFormatter()([report]).split('\n');
-				rawOutput.splice(1, 1);
-				output = `${rawOutput.join('\n')}\n\n`;
+
+	/**
+	 * Initialize tests.
+	 *
+	 * @param {object} options - Project options.
+	 * @param {RepositoryType} options.repositoryType - Type of repository.
+	 * @param {PackageType} options.packageType - Type of package.
+	 *
+	 * @example
+	 * tester.init({
+	 * 		repositoryType: 'single-package',
+	 * 		packageType:    'common'
+	 * });
+	 */
+	init(options = {}) {
+		options.scope         = minimist(process.argv.slice(2)).scope;
+		options.customization = customization;
+
+		const iocTests = [];
+		if (options.packageType === env.PACKAGE_TYPE.ioc) {
+			if (options.scope === 'all') {
+				iocTests.push(...env.TEST_TYPE);
+			} else if (Object.values(...env.TEST_TYPE).includes(options.scope)) {
+				iocTests.push(options.scope);
 			}
-
-			return fail(testResult(output));
 		}
 
-		return pass(testResult());
+
+
+		try {
+			terminal.run(`export ${env.JEST_CLI_KEY}='${JSON.stringify(options)}'; node ${paths.jestBinary} --config=${paths.config}/jest.js`);
+
+			iocTests.forEach((type) => {
+				terminal.run(`node ioc test --type=${type}`);
+			});
+		} catch (error) {
+			process.exit(1);  // eslint-disable-line no-process-exit, unicorn/no-process-exit
+		}
 	}
 
 }
 
 
-export default new ESLintHelper();
+export default Tester;
 </code></pre>
         </article>
     </section>

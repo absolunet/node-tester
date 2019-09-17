@@ -1,44 +1,47 @@
 //--------------------------------------------------------
-//-- Tester
+//-- @absolunet/tester
 //--------------------------------------------------------
-import minimist     from 'minimist';
-import { terminal } from '@absolunet/terminal';
-import env          from './helpers/environment';
-import paths        from './helpers/paths';
+import Tester from './Tester';
+
+
+const tester = new Tester();
 
 
 /**
- * Absolunet's npm packages tester.
- *
- * @hideconstructor
- */
-class Tester {
-
-	/**
-	 * Initialize tests.
-	 *
-	 * @param {TesterOptions} options - Project options.
-	 * @example
-	 * tester.init({
-	 * 		repositoryType: 'single-package',
-	 * 		packageType:    'common'
-	 * });
-	 */
-	init(options = {}) {
-		options.scope = minimist(process.argv.slice(2)).scope;
-
-		try {
-			terminal.run(`export ${env.jestConfigVariable}='${JSON.stringify(options)}'; jest --config=${paths.config}/jest.js`);
-		} catch (error) {
-			process.exit(1);  // eslint-disable-line no-process-exit, unicorn/no-process-exit
-		}
-	}
-
-}
-
-/**
- * Exports an instance of {@link Tester}.
+ * Exports a default instance of the tester and also the main class.
  *
  * @module @absolunet/tester
+ *
+ * @example
+ * import { tester } from '@absolunet/tester';
+ *
+ * tester.init({
+ * 	repositoryType: 'single-package',
+ * 	packageType:    'common'
+ * });
+ *
+ * @example
+ * import { Tester } from '@absolunet/tester';
+ *
+ * class MyTester extends Tester {
+ * 	constructor(options) {
+ * 		super(options);
+ * 	}
+ * }
  */
-export default new Tester();
+export {
+
+	/**
+	 * Instance of Tester.
+	 *
+	 * @type {Tester}
+	 **/
+	tester,
+
+	/**
+	 * Class definition of Tester.
+	 *
+	 * @type {class}
+	 **/
+	Tester
+};

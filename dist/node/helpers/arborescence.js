@@ -4,6 +4,8 @@ exports.default = void 0;
 
 var _fss = _interopRequireDefault(require("@absolunet/fss"));
 
+var _environment = _interopRequireDefault(require("./environment"));
+
 var _paths = _interopRequireDefault(require("./paths"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -12,13 +14,26 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //-- Arborescence helper
 //--------------------------------------------------------
 const EDITORCONFIG = Symbol('editorconfig');
+const ESLINTIGNORE = Symbol('eslintignore');
 const ESLINTRC = Symbol('eslintrc');
 const GITIGNORE = Symbol('gitignore');
 const NPMIGNORE = Symbol('npmignore');
+const TRAVIS = Symbol('travis');
+const PIPELINES = Symbol('pipelines');
+const LICENSE = Symbol('license');
 const MANAGER = Symbol('manager');
 const PACKAGE = Symbol('package');
-const TRAVIS = Symbol('travis');
+const README = Symbol('readme');
+const DISTRIBUTION = Symbol('distribution');
+const DOCUMENTATION = Symbol('documentation');
+const SOURCE = Symbol('source');
 const TEST = Symbol('test');
+const IGNORE = {
+  [_environment.default.GROUP_TYPE.simple]: [],
+  [_environment.default.GROUP_TYPE.ioc]: [],
+  [_environment.default.GROUP_TYPE.multi]: [NPMIGNORE, DISTRIBUTION, SOURCE],
+  [_environment.default.GROUP_TYPE.sub]: [EDITORCONFIG, ESLINTIGNORE, ESLINTRC, GITIGNORE, TRAVIS, PIPELINES, MANAGER, DOCUMENTATION, TEST]
+};
 
 const extractEntries = filename => {
   return _fss.default.readFile(filename, 'utf8').split(`\n`).filter(Boolean);
@@ -27,7 +42,7 @@ const extractEntries = filename => {
 const matrix = (filename, type) => {
   const cleaned = filename.replace(/^(?<prefix>(?<remove>[\w./-])+\/)?\.(?<filename>[\w./-]+)/u, `$<prefix>$<filename>`);
   const rootPath = `${_paths.default.root}/${filename}`;
-  const matrixPath = `${_paths.default.matrix}/${cleaned}`;
+  const matrixPath = `${_paths.default.matrix}/root/${cleaned}`;
   const typePath = `${_paths.default.matrix}/${type}/${cleaned}`;
 
   if (_fss.default.exists(typePath)) {
@@ -50,147 +65,208 @@ class ArborescenceHelper {
    * Validates if file exists.
    *
    * @param {string} filename - Name of the file.
-   * @param {object} parameters - Parameters.
-   * @param {string} parameters.path - Absolute directory path to the file.
-   * @param {string} parameters.readablePath - Readable directory path to the file (for logging purposes).
+   * @param {string} directoryPath - Absolute directory path to the file.
    */
-  fileExists(filename, {
-    path,
-    readablePath
-  }) {
-    const exists = _fss.default.exists(`${path}/${filename}`);
+  fileExists(filename, directoryPath) {
+    const exists = _fss.default.exists(`${directoryPath}/${filename}`);
 
-    expect(exists, `'${readablePath}/${filename}' must exists`).toBeTrue();
+    expect(exists, `'${filename}' must exists`).toBeTrue();
   }
   /**
    * Validates if file is identical to a defined matrix.
    *
    * @param {string} filename - Name of the file.
    * @param {object} parameters - Parameters.
-   * @param {string} parameters.path - Absolute directory path to the file.
-   * @param {string} parameters.readablePath - Readable directory path to the file (for logging purposes).
-   * @param {PackageType} parameters.packageType - Type of package.
+   * @param {string} parameters.directoryPath - Absolute directory path to the file.
+   * @param {GroupType} parameters.groupType - Type of group.
    */
 
 
   fileIsMatrix(filename, {
-    path,
-    readablePath,
-    packageType
+    directoryPath,
+    groupType
   }) {
-    const content = _fss.default.readFile(`${path}/${filename}`, 'utf8');
+    const content = _fss.default.readFile(`${directoryPath}/${filename}`, 'utf8');
 
-    const matrixContent = _fss.default.readFile(matrix(filename, packageType), 'utf8');
+    const matrixContent = _fss.default.readFile(matrix(filename, groupType), 'utf8');
 
-    expect(content, `'${readablePath}/${filename}' must be identical to matrix`).toBe(matrixContent);
+    expect(content, `'${filename}' must be identical to matrix`).toBe(matrixContent);
   }
   /**
    * Validates if file contains all entries in a defined matrix.
    *
    * @param {string} filename - Name of the file.
    * @param {object} parameters - Parameters.
-   * @param {string} parameters.path - Absolute directory path to the file.
-   * @param {string} parameters.readablePath - Readable directory path to the file (for logging purposes).
-   * @param {PackageType} parameters.packageType - Type of package.
+   * @param {string} parameters.directoryPath - Absolute directory path to the file.
+   * @param {GroupType} parameters.groupType - Type of group.
    */
 
 
   fileContainsMatrix(filename, {
-    path,
-    readablePath,
-    packageType
+    directoryPath,
+    groupType
   }) {
-    const entries = extractEntries(`${path}/${filename}`);
-    const matrixEntries = extractEntries(matrix(filename, packageType));
-    expect(entries, `'${readablePath}/${filename}' must contain matrix`).toIncludeAllMembers(matrixEntries);
+    const entries = extractEntries(`${directoryPath}/${filename}`);
+    const matrixEntries = extractEntries(matrix(filename, groupType));
+    expect(entries, `'${filename}' must contain matrix`).toIncludeAllMembers(matrixEntries);
   }
   /**
-   * Validates that the project's arborescence respect Absolunet's standards.
+   * Validates that the package's arborescence respect Absolunet's standards.
    *
-   * @param {object} parameters - Parameters.
-   * @param {string} parameters.root - Absolute directory path to the file.
-   * @param {string} parameters.ignore - Readable directory path to the file (for logging purposes).
-   * @param {PackageType} parameters.packageType - Type of package.
+   * @param {object} [parameters] - Parameters.
+   * @param {string} [parameters.root=paths.project.root] - Root directory of the package.
+   * @param {RepositoryType} [parameters.repositoryType=env.repositoryType] - Type of repository.
+   * @param {PackageType} [parameters.packageType=env.packageType] - Type of package.
+   * @param {boolean} [parameters.subpackage=false] - If is subpackage.
    */
 
 
   validate({
-    root,
-    ignore = [],
-    packageType
-  }) {
+    root = _paths.default.project.root,
+    repositoryType = _environment.default.repositoryType,
+    packageType = _environment.default.packageType,
+    subpackage = false
+  } = {}) {
     describe(`Validate arborescence`, () => {
-      const selfTest = true;
+      const directoryPath = _fss.default.realpath(root);
 
-      const currentRoot = _fss.default.realpath(root);
+      const readablePath = _environment.default.getReadablePath(directoryPath);
 
-      const options = {
+      const groupType = _environment.default.groupType({
+        repositoryType,
         packageType,
-        path: currentRoot,
-        readablePath: currentRoot.startsWith(_paths.default.project.root) ? currentRoot.substring(_paths.default.project.root.length + 1) : currentRoot
-      };
+        subpackage
+      });
+
+      const ignore = IGNORE[groupType];
 
       if (!ignore.includes(EDITORCONFIG)) {
-        test(`Ensure '.editorconfig' is valid`, () => {
-          this.fileExists('.editorconfig', options);
+        test(`Ensure '${readablePath}/.editorconfig' is valid`, () => {
+          this.fileExists('.editorconfig', directoryPath);
+        });
+      }
+
+      if (!ignore.includes(ESLINTIGNORE)) {
+        test(`Ensure '${readablePath}/.eslintignore' is valid`, () => {
+          this.fileExists('.eslintignore', directoryPath);
+          this.fileContainsMatrix('.eslintignore', {
+            directoryPath,
+            groupType
+          });
         });
       }
 
       if (!ignore.includes(ESLINTRC)) {
-        test(`Ensure '.eslintrc.yaml' is valid`, () => {
-          this.fileExists('.eslintrc.yaml', options);
-          this.fileContainsMatrix('.eslintrc.yaml', options);
+        test(`Ensure '${readablePath}/.eslintrc.yaml' is valid`, () => {
+          this.fileExists('.eslintrc.yaml', directoryPath);
+          this.fileContainsMatrix('.eslintrc.yaml', {
+            directoryPath,
+            groupType
+          });
         });
       }
 
       if (!ignore.includes(GITIGNORE)) {
-        test(`Ensure '.gitignore' is valid`, () => {
-          this.fileExists('.gitignore', options);
-          this.fileContainsMatrix('.gitignore', options);
+        test(`Ensure '${readablePath}/.gitignore' is valid`, () => {
+          this.fileExists('.gitignore', directoryPath);
+          this.fileContainsMatrix('.gitignore', {
+            directoryPath,
+            groupType
+          });
         });
       }
 
       if (!ignore.includes(NPMIGNORE)) {
-        test(`Ensure '.npmignore' is valid`, () => {
-          this.fileExists('.npmignore', options);
-
-          if (!selfTest) {
-            this.fileContainsMatrix('.npmignore', options);
-          }
+        test(`Ensure '${readablePath}/.npmignore' is valid`, () => {
+          this.fileExists('.npmignore', directoryPath);
+          this.fileContainsMatrix('.npmignore', {
+            directoryPath,
+            groupType
+          });
         });
       }
 
-      if (!ignore.includes(TRAVIS)) {
-        test(`Ensure '.travis.yml' is valid`, () => {
-          this.fileExists('.travis.yml', options);
-          this.fileIsMatrix('.travis.yml', options);
+      if (!ignore.includes(TRAVIS) && _environment.default.packageCustomization.ciEngine === _environment.default.CI_ENGINE.travis) {
+        test(`Ensure '${readablePath}/.travis.yml' is valid`, () => {
+          this.fileExists('.travis.yml', directoryPath);
+          this.fileIsMatrix('.travis.yml', {
+            directoryPath,
+            groupType
+          });
         });
       }
 
-      test(`Ensure 'license' is valid`, () => {
-        this.fileExists('license', options);
-        this.fileIsMatrix('license', options);
-      });
+      if (!ignore.includes(PIPELINES) && _environment.default.packageCustomization.ciEngine === _environment.default.CI_ENGINE.pipelines) {
+        test(`Ensure '${readablePath}/bitbucket-pipelines.yml' is valid`, () => {
+          this.fileExists('bitbucket-pipelines.yml', directoryPath);
+          this.fileIsMatrix('bitbucket-pipelines.yml', {
+            directoryPath,
+            groupType
+          });
+        });
+      }
+
+      if (!ignore.includes(LICENSE)) {
+        test(`Ensure '${readablePath}/license' is valid`, () => {
+          this.fileExists('license', directoryPath);
+          this.fileIsMatrix('license', {
+            directoryPath,
+            groupType
+          });
+        });
+      }
 
       if (!ignore.includes(MANAGER)) {
-        test(`Ensure 'manager.js' is valid`, () => {
-          this.fileExists('manager.js', options);
+        test(`Ensure '${readablePath}/manager.js' is valid`, () => {
+          this.fileExists('manager.js', directoryPath);
         });
       }
 
       if (!ignore.includes(PACKAGE)) {
-        test(`Ensure 'package.json' is valid`, () => {
-          this.fileExists('package.json', options);
+        test(`Ensure '${readablePath}/package.json' is valid`, () => {
+          this.fileExists('package.json', directoryPath);
         });
       }
 
-      test(`Ensure 'readme.md' is valid`, () => {
-        this.fileExists('readme.md', options);
-      });
+      if (!ignore.includes(README)) {
+        test(`Ensure '${readablePath}/readme.md' is valid`, () => {
+          this.fileExists('readme.md', directoryPath);
+        });
+      }
+
+      if (!ignore.includes(DISTRIBUTION)) {
+        test(`Ensure '${readablePath}/dist/*' is valid`, () => {
+          this.fileExists('dist', directoryPath);
+        });
+      }
+
+      if (!ignore.includes(DOCUMENTATION)) {
+        test(`Ensure '${readablePath}/docs/*' is valid`, () => {
+          this.fileExists('docs/index.html', directoryPath);
+          this.fileExists('docs/api/index.html', directoryPath);
+        });
+      }
+
+      if (!ignore.includes(SOURCE)) {
+        test(`Ensure '${readablePath}/src/*' is valid`, () => {
+          this.fileExists('src/index.js', directoryPath);
+          this.fileExists('src/.eslintrc.yaml', directoryPath); // To rework
+
+          this.fileContainsMatrix('src/.eslintrc.yaml', {
+            directoryPath,
+            groupType
+          });
+        });
+      }
 
       if (!ignore.includes(TEST)) {
-        test(`Ensure 'test' is valid`, () => {
-          this.fileExists('test', options);
+        test(`Ensure '${readablePath}/test/*' is valid`, () => {
+          this.fileExists('test/index.js', directoryPath);
+          this.fileExists('test/.eslintrc.yaml', directoryPath);
+          this.fileContainsMatrix('test/.eslintrc.yaml', {
+            directoryPath,
+            groupType
+          });
         });
       }
     });

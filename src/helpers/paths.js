@@ -1,13 +1,15 @@
 //--------------------------------------------------------
 //-- Paths
 //--------------------------------------------------------
-import fss from '@absolunet/fss';
+import path from 'path';
+import fss  from '@absolunet/fss';
 
 
 const __ = {};
 __.root        = fss.realpath(`${__dirname}/../../..`);
 __.code        = `${__.root}/dist/node`;
 __.projectRoot = fss.realpath(`.`);
+__.jestRoot    = fss.realpath(`${path.dirname(require.resolve('jest'))}/..`);
 
 
 
@@ -20,6 +22,15 @@ __.projectRoot = fss.realpath(`.`);
   * @hideconstructor
   */
 class PathsHelper {
+
+	/**
+	 * Jest binary path.
+	 *
+	 * @type {string}
+	 */
+	get jestBinary() {
+		return `${__.jestRoot}/bin/jest.js`;
+	}
 
 	/**
 	 * Tester root.
@@ -86,12 +97,14 @@ class PathsHelper {
 	 *
 	 * @type {object}
 	 * @property {string} root - Project root.
+	 * @property {string} subpackages - Project subpackages.
 	 * @property {string} test - Project tests.
 	 */
 	get project() {
 		return {
-			root: __.projectRoot,
-			test: `${__.projectRoot}/test`
+			root:        __.projectRoot,
+			subpackages: `${__.projectRoot}/packages`,
+			test:        `${__.projectRoot}/test`
 		};
 	}
 

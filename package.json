@@ -43,8 +43,10 @@
     "manager:publish:unsafe": "node manager --task=publish:unsafe",
     "test": "node test --scope=all",
     "test:standard": "node test --scope=standard",
+    "test:unit": "node test --scope=unit",
     "test:feature": "node test --scope=feature",
-    "test:unit": "node test --scope=unit"
+    "test:integration": "node test --scope=integration",
+    "test:endtoend": "node test --scope=endtoend"
   },
   "devDependencies": {
     "@absolunet/manager": "2.0.0-alpha.1",
@@ -55,9 +57,9 @@
     "@absolunet/eslint-config-package": "1.4.0-beta.3",
     "@absolunet/eslint-config-test": "1.4.0-beta.3",
     "@absolunet/fss": "^1.6.1",
-    "@absolunet/terminal": "^2.1.0",
-    "@babel/core": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
+    "@absolunet/terminal": "^2.1.1",
+    "@babel/core": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
     "babel-jest": "^24.9.0",
     "chalk": "^2.4.2",
     "create-jest-runner": "^0.5.3",

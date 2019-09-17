@@ -23,7 +23,12 @@ var _default = ({
   const testResult = _runner.default.initTestResult({
     testPath,
     title: 'EditorConfig'
-  });
+  }); // Bad patch
+
+
+  if (testPath.endsWith('.md')) {
+    return (0, _createJestRunner.skip)(testResult());
+  }
 
   return new Promise((resolve, reject) => {
     _vinylFs.default.src(testPath).pipe(_eclint.default.check()).pipe((0, _gulpReporter.default)({
