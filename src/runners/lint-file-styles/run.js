@@ -1,16 +1,21 @@
 //--------------------------------------------------------
 //-- Lint file styles - Run
 //--------------------------------------------------------
-import { pass, fail } from 'create-jest-runner';
-import eclint         from 'eclint';
-import reporter       from 'gulp-reporter';
-import vfs            from 'vinyl-fs';
-import runner         from '../../helpers/runner';
+import { pass, fail, skip } from 'create-jest-runner';
+import eclint               from 'eclint';
+import reporter             from 'gulp-reporter';
+import vfs                  from 'vinyl-fs';
+import runner               from '../../helpers/runner';
 
 
 export default ({ testPath }) => {
 
 	const testResult = runner.initTestResult({ testPath, title: 'EditorConfig' });
+
+	// Bad patch
+	if (testPath.endsWith('.md')) {
+		return skip(testResult());
+	}
 
 	return new Promise((resolve, reject) => {
 		vfs.src(testPath)

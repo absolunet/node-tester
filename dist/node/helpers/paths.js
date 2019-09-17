@@ -2,6 +2,8 @@
 
 exports.default = void 0;
 
+var _path = _interopRequireDefault(require("path"));
+
 var _fss = _interopRequireDefault(require("@absolunet/fss"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -13,6 +15,7 @@ const __ = {};
 __.root = _fss.default.realpath(`${__dirname}/../../..`);
 __.code = `${__.root}/dist/node`;
 __.projectRoot = _fss.default.realpath(`.`);
+__.jestRoot = _fss.default.realpath(`${_path.default.dirname(require.resolve('jest'))}/..`);
 /**
  * Internal and project's paths.
  *
@@ -21,10 +24,20 @@ __.projectRoot = _fss.default.realpath(`.`);
 
 class PathsHelper {
   /**
+   * Jest binary path.
+   *
+   * @type {string}
+   */
+  get jestBinary() {
+    return `${__.jestRoot}/bin/jest.js`;
+  }
+  /**
    * Tester root.
    *
    * @type {string}
    */
+
+
   get root() {
     return __.root;
   }
@@ -83,6 +96,7 @@ class PathsHelper {
    *
    * @type {object}
    * @property {string} root - Project root.
+   * @property {string} subpackages - Project subpackages.
    * @property {string} test - Project tests.
    */
 
@@ -90,6 +104,7 @@ class PathsHelper {
   get project() {
     return {
       root: __.projectRoot,
+      subpackages: `${__.projectRoot}/packages`,
       test: `${__.projectRoot}/test`
     };
   }

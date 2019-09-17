@@ -4,6 +4,8 @@ exports.default = void 0;
 
 var _fss = _interopRequireDefault(require("@absolunet/fss"));
 
+var _environment = _interopRequireDefault(require("../environment"));
+
 var _paths = _interopRequireDefault(require("../paths"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -11,10 +13,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //--------------------------------------------------------
 //-- Runner config helper
 //--------------------------------------------------------
-const JEST_PLUGINS = ['jest-chain', 'jest-expect-message', 'jest-extended'];
+const JEST_PLUGINS = [require.resolve('jest-chain'), require.resolve('jest-expect-message'), require.resolve('jest-extended')];
 const JEST_TRANSFORM = {
   '\\.js$': `${_paths.default.transformers}/babel`
 };
+const __ = {};
 /**
  * Configurations for Jest {@link https://jestjs.io/docs/en/configuration#projects-array-string-projectconfig project} runners.
  *
@@ -22,6 +25,26 @@ const JEST_TRANSFORM = {
  */
 
 class RunnerHelperConfig {
+  /**
+   * Set Jest globals variables.
+   *
+   * @param {object} globals - Data to be exposed globally by Jest.
+   */
+  set globals(globals) {
+    __.globals = globals;
+  }
+  /**
+   * Jest globals variables.
+   *
+   * @type {object}
+   */
+
+
+  get globals() {
+    return {
+      [_environment.default.JEST_GLOBALS_KEY]: __.globals
+    };
+  }
   /* eslint-disable unicorn/prevent-abbreviations */
 
   /**
@@ -29,12 +52,15 @@ class RunnerHelperConfig {
    *
    * @type {object}
    */
+
+
   get lintJS() {
     return {
-      displayName: 'Lint JS',
+      displayName: 'Standard: Lint JS',
       runner: `${_paths.default.runners}/lint-js`,
       rootDir: _paths.default.project.root,
-      testMatch: ['**/*.js']
+      testMatch: ['**/*.js'],
+      globals: this.globals
     };
   }
   /**
@@ -46,10 +72,11 @@ class RunnerHelperConfig {
 
   get lintJSON() {
     return {
-      displayName: 'Lint JSON',
+      displayName: 'Standard: Lint JSON',
       runner: `${_paths.default.runners}/lint-json`,
       rootDir: _paths.default.project.root,
-      testMatch: ['**/*.json', '!**/package-lock.json']
+      testMatch: ['**/*.json', '!**/package-lock.json'],
+      globals: this.globals
     };
   }
   /**
@@ -61,11 +88,12 @@ class RunnerHelperConfig {
 
   get lintYAML() {
     return {
-      displayName: 'Lint YAML',
+      displayName: 'Standard: Lint YAML',
       runner: `${_paths.default.runners}/lint-yaml`,
       rootDir: _paths.default.project.root,
       moduleFileExtensions: ['yaml', 'yml'],
-      testMatch: ['**/*.{yaml,yml}']
+      testMatch: ['**/*.{yaml,yml}'],
+      globals: this.globals
     };
   }
   /**
@@ -77,11 +105,12 @@ class RunnerHelperConfig {
 
   get lintBash() {
     return {
-      displayName: 'Lint Bash',
+      displayName: 'Standard: Lint Bash',
       runner: `${_paths.default.runners}/lint-bash`,
       rootDir: _paths.default.project.root,
       moduleFileExtensions: ['sh'],
-      testMatch: ['**/*.sh']
+      testMatch: ['**/*.sh'],
+      globals: this.globals
     };
   }
   /**
@@ -93,11 +122,12 @@ class RunnerHelperConfig {
 
   get lintSCSS() {
     return {
-      displayName: 'Lint SCSS',
+      displayName: 'Standard: Lint SCSS',
       runner: `${_paths.default.runners}/lint-scss`,
       rootDir: _paths.default.project.root,
       moduleFileExtensions: ['scss'],
-      testMatch: ['**/*.scss']
+      testMatch: ['**/*.scss'],
+      globals: this.globals
     };
   }
   /**
@@ -115,38 +145,40 @@ class RunnerHelperConfig {
       return `**/${item[1]}`;
     });
     return {
-      displayName: 'Lint file styles',
+      displayName: 'Standard: Lint file styles',
       runner: `${_paths.default.runners}/lint-file-styles`,
       rootDir: _paths.default.project.root,
       moduleFileExtensions: ['*'],
-      testMatch: [...patterns, '!**/*.{js,scss}', '!**/package-lock.json']
+      testMatch: [...patterns, '!**/*.{js,scss}', '!**/package-lock.json'],
+      globals: this.globals
     };
   }
   /**
-   * Configuration for validating a single package.
+   * Configuration for validating a repository.
    *
    * @type {object}
    */
 
 
-  get validateSinglePackage() {
+  get validateRepository() {
     return {
-      displayName: 'Single package',
-      rootDir: `${_paths.default.tests}/single-package`,
-      setupFilesAfterEnv: JEST_PLUGINS
+      displayName: 'Standard: Repository',
+      rootDir: `${_paths.default.tests}/repository`,
+      setupFilesAfterEnv: JEST_PLUGINS,
+      globals: this.globals
     };
   }
   /**
-   * Configuration for running a project's custom feature tests.
+   * Configuration for running a project's custom standard tests.
    *
    * @type {object}
    */
 
 
-  get projectFeatureTests() {
+  get projectStandardTests() {
     return {
-      displayName: 'Project feature tests',
-      rootDir: `${_paths.default.project.test}/feature`,
+      displayName: 'Standard: Project tests',
+      rootDir: `${_paths.default.project.test}/standard`,
       setupFilesAfterEnv: JEST_PLUGINS,
       transform: JEST_TRANSFORM
     };
@@ -160,8 +192,53 @@ class RunnerHelperConfig {
 
   get projectUnitTests() {
     return {
-      displayName: 'Project unit tests',
+      displayName: 'Unit: Project tests',
       rootDir: `${_paths.default.project.test}/unit`,
+      setupFilesAfterEnv: JEST_PLUGINS,
+      transform: JEST_TRANSFORM
+    };
+  }
+  /**
+   * Configuration for running a project's custom feature tests.
+   *
+   * @type {object}
+   */
+
+
+  get projectFeatureTests() {
+    return {
+      displayName: 'Feature: Project tests',
+      rootDir: `${_paths.default.project.test}/feature`,
+      setupFilesAfterEnv: JEST_PLUGINS,
+      transform: JEST_TRANSFORM
+    };
+  }
+  /**
+   * Configuration for running a project's custom integration tests.
+   *
+   * @type {object}
+   */
+
+
+  get projectIntegrationTests() {
+    return {
+      displayName: 'Integration: Project tests',
+      rootDir: `${_paths.default.project.test}/integration`,
+      setupFilesAfterEnv: JEST_PLUGINS,
+      transform: JEST_TRANSFORM
+    };
+  }
+  /**
+   * Configuration for running a project's custom end-to-end tests.
+   *
+   * @type {object}
+   */
+
+
+  get projectEndtoendTests() {
+    return {
+      displayName: 'End-to-end: Project tests',
+      rootDir: `${_paths.default.project.test}/endtoend`,
       setupFilesAfterEnv: JEST_PLUGINS,
       transform: JEST_TRANSFORM
     };

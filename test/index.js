@@ -3,9 +3,9 @@
 //--------------------------------------------------------
 'use strict';  // eslint-disable-line strict
 
-const tester = require('@absolunet/tester');
+const { tester } = require('@absolunet/tester');
 
 tester.init({
 	repositoryType: 'single-package',
-	packageType:    'common'
+	packageType:    'simple'
 });

@@ -13,7 +13,6 @@ import RunnerHelperConfig   from './config';
  */
 class RunnerHelper {
 
-
 	/**
 	 * Runners configurations.
 	 *
@@ -22,7 +21,6 @@ class RunnerHelper {
 	get config() {
 		return RunnerHelperConfig;
 	}
-
 
 
 	/**
@@ -34,6 +32,7 @@ class RunnerHelper {
 	create(directory) {
 		return createJestRunner(`${directory}/run`);
 	}
+
 
 	/**
 	 * Initialize a method to create {@link CreatejestrunnerConfig} .

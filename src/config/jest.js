@@ -5,26 +5,9 @@ import env    from '../helpers/environment';
 import runner from '../helpers/runner';
 
 
-/**
- * Types of repositories: 'single-package', 'multi-package'.
- *
- * @typedef {string} RepositoryType
- */
-const REPOSITORY_TYPE = {
-	singlePackage: 'single-package'
-};
-
-
-/**
- * Types of package: 'common'.
- *
- * @typedef {string} PackageType
- */
-const PACKAGE_TYPE = {
-	common: 'common'
-};
-
-
+const runners = [];
+const { repositoryType, packageType, scope, customization } = JSON.parse(process.env[env.JEST_CLI_KEY]);  // eslint-disable-line no-process-env
+runner.config.globals = { repositoryType, packageType, customization };
 
 
 const STANDARD = [
@@ -33,76 +16,67 @@ const STANDARD = [
 	runner.config.lintYAML,
 	runner.config.lintBash,
 	runner.config.lintSCSS,
-	runner.config.lintFileStyles
-];
-
-const FEATURE = [
-	runner.config.projectFeatureTests
+	runner.config.lintFileStyles,
+	runner.config.validateRepository,
+	runner.config.projectStandardTests
 ];
 
 const UNIT = [
 	runner.config.projectUnitTests
 ];
 
+const FEATURE = [
+	runner.config.projectFeatureTests
+];
+
+const INTEGRATION = [
+	runner.config.projectIntegrationTests
+];
+
+const ENDTOEND = [
+	runner.config.projectEndtoendTests
+];
 
 
 
 
-/**
- * Options to customize the testing process.
- *
- * @typedef {object} TesterOptions
- * @property {RepositoryType} repositoryType - Type of repository.
- * @property {PackageType} packageType - Type of package.
- */
-const runners = [];
-const { repositoryType, packageType, scope } = JSON.parse(process.env[env.jestConfigVariable]);  // eslint-disable-line no-process-env
-
-
-//-- Repository type
-switch (repositoryType) {
-
-	case REPOSITORY_TYPE.singlePackage:
-		STANDARD.push(...[
-			runner.config.validateSinglePackage
-		]);
-		break;
-
-	default:
-		throw new Error('No repositoryType defined');
-
-}
-
-
-//-- Package type
-switch (packageType) {
-
-	case PACKAGE_TYPE.common:
-		break;
-
-	default:
-		throw new Error('No packageType defined');
-
-}
 
 
 //-- Scope
 switch (scope) {
 
 	case 'all':
-		runners.push(...STANDARD, ...FEATURE, ...UNIT);
+		runners.push(...STANDARD, ...UNIT, ...FEATURE, ...INTEGRATION, ...ENDTOEND);
 		break;
 
 	case 'standard':
-		runners.push(...STANDARD);
-		break;
-
-	case 'feature':
-		runners.push(...FEATURE);
+		if (packageType !== env.PACKAGE_TYPE.ioc) {
+			runners.push(...STANDARD);
+		}
 		break;
 
 	case 'unit':
-		runners.push(...UNIT);
+		if (packageType !== env.PACKAGE_TYPE.ioc) {
+			runners.push(...UNIT);
+		}
+		break;
+
+	case 'feature':
+		if (packageType !== env.PACKAGE_TYPE.ioc) {
+			runners.push(...FEATURE);
+		}
+		break;
+
+	case 'integration':
+		if (packageType !== env.PACKAGE_TYPE.ioc) {
+			runners.push(...INTEGRATION);
+		}
+		break;
+
+	case 'endtoend':
+		if (packageType !== env.PACKAGE_TYPE.ioc) {
+			runners.push(...ENDTOEND);
+		}
 		break;
 
 	default:

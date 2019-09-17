@@ -8,17 +8,22 @@ var _semver = _interopRequireDefault(require("semver"));
 
 var _fss = _interopRequireDefault(require("@absolunet/fss"));
 
+var _environment = _interopRequireDefault(require("./environment"));
+
+var _paths = _interopRequireDefault(require("./paths"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //--------------------------------------------------------
 //-- package.json helper
 //--------------------------------------------------------
-
+const SCRIPTS = [['manager:install', 'node manager --task=install'], ['manager:outdated', 'node manager --task=outdated'], ['manager:build', 'node manager --task=build'], ['manager:watch', 'node manager --task=watch'], ['manager:documentation', 'node manager --task=documentation'], ['manager:prepare', 'node manager --task=prepare'], ['manager:rebuild', 'node manager --task=rebuild'], ['manager:publish', 'node manager --task=publish'], ['manager:publish:unsafe', 'node manager --task=publish:unsafe'], ['test', 'node test --scope=all'], ['test:standard', 'node test --scope=standard'], ['test:unit', 'node test --scope=unit'], ['test:feature', 'node test --scope=feature'], ['test:integration', 'node test --scope=integration'], ['test:endtoend', 'node test --scope=endtoend']];
 /**
  * Package.json validation helper.
  *
  * @hideconstructor
  */
+
 class PackageJsonHelper {
   /**
    * Parse the package.json.
@@ -49,77 +54,126 @@ class PackageJsonHelper {
   /**
    * Validates that the raw JSON parsing is identical to npm's parsing.
    *
-   * @param {object} config - Raw JSON parsing.
-   * @param {object} parsedConfig - Clean npm's parsing.
+   * @param {object} reference - Referenced object to be populated by beforeAll.
+   * @param {string} directoryPath - Path to the package.json file.
    */
 
 
-  validateIntegrity(config, parsedConfig) {
-    Object.keys(config).forEach(key => {
-      expect(config[key], `Raw config must be identical to parsed config for '${key}'`).toEqual(parsedConfig[key]);
+  validateIntegrity(reference, directoryPath) {
+    let packageConfig;
+    let packageParsedConfig;
+    beforeAll(() => {
+      return this.readConfig(directoryPath).then(({
+        config,
+        parsedConfig
+      }) => {
+        packageConfig = config;
+        packageParsedConfig = parsedConfig;
+        reference.config = packageConfig;
+      }).catch(error => {
+        throw new Error(error);
+      });
     });
-  }
-  /**
-   * Validates that the package.json contains all fields (no more, no less) and that their value is also respects the standards.
-   *
-   * @param {object} config - Parsed package.json.
-   */
-
-
-  validateFields(config) {
-    expect(config.name, 'Name must be valid').toMatch(/^@absolunet\/(?<kebab1>[a-z][a-z0-9]*)(?<kebab2>-[a-z0-9]+)*$/u);
-    expect(config.version === _semver.default.valid(config.version), 'Version must be valid').toBeTrue();
-    expect(config.description, 'Description must be defined').toBeString().not.toBeEmpty();
-    expect(config.homepage, 'Homepage must be valid').toMatch(/^https:\/\/(?<domain>github.com\/absolunet\/|absolunet.github.io\/).+/u);
-    expect(config.author, 'Author must be valid').toContainAllEntries([['name', 'Absolunet'], ['url', 'https://absolunet.com']]);
-    expect(config.keywords, 'Keywords must be defined').toBeArray().not.toBeEmpty();
-    expect(config.license, 'License must be valid').toBe('MIT');
-    expect(config.private, 'Private must not be defined').toBeUndefined();
-    expect(config.repository, 'Repository must be valid').toContainAllEntries([['type', 'git'], ['url', expect.stringMatching(/git:\/\/github.com\/absolunet\/(?<kebab1>[a-z][a-z0-9]*)(?<kebab2>-[a-z0-9]+)*\.git/u)]]);
-    expect(config.bugs, 'Bugs must be valid').toContainAllEntries([['url', expect.stringMatching(/https:\/\/github.com\/absolunet\/(?<kebab1>[a-z][a-z0-9]*)(?<kebab2>-[a-z0-9]+)*\/issues/u)]]);
-    expect({
-      main: config.main,
-      browser: config.browser
-    }, 'Main or browser must be defined').toSatisfy(({
-      main,
-      browser
-    }) => {
-      return typeof main === 'string' && main !== '' || typeof browser === 'string' && browser !== '';
+    test('Ensure parsed config integrity', () => {
+      Object.keys(packageConfig).forEach(key => {
+        expect(packageConfig[key], `Raw config must be identical to parsed config for '${key}'`).toEqual(packageParsedConfig[key]);
+      });
     });
-
-    if (config.main) {
-      expect(config.engines, 'Engines must be valid').toContainAllEntries([['node', expect.stringMatching(/^>= \d+\.\d+\.\d+$/u)]]);
-    }
-
-    expect(config.scripts, 'Scripts must be valid').toContainEntries([['manager:install', 'node manager --task=install'], ['manager:outdated', 'node manager --task=outdated'], ['manager:build', 'node manager --task=build'], ['manager:watch', 'node manager --task=watch'], ['manager:documentation', 'node manager --task=documentation'], ['manager:prepare', 'node manager --task=prepare'], ['manager:rebuild', 'node manager --task=rebuild'], ['manager:publish', 'node manager --task=publish'], ['manager:publish:unsafe', 'node manager --task=publish:unsafe'], ['test', 'node test --scope=all'], ['test:standard', 'node test --scope=standard'], ['test:feature', 'node test --scope=feature'], ['test:unit', 'node test --scope=unit']]);
-    expect(config.files, 'Files must not be defined').toBeUndefined();
-    expect(config.config, 'Config must not be defined').toBeUndefined();
   }
   /**
    * Validates that the package.json respect Absolunet's format and standards.
+   *
+   * @param {string} [parameters] - Parameters.
+   * @param {string} [parameters.directoryPath=paths.project.root] - Path to the package.json file.
+   * @param {RepositoryType} [parameters.repositoryType=env.repositoryType] - Type of repository.
+   * @param {PackageType} [parameters.packageType=env.packageType] - Type of package.
    */
 
 
-  validate() {
-    describe(`Validate package.json`, () => {
-      let packageConfig;
-      let packageParsedConfig;
-      beforeAll(() => {
-        return this.readConfig('.').then(({
-          config,
-          parsedConfig
-        }) => {
-          packageConfig = config;
-          packageParsedConfig = parsedConfig;
-        }).catch(error => {
-          throw new Error(error);
-        });
-      });
-      test('Ensure parsed config integrity', () => {
-        this.validateIntegrity(packageConfig, packageParsedConfig);
-      });
+  validatePackage({
+    directoryPath = _paths.default.project.root,
+    repositoryType = _environment.default.repositoryType,
+    packageType = _environment.default.packageType
+  } = {}) {
+    describe(`Validate ${_environment.default.getReadablePath(directoryPath)}/package.json`, () => {
+      const escapedScope = _environment.default.packageCustomization.nameScope.replace('/', '\\/');
+
+      const escapedSource = _environment.default.packageCustomization.source.replace('/', '\\/');
+
+      const namePattern = new RegExp(`^${escapedScope}(?<kebab1>[a-z][a-z0-9]*)(?<kebab2>-[a-z0-9]+)*$`, 'u');
+      const repositoryPattern = new RegExp(`^git:\\/\\/${escapedSource}\\/(?<kebab1>[a-z][a-z0-9]*)(?<kebab2>-[a-z0-9]+)*\\.git$`, 'u');
+      const bugsPattern = new RegExp(`^https:\\/\\/${escapedSource}\\/(?<kebab1>[a-z][a-z0-9]*)(?<kebab2>-[a-z0-9]+)*\\/issues$`, 'u');
+      const homepagePattern = new RegExp(`^https:\\/\\/(?<domain>${escapedSource}\\/|absolunet.github.io\\/).+`, 'u');
+      const reference = {};
+      this.validateIntegrity(reference, directoryPath);
       test('Ensure contains minimum fields', () => {
-        this.validateFields(packageConfig);
+        expect(reference.config.version, 'Version must be valid').toBe(_semver.default.valid(reference.config.version));
+        expect(reference.config.description, 'Description must be defined').toBeString().not.toBeEmpty();
+        expect(reference.config.homepage, 'Homepage must be valid').toMatch(homepagePattern);
+        expect(reference.config.author, 'Author must be valid').toContainAllEntries(Object.entries(_environment.default.packageCustomization.author));
+        expect(reference.config.license, 'License must be valid').toBe(_environment.default.packageCustomization.license);
+        expect(reference.config.private, 'Private must not be defined').toBeUndefined();
+        expect(reference.config.repository, 'Repository must be valid').toContainAllEntries([['type', 'git'], ['url', expect.stringMatching(repositoryPattern)]]);
+        expect(reference.config.bugs, 'Bugs must be valid').toContainAllEntries([['url', expect.stringMatching(bugsPattern)]]);
+        expect({
+          main: reference.config.main,
+          browser: reference.config.browser
+        }, 'Main or browser must be defined').toSatisfy(({
+          main,
+          browser
+        }) => {
+          return typeof main === 'string' && main !== '' || typeof browser === 'string' && browser !== '';
+        });
+
+        if (reference.config.main) {
+          expect(reference.config.engines, 'Engines must be valid').toContainAllEntries([['node', expect.stringMatching(/^>= \d+\.\d+\.\d+$/u)]]);
+        }
+
+        expect(reference.config, 'Files must not be defined').not.toContainKey('files');
+        expect(reference.config, 'Config must not be defined').not.toContainKey('config'); //-- Package type specifc tests
+
+        switch (packageType) {
+          default:
+            expect(reference.config.name, 'Name must be valid').toMatch(namePattern);
+            expect(reference.config.keywords, 'Keywords must be defined').toBeArray().not.toBeEmpty();
+            break;
+        } //-- Repository type specifc tests
+
+
+        switch (repositoryType) {
+          case _environment.default.REPOSITORY_TYPE.singlePackage:
+            expect(reference.config.devDependencies, 'devDependencies must be valid').toContainKeys(['@absolunet/manager', `${_environment.default.packageCustomization.nameScope}tester`]);
+            expect(reference.config.scripts, 'Scripts must be valid').toContainEntries(SCRIPTS);
+            break;
+
+          default:
+            break;
+        }
+      });
+    });
+  }
+  /**
+   * Validates that the multi package.json respect Absolunet's format and standards.
+   *
+   * @param {string} [parameters] - Parameters.
+   * @param {string} [parameters.directoryPath=paths.project.root] - Path to the package.json file.
+   */
+
+
+  validateMulti({
+    directoryPath = _paths.default.project.root
+  } = {}) {
+    describe(`Validate ${_environment.default.getReadablePath(directoryPath)}/package.json`, () => {
+      const reference = {};
+      this.validateIntegrity(reference, directoryPath);
+      test('Ensure contains minimum fields', () => {
+        expect(reference.config.name, 'Name must be valid').toMatch(/^(?<kebab1>[a-z][a-z0-9]+)(?<kebab2>-[a-z0-9]+)*$/u);
+        expect(reference.config.private, 'Private must be valid').toBeTrue();
+        expect(reference.config.scripts, 'Scripts must be valid').toContainEntries(SCRIPTS);
+        expect(reference.config.devDependencies, 'devDependencies must be valid').toContainKey('lerna');
+        expect(reference.config, 'Version must not be defined').not.toContainKey('version');
+        expect(reference.config, 'Author must not be defined').not.toContainKey('author');
+        expect(reference.config, 'Dependencies must not be defined').not.toContainKey('dependencies');
       });
     });
   }
