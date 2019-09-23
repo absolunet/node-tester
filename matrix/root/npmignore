@@ -9,8 +9,3 @@ docs
 src
 test
 !dist/**
-
-!.editorconfig
-!.eslintignore
-!.eslintrc.yaml
-!.travis.yml
