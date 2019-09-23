@@ -28,7 +28,7 @@
     "url": "https://github.com/absolunet/node-tester/issues"
   },
   "engines": {
-    "node": ">= 12.9.1"
+    "node": ">= 12.10.0"
   },
   "main": "dist/node",
   "scripts": {
@@ -49,7 +49,7 @@
     "test:endtoend": "node test --scope=endtoend"
   },
   "devDependencies": {
-    "@absolunet/manager": "2.0.0-alpha.1",
+    "@absolunet/manager": "2.0.0-alpha.3",
     "@absolunet/tester": "2.6.9"
   },
   "dependencies": {

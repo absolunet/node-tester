@@ -3,7 +3,7 @@
 //--------------------------------------------------------
 'use strict';
 
-const manager = require('@absolunet/manager');
+const { manager } = require('@absolunet/manager');
 
 manager.singleScriptsRunner({
 	dist: {
