@@ -35,6 +35,7 @@ class ESLintHelper {
       title: 'ESLint'
     });
 
+    options.reportUnusedDisableDirectives = true;
     const cli = new _eslint.CLIEngine(options);
 
     if (cli.isPathIgnored(testPath)) {

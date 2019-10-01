@@ -14,3 +14,4 @@ test
 !.eslintignore
 !.eslintrc.yaml
 !.travis.yml
+!matrix/**

@@ -56,7 +56,7 @@ class RunnerHelperConfig {
 
   get lintJS() {
     return {
-      displayName: 'Standard: Lint JS',
+      displayName: 'Standards: Lint JS',
       runner: `${_paths.default.runners}/lint-js`,
       rootDir: _paths.default.project.root,
       testMatch: ['**/*.js'],
@@ -72,7 +72,7 @@ class RunnerHelperConfig {
 
   get lintJSON() {
     return {
-      displayName: 'Standard: Lint JSON',
+      displayName: 'Standards: Lint JSON',
       runner: `${_paths.default.runners}/lint-json`,
       rootDir: _paths.default.project.root,
       testMatch: ['**/*.json', '!**/package-lock.json'],
@@ -88,7 +88,7 @@ class RunnerHelperConfig {
 
   get lintYAML() {
     return {
-      displayName: 'Standard: Lint YAML',
+      displayName: 'Standards: Lint YAML',
       runner: `${_paths.default.runners}/lint-yaml`,
       rootDir: _paths.default.project.root,
       moduleFileExtensions: ['yaml', 'yml'],
@@ -105,7 +105,7 @@ class RunnerHelperConfig {
 
   get lintBash() {
     return {
-      displayName: 'Standard: Lint Bash',
+      displayName: 'Standards: Lint Bash',
       runner: `${_paths.default.runners}/lint-bash`,
       rootDir: _paths.default.project.root,
       moduleFileExtensions: ['sh'],
@@ -122,7 +122,7 @@ class RunnerHelperConfig {
 
   get lintSCSS() {
     return {
-      displayName: 'Standard: Lint SCSS',
+      displayName: 'Standards: Lint SCSS',
       runner: `${_paths.default.runners}/lint-scss`,
       rootDir: _paths.default.project.root,
       moduleFileExtensions: ['scss'],
@@ -145,7 +145,7 @@ class RunnerHelperConfig {
       return `**/${item[1]}`;
     });
     return {
-      displayName: 'Standard: Lint file styles',
+      displayName: 'Standards: Lint file styles',
       runner: `${_paths.default.runners}/lint-file-styles`,
       rootDir: _paths.default.project.root,
       moduleFileExtensions: ['*'],
@@ -162,23 +162,28 @@ class RunnerHelperConfig {
 
   get validateRepository() {
     return {
-      displayName: 'Standard: Repository',
+      displayName: 'Standards: Repository',
       rootDir: `${_paths.default.tests}/repository`,
       setupFilesAfterEnv: JEST_PLUGINS,
-      globals: this.globals
+      globals: this.globals,
+      // Allow tests from node_modules
+      testPathIgnorePatterns: [],
+      haste: {
+        providesModuleNodeModules: ['.*']
+      }
     };
   }
   /**
-   * Configuration for running a project's custom standard tests.
+   * Configuration for running a project's custom standards tests.
    *
    * @type {object}
    */
 
 
-  get projectStandardTests() {
+  get projectStandardsTests() {
     return {
-      displayName: 'Standard: Project tests',
-      rootDir: `${_paths.default.project.test}/standard`,
+      displayName: 'Standards: Project tests',
+      rootDir: `${_paths.default.project.test}/standards`,
       setupFilesAfterEnv: JEST_PLUGINS,
       transform: JEST_TRANSFORM
     };

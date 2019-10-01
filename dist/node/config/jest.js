@@ -25,7 +25,7 @@ _runner.default.config.globals = {
   packageType,
   customization
 };
-const STANDARD = [_runner.default.config.lintJS, _runner.default.config.lintJSON, _runner.default.config.lintYAML, _runner.default.config.lintBash, _runner.default.config.lintSCSS, _runner.default.config.lintFileStyles, _runner.default.config.validateRepository, _runner.default.config.projectStandardTests];
+const STANDARDS = [_runner.default.config.lintJS, _runner.default.config.lintJSON, _runner.default.config.lintYAML, _runner.default.config.lintBash, _runner.default.config.lintSCSS, _runner.default.config.lintFileStyles, _runner.default.config.validateRepository, _runner.default.config.projectStandardsTests];
 const UNIT = [_runner.default.config.projectUnitTests];
 const FEATURE = [_runner.default.config.projectFeatureTests];
 const INTEGRATION = [_runner.default.config.projectIntegrationTests];
@@ -33,12 +33,12 @@ const ENDTOEND = [_runner.default.config.projectEndtoendTests]; //-- Scope
 
 switch (scope) {
   case 'all':
-    runners.push(...STANDARD, ...UNIT, ...FEATURE, ...INTEGRATION, ...ENDTOEND);
+    runners.push(...STANDARDS, ...UNIT, ...FEATURE, ...INTEGRATION, ...ENDTOEND);
     break;
 
-  case 'standard':
+  case 'standards':
     if (packageType !== _environment.default.PACKAGE_TYPE.ioc) {
-      runners.push(...STANDARD);
+      runners.push(...STANDARDS);
     }
 
     break;

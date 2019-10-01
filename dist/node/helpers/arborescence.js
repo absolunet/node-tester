@@ -31,7 +31,7 @@ const TEST = Symbol('test');
 const IGNORE = {
   [_environment.default.GROUP_TYPE.simple]: [],
   [_environment.default.GROUP_TYPE.ioc]: [],
-  [_environment.default.GROUP_TYPE.multi]: [NPMIGNORE, DISTRIBUTION, SOURCE],
+  [_environment.default.GROUP_TYPE.multi]: [NPMIGNORE, DOCUMENTATION, DISTRIBUTION, SOURCE],
   [_environment.default.GROUP_TYPE.sub]: [EDITORCONFIG, ESLINTIGNORE, ESLINTRC, GITIGNORE, TRAVIS, PIPELINES, MANAGER, DOCUMENTATION, TEST]
 };
 
