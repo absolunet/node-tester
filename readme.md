@@ -23,7 +23,7 @@ In your `./package.json` file add
 {
 	"scripts": {
 		"test":             "node test --scope=all",
-		"test:standard":    "node test --scope=standard",
+		"test:standards":   "node test --scope=standards",
 		"test:unit":        "node test --scope=unit",
 		"test:feature":     "node test --scope=feature",
 		"test:integration": "node test --scope=integration",

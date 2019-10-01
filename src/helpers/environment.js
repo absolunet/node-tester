@@ -87,7 +87,7 @@ class EnvironmentHelper {
 
 
 	/**
-	 * Type of test: 'standard', 'unit', 'feature', 'integration', 'endtoend'.
+	 * Type of test: 'standards', 'unit', 'feature', 'integration', 'endtoend'.
 	 *
 	 * @typedef {string} TestType
 	 */
@@ -98,7 +98,7 @@ class EnvironmentHelper {
 	 */
 	get TEST_TYPE() {
 		return {
-			standard:    'standard',
+			standards:   'standards',
 			unit:        'unit',
 			feature:     'feature',
 			integration: 'integration',

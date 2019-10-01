@@ -10,7 +10,7 @@ const { repositoryType, packageType, scope, customization } = JSON.parse(process
 runner.config.globals = { repositoryType, packageType, customization };
 
 
-const STANDARD = [
+const STANDARDS = [
 	runner.config.lintJS,
 	runner.config.lintJSON,
 	runner.config.lintYAML,
@@ -18,7 +18,7 @@ const STANDARD = [
 	runner.config.lintSCSS,
 	runner.config.lintFileStyles,
 	runner.config.validateRepository,
-	runner.config.projectStandardTests
+	runner.config.projectStandardsTests
 ];
 
 const UNIT = [
@@ -46,12 +46,12 @@ const ENDTOEND = [
 switch (scope) {
 
 	case 'all':
-		runners.push(...STANDARD, ...UNIT, ...FEATURE, ...INTEGRATION, ...ENDTOEND);
+		runners.push(...STANDARDS, ...UNIT, ...FEATURE, ...INTEGRATION, ...ENDTOEND);
 		break;
 
-	case 'standard':
+	case 'standards':
 		if (packageType !== env.PACKAGE_TYPE.ioc) {
-			runners.push(...STANDARD);
+			runners.push(...STANDARDS);
 		}
 		break;
 

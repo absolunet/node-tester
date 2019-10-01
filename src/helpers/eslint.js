@@ -24,6 +24,8 @@ class ESLintHelper {
 	run(testPath, options = {}) {
 		const testResult = runner.initTestResult({ testPath, title: 'ESLint' });
 
+		options.reportUnusedDisableDirectives = true;
+
 		const cli = new CLIEngine(options);
 
 		if (cli.isPathIgnored(testPath)) {
