@@ -1,15 +1,15 @@
 //--------------------------------------------------------
 //-- Paths
 //--------------------------------------------------------
-import path from 'path';
-import fss  from '@absolunet/fss';
+import pkgDir from 'pkg-dir';
+import fss    from '@absolunet/fss';
 
 
 const __ = {};
-__.root        = fss.realpath(`${__dirname}/../../..`);
+__.root        = pkgDir.sync(__dirname);
 __.code        = `${__.root}/dist/node`;
 __.projectRoot = fss.realpath(`.`);
-__.jestRoot    = fss.realpath(`${path.dirname(require.resolve('jest'))}/..`);
+__.jestRoot    = pkgDir.sync(require.resolve('jest'));
 
 
 

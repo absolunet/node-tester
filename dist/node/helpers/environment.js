@@ -37,12 +37,6 @@ class EnvironmentHelper {
     return '__ABSOLUNET_TESTER_JEST_GLOBALS__';
   }
   /**
-   * Type of repository: 'single-package', 'multi-package'.
-   *
-   * @typedef {string} RepositoryType
-   */
-
-  /**
    * Types of repository.
    *
    * @type {object<RepositoryType>}
@@ -55,12 +49,6 @@ class EnvironmentHelper {
       multiPackage: 'multi-package'
     };
   }
-  /**
-   * Type of package: 'common'.
-   *
-   * @typedef {string} PackageType
-   */
-
   /**
    * Types of package.
    *
@@ -75,12 +63,6 @@ class EnvironmentHelper {
     };
   }
   /**
-   * Type of group: All {@link PackageType} and 'multi', 'sub'.
-   *
-   * @typedef {string} GroupType
-   */
-
-  /**
    * Types of group.
    *
    * @type {object<GroupType>}
@@ -93,12 +75,6 @@ class EnvironmentHelper {
       sub: 'sub'
     });
   }
-  /**
-   * Type of test: 'standards', 'unit', 'feature', 'integration', 'endtoend'.
-   *
-   * @typedef {string} TestType
-   */
-
   /**
    * Types of test.
    *
@@ -115,12 +91,6 @@ class EnvironmentHelper {
       endtoend: 'endtoend'
     };
   }
-  /**
-   * Type of CI engine: 'travis', 'pipeline'.
-   *
-   * @typedef {string} CIEngine
-   */
-
   /**
    * Types of CI engine.
    *

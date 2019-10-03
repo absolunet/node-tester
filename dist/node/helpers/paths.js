@@ -2,7 +2,7 @@
 
 exports.default = void 0;
 
-var _path = _interopRequireDefault(require("path"));
+var _pkgDir = _interopRequireDefault(require("pkg-dir"));
 
 var _fss = _interopRequireDefault(require("@absolunet/fss"));
 
@@ -12,10 +12,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //-- Paths
 //--------------------------------------------------------
 const __ = {};
-__.root = _fss.default.realpath(`${__dirname}/../../..`);
+__.root = _pkgDir.default.sync(__dirname);
 __.code = `${__.root}/dist/node`;
 __.projectRoot = _fss.default.realpath(`.`);
-__.jestRoot = _fss.default.realpath(`${_path.default.dirname(require.resolve('jest'))}/..`);
+__.jestRoot = _pkgDir.default.sync(require.resolve('jest'));
 /**
  * Internal and project's paths.
  *
