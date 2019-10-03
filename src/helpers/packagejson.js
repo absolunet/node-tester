@@ -104,7 +104,7 @@ class PackageJsonHelper {
 	 * @param {RepositoryType} [parameters.repositoryType=env.repositoryType] - Type of repository.
 	 * @param {PackageType} [parameters.packageType=env.packageType] - Type of package.
 	 */
-	validatePackage({ directoryPath = paths.project.root, repositoryType = env.repositoryType, packageType = env.packageType } = {}) {
+	validatePackage({ directoryPath = paths.project.root, repositoryType = env.repositoryType /* , packageType = env.packageType */ } = {}) {
 		describe(`Validate ${env.getReadablePath(directoryPath)}/package.json`, () => {
 
 			const escapedScope      = env.packageCustomization.nameScope.replace('/', '\\/');
@@ -118,29 +118,34 @@ class PackageJsonHelper {
 			const reference = {};
 			this.validateIntegrity(reference, directoryPath);
 
-			test('Ensure contains minimum fields', () => {
-
+			test('Ensure mandatory identification fields are valid', () => {
+				expect(reference.config.name,    'Name must be valid').toMatch(namePattern);  // Make special check for packageType IoC
 				expect(reference.config.version, 'Version must be valid').toBe(semver.valid(reference.config.version));
-
-				expect(reference.config.description, 'Description must be defined').toBeString().not.toBeEmpty();
-
-				expect(reference.config.homepage, 'Homepage must be valid').toMatch(homepagePattern);
-
-				expect(reference.config.author, 'Author must be valid').toContainAllEntries(Object.entries(env.packageCustomization.author));
-
 				expect(reference.config.license, 'License must be valid').toBe(env.packageCustomization.license);
-
 				expect(reference.config.private, 'Private must not be defined').toBeUndefined();
+			});
 
+
+			test('Ensure meta identification fields are valid', () => {
+				expect(reference.config.description, 'Description must be defined').toBeString().not.toBeEmpty();
+				expect(reference.config.author,      'Author must be valid').toContainAllEntries(Object.entries(env.packageCustomization.author));
+				expect(reference.config.keywords,    'Keywords must be defined').toBeArray().not.toBeEmpty();  // Make special check for packageType IoC
+			});
+
+
+			test('Ensure url fields are valid', () => {
+				expect(reference.config.homepage,   'Homepage must be valid').toMatch(homepagePattern);
 				expect(reference.config.repository, 'Repository must be valid').toContainAllEntries([
 					['type', 'git'],
 					['url', expect.stringMatching(repositoryPattern)]
 				]);
-
 				expect(reference.config.bugs, 'Bugs must be valid').toContainAllEntries([
 					['url', expect.stringMatching(bugsPattern)]
 				]);
+			});
 
+
+			test('Ensure functional fields are valid', () => {
 				expect({ main: reference.config.main, browser: reference.config.browser }, 'Main or browser must be defined').toSatisfy(({ main, browser }) => {
 					return (typeof main === 'string' && main !== '') || (typeof browser === 'string' && browser !== '');
 				});
@@ -152,39 +157,26 @@ class PackageJsonHelper {
 				}
 
 				expect(reference.config, 'Files must not be defined').not.toContainKey('files');
-
 				expect(reference.config, 'Config must not be defined').not.toContainKey('config');
 
-
-				//-- Package type specifc tests
-				switch (packageType) {
-
-					default:
-						expect(reference.config.name, 'Name must be valid').toMatch(namePattern);
-						expect(reference.config.keywords, 'Keywords must be defined').toBeArray().not.toBeEmpty();
-						break;
-
-				}
-
-
-				//-- Repository type specifc tests
-				switch (repositoryType) {
-
-					case env.REPOSITORY_TYPE.singlePackage:
-						expect(reference.config.devDependencies, 'devDependencies must be valid').toContainKeys(['@absolunet/manager', `${env.packageCustomization.nameScope}tester`]);
-						expect(reference.config.scripts, 'Scripts must be valid').toContainEntries(SCRIPTS);
-						break;
-
-					default: break;
-
+				if (repositoryType === env.REPOSITORY_TYPE.singlePackage) {
+					expect(reference.config.scripts, 'Scripts must be valid').toContainEntries(SCRIPTS);
 				}
 			});
+
+
+			test('Ensure dependencies are valid', () => {
+				if (repositoryType === env.REPOSITORY_TYPE.singlePackage) {
+					expect(reference.config.devDependencies, 'devDependencies must be valid').toContainKeys(['@absolunet/manager', `${env.packageCustomization.nameScope}tester`]);
+				}
+			});
+
 		});
 	}
 
 
 	/**
-	 * Validates that the multi package.json respect Absolunet's format and standards.
+	 * Validates that the multi package.json respects Absolunet's format and standards.
 	 *
 	 * @param {string} [parameters] - Parameters.
 	 * @param {string} [parameters.directoryPath=paths.project.root] - Path to the package.json file.
@@ -195,21 +187,26 @@ class PackageJsonHelper {
 			const reference = {};
 			this.validateIntegrity(reference, directoryPath);
 
-			test('Ensure contains minimum fields', () => {
-				expect(reference.config.name, 'Name must be valid').toMatch(/^(?<kebab1>[a-z][a-z0-9]+)(?<kebab2>-[a-z0-9]+)*$/u);
-
+			test('Ensure mandatory identification fields are valid', () => {
+				expect(reference.config.name,    'Name must be valid').toMatch(/^(?<kebab1>[a-z][a-z0-9]+)(?<kebab2>-[a-z0-9]+)*$/u);
 				expect(reference.config.private, 'Private must be valid').toBeTrue();
+				expect(reference.config,         'Version must not be defined').not.toContainKey('version');
+			});
 
-				expect(reference.config.scripts, 'Scripts must be valid').toContainEntries(SCRIPTS);
 
-				expect(reference.config.devDependencies, 'devDependencies must be valid').toContainKey('lerna');
-
-				expect(reference.config, 'Version must not be defined').not.toContainKey('version');
-
+			test('Ensure meta identification fields are valid', () => {
 				expect(reference.config, 'Author must not be defined').not.toContainKey('author');
+			});
 
-				expect(reference.config, 'Dependencies must not be defined').not.toContainKey('dependencies');
 
+			test('Ensure functional fields are valid', () => {
+				expect(reference.config.scripts, 'Scripts must be valid').toContainEntries(SCRIPTS.concat([['postinstall', 'npm run manager:install']]));
+			});
+
+
+			test('Ensure dependencies are valid', () => {
+				expect(reference.config.devDependencies, 'devDependencies must be valid').toContainKey('lerna');
+				expect(reference.config,                 'Dependencies must not be defined').not.toContainKey('dependencies');
 			});
 
 		});

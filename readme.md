@@ -35,15 +35,36 @@ In your `./package.json` file add
 
 In a `./test/index.js` file
 ```js
-import { tester } from '@absolunet/tester';
+const tester = require('@absolunet/tester');
 
 tester.init({
 	repositoryType: 'single-package',
-	packageType:    'common'
+	packageType:    'simple'
 });
 ```
 
 
+In a `./test/generic/index.test.js` file
+```js
+import { tester } from '@absolunet/tester';
+
+tester.genericRepositoryTests();
+```
+
+
+## Custom tests
+Under `./test/[TYPE]/` folders, add your `*.test.js` Jest files.
+
+**Available [TYPE]s are:**
+- `standards`
+- `unit`
+- `feature`
+- `integration`
+- `endtoend`
+
+
+## Documentation
+https://absolunet.github.io/node-tester
 
 <br>
 

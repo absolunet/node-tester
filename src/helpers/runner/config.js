@@ -163,18 +163,13 @@ class RunnerHelperConfig {
 	 *
 	 * @type {object}
 	 */
-	get validateRepository() {
+	get genericTests() {
 		return {
-			displayName:        'Standards: Repository',
-			rootDir:            `${paths.tests}/repository`,
+			displayName:        'Standards: Generic tests',
+			rootDir:            `${paths.project.test}/generic`,
 			setupFilesAfterEnv: JEST_PLUGINS,
-			globals:            this.globals,
-
-			// Allow tests from node_modules
-			testPathIgnorePatterns: [],
-			haste: {
-				providesModuleNodeModules: ['.*']
-			}
+			transform:          JEST_TRANSFORM,
+			globals:            this.globals
 		};
 	}
 

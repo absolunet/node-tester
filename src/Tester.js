@@ -1,10 +1,15 @@
 //--------------------------------------------------------
 //-- Tester
 //--------------------------------------------------------
-import minimist     from 'minimist';
-import { terminal } from '@absolunet/terminal';
-import env          from './helpers/environment';
-import paths        from './helpers/paths';
+import chalk          from 'chalk';
+import minimist       from 'minimist';
+import spdxLicenseIds from 'spdx-license-ids';
+import Joi            from '@hapi/joi';
+import fss            from '@absolunet/fss';
+import { terminal }   from '@absolunet/terminal';
+import dataValidation from './helpers/data-validation';
+import env            from './helpers/environment';
+import paths          from './helpers/paths';
 
 
 const customization = {};
@@ -30,6 +35,12 @@ class Tester {
 	 * @param {CIEngine} [options.ciEngine='travis'] - Package CI engine.
 	 */
 	constructor({ nameScope = '@absolunet', source, author, license, ciEngine } = {}) {
+		dataValidation.argument('nameScope', nameScope,           Joi.alternatives().try('', Joi.string().pattern(/^@(?<kebab1>[a-z][a-z0-9]*)(?<kebab2>-[a-z0-9]+)*$/u, 'npm scope')));
+		dataValidation.argument('source',    `https://${source}`, Joi.string().uri());
+		dataValidation.argument('author',    author,              Joi.object({ name: Joi.string().required(), url: Joi.string().uri().required() }));
+		dataValidation.argument('license',   license,             Joi.string().valid(...spdxLicenseIds));
+		dataValidation.argument('ciEngine',  ciEngine,            Joi.string().valid(...Object.values(env.CI_ENGINE)));
+
 		customization.nameScope = nameScope ? `${nameScope}/` : '';
 		customization.source    = source   || 'github.com/absolunet';
 		customization.author    = author   || { name: 'Absolunet', url: 'https://absolunet.com' };
@@ -55,6 +66,8 @@ class Tester {
 	 * @returns {string} Stripped relative path to project root.
 	 */
 	getReadablePath(absolutePath) {
+		dataValidation.argument('absolutePath', absolutePath, Joi.string().pattern(/^\//u, 'absolute path'));
+
 		return env.getReadablePath(absolutePath);
 	}
 
@@ -73,6 +86,27 @@ class Tester {
 	 * });
 	 */
 	init(options = {}) {
+		dataValidation.argument('repositoryType', options.repositoryType, Joi.string().valid(...Object.values(env.REPOSITORY_TYPE)).required());
+		dataValidation.argument('packageType',    options.packageType,    Joi.string().valid(...Object.values(env.PACKAGE_TYPE)).required());
+
+
+		//-- Check if generic tests are present
+		const genericTests = `${paths.project.test}/generic/index.test.js`;
+		if (fss.exists(genericTests)) {
+			const esprima = require('esprima');  // eslint-disable-line global-require
+
+			const code  = fss.readFile(genericTests, 'utf8');
+			const found = esprima.tokenize(code).some(({ type, value }) => { return type === 'Identifier' && value === 'genericRepositoryTests'; });
+
+			if (!found) {
+				terminal.exit(`Generic tests must be called: ${chalk.underline('tester.genericRepositoryTests()')}`);
+			}
+		} else {
+			terminal.exit(`Generic tests must exist: ${chalk.underline(genericTests)}`);
+		}
+
+
+		//-- Gather configurations
 		options.scope         = minimist(process.argv.slice(2)).scope;
 		options.customization = customization;
 
@@ -86,7 +120,7 @@ class Tester {
 		}
 
 
-
+		//-- Run tests
 		try {
 			terminal.run(`export ${env.JEST_CLI_KEY}='${JSON.stringify(options)}'; node ${paths.jestBinary} --config=${paths.config}/jest.js`);
 
@@ -96,6 +130,18 @@ class Tester {
 		} catch (error) {
 			process.exit(1);  // eslint-disable-line no-process-exit, unicorn/no-process-exit
 		}
+	}
+
+
+	/**
+	 * Run generic repository tests.
+	 */
+	genericRepositoryTests() {
+		const repositoryPath = `${paths.tests}/repository`;
+
+		fss.readdir(repositoryPath).forEach((file) => {
+			require(`${repositoryPath}/${file}`)();  // eslint-disable-line global-require
+		});
 	}
 
 }
