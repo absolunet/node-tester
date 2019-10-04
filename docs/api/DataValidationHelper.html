@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>RunnerHelper - @absolunet/tester API documentation</title>
+	<title>DataValidationHelper - @absolunet/tester API documentation</title>
 
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<meta http-equiv="cleartype" content="on">
@@ -54,7 +54,7 @@
 
 		<div id="main">
 		
-			<h1 class="page-title">RunnerHelper</h1>
+			<h1 class="page-title">DataValidationHelper</h1>
 		
 
 			
@@ -68,7 +68,7 @@
     
         </h2>
         
-            <div class="class-description">Jest <a href="https://jestjs.io/docs/en/configuration#runner-string">runner</a> helper.</div>
+            <div class="class-description">Data validation helper.</div>
         
     
 </div>
@@ -89,75 +89,6 @@
     
 
     
-        <h3 class="subsection-title">Members</h3>
-
-        
-            
-<div class="member">
-<h4 class="name" id="config"><span class="type-signature"></span>config<span class="type-signature"> :<a href="RunnerHelperConfig.html">RunnerHelperConfig</a></span></h4>
-
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="helpers_runner_index.js.html#line-21">helpers/runner/index.js:21</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    Runners configurations.
-</div>
-
-
-
-
-
-
-
-</div>
-
-        
-    
 
     
         <h3 class="subsection-title">Methods</h3>
@@ -168,7 +99,7 @@
 
     
 
-    <h4 class="name" id="create"><span class="type-signature"></span>create<span class="signature">(directory)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="argument"><span class="type-signature"></span>argument<span class="signature">(label, value, schema)</span><span class="type-signature"></span></h4>
 
     
 
@@ -180,7 +111,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="helpers_runner_index.js.html#line-32">helpers/runner/index.js:32</a>
+        <a href="helpers_data-validation.js.html#line-21">helpers/data-validation.js:21</a>
     </li></ul></dd>
     
 
@@ -220,7 +151,7 @@
 
 
 <div class="description">
-    Create a Jest runner.
+    Validate method argument.
 </div>
 
 
@@ -258,7 +189,7 @@
 
         <tr>
             
-                <td class="name"><code>directory</code></td>
+                <td class="name"><code>label</code></td>
             
 
             <td class="type">
@@ -274,7 +205,53 @@
 
             
 
-            <td class="description last">Path to the runner directory containing a run.js file.</td>
+            <td class="description last">Name of the argument.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>value</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Value of the argument.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>schema</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">JoiSchema</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><a href="https://hapi.dev/family/joi/">Joi validation schema</a>.</td>
         </tr>
 
     
@@ -296,420 +273,6 @@
 
 
 
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    Jest <a href="https://github.com/facebook/jest/blob/4d3c1a187bd429fd8611f6b0f19e4aa486fa2a85/packages/jest-runner/src/index.ts#L37-L186">TestRunner</a> object.
-</div>
-
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">TestRunner</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-</div>
-
-        
-            
-<div class="method">
-
-    
-
-    <h4 class="name" id="initTestResult"><span class="type-signature"></span>initTestResult<span class="signature">(parameters)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="helpers_runner_index.js.html#line-45">helpers/runner/index.js:45</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    Initialize a method to create <a href="global.html#CreatejestrunnerConfig">CreatejestrunnerConfig</a> .
-</div>
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>parameters</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Parameters.
-                <h6>Properties</h6>
-                
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>testPath</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Path to the test file.</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>title</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Test title.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    TestResult initializer.
-</div>
-
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type"><a href="global.html#CreatejestrunnerConfigInitializer">CreatejestrunnerConfigInitializer</a></span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-</div>
-
-        
-            
-<div class="method">
-
-    
-
-    <h4 class="name" id="formatError"><span class="type-signature"></span>formatError<span class="signature">(message)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="helpers_runner_index.js.html#line-87">helpers/runner/index.js:87</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description">
-    Returns the message with error styling.
-</div>
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>message</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Error message.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    Error styled message.
-</div>
-
-
-
-<dl class="param-type">
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">string</span>
-
-
-    </dd>
-</dl>
-
-    
 
 
 </div>
