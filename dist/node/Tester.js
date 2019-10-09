@@ -41,34 +41,27 @@ class Tester {
    * @param {string} [options.license='MIT'] - Package license.
    * @param {CIEngine} [options.ciEngine='travis'] - Package CI engine.
    */
-  constructor({
-    nameScope = '@absolunet',
-    source,
-    author,
-    license,
-    ciEngine
-  } = {}) {
-    _dataValidation.default.argument('nameScope', nameScope, _joi.default.alternatives().try('', _joi.default.string().pattern(/^@(?<kebab1>[a-z][a-z0-9]*)(?<kebab2>-[a-z0-9]+)*$/u, 'npm scope')));
-
-    _dataValidation.default.argument('source', `https://${source}`, _joi.default.string().uri());
-
-    _dataValidation.default.argument('author', author, _joi.default.object({
-      name: _joi.default.string().required(),
-      url: _joi.default.string().uri().required()
+  constructor(options = {}) {
+    _dataValidation.default.argument('options', options, _joi.default.object({
+      nameScope: _joi.default.alternatives().try('', _joi.default.string().pattern(/^@(?<kebab1>[a-z][a-z0-9]*)(?<kebab2>-[a-z0-9]+)*$/u, 'npm scope')),
+      source: _joi.default.string().replace(/^(?<all>\.+)$/u, 'https://$<all>').uri(),
+      author: _joi.default.object({
+        name: _joi.default.string().required(),
+        url: _joi.default.string().uri().required()
+      }),
+      license: _joi.default.string().valid(..._spdxLicenseIds.default),
+      ciEngine: _joi.default.string().valid(...Object.values(_environment.default.CI_ENGINE))
     }));
 
-    _dataValidation.default.argument('license', license, _joi.default.string().valid(..._spdxLicenseIds.default));
-
-    _dataValidation.default.argument('ciEngine', ciEngine, _joi.default.string().valid(...Object.values(_environment.default.CI_ENGINE)));
-
+    const nameScope = options.nameScope === undefined ? '@absolunet' : options.nameScope;
     customization.nameScope = nameScope ? `${nameScope}/` : '';
-    customization.source = source || 'github.com/absolunet';
-    customization.author = author || {
+    customization.source = options.source || 'github.com/absolunet';
+    customization.author = options.author || {
       name: 'Absolunet',
       url: 'https://absolunet.com'
     };
-    customization.license = license || 'MIT';
-    customization.ciEngine = ciEngine || _environment.default.CI_ENGINE.travis;
+    customization.license = options.license || 'MIT';
+    customization.ciEngine = options.ciEngine || _environment.default.CI_ENGINE.travis;
   }
   /**
    * List of subpackages.
@@ -89,7 +82,7 @@ class Tester {
 
 
   getReadablePath(absolutePath) {
-    _dataValidation.default.argument('absolutePath', absolutePath, _joi.default.string().pattern(/^\//u, 'absolute path'));
+    _dataValidation.default.argument('absolutePath', absolutePath, _dataValidation.default.absolutePath);
 
     return _environment.default.getReadablePath(absolutePath);
   }
@@ -109,9 +102,10 @@ class Tester {
 
 
   init(options = {}) {
-    _dataValidation.default.argument('repositoryType', options.repositoryType, _joi.default.string().valid(...Object.values(_environment.default.REPOSITORY_TYPE)).required());
-
-    _dataValidation.default.argument('packageType', options.packageType, _joi.default.string().valid(...Object.values(_environment.default.PACKAGE_TYPE)).required()); //-- Check if generic tests are present
+    _dataValidation.default.argument('options', options, _joi.default.object({
+      repositoryType: _joi.default.string().valid(...Object.values(_environment.default.REPOSITORY_TYPE)).required(),
+      packageType: _joi.default.string().valid(...Object.values(_environment.default.PACKAGE_TYPE)).required()
+    })); //-- Check if generic tests are present
 
 
     const genericTests = `${_paths.default.project.test}/generic/index.test.js`;

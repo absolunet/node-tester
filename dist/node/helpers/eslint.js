@@ -47,21 +47,35 @@ class ESLintHelper {
     } = cli.executeOnFiles([testPath]);
     const problemCount = report.errorCount + report.warningCount;
 
-    if (problemCount > 0) {
-      let output;
-
-      if (problemCount > 100) {
-        output = `\n  [Too many to show...]\n\n${_chalk.default.red.bold(`✖ ${problemCount} problems (${report.errorCount} error${report.errorCount === 1 ? '' : 's'}, ${report.warningCount} warning${report.errorCount === 1 ? '' : 's'})`)}\n\n\n`;
-      } else {
-        const rawOutput = cli.getFormatter()([report]).split('\n');
-        rawOutput.splice(1, 1);
-        output = `${rawOutput.join('\n')}\n\n`;
-      }
-
-      return (0, _createJestRunner.fail)(testResult(output));
+    if (problemCount > 100) {
+      return (0, _createJestRunner.fail)(testResult(`\n  [Too many to show...]\n\n${_chalk.default.red.bold(`✖ ${problemCount} problems (${report.errorCount} error${report.errorCount === 1 ? '' : 's'}, ${report.warningCount} warning${report.errorCount === 1 ? '' : 's'})`)}\n\n\n`));
     }
 
-    return (0, _createJestRunner.pass)(testResult());
+    let linterOutput;
+
+    if (problemCount > 0) {
+      const rawOutput = cli.getFormatter()([report]).split('\n');
+      rawOutput.splice(1, 1);
+      linterOutput = `${rawOutput.join('\n')}\n\n`;
+    } // Fails
+
+
+    if (report.errorCount > 0) {
+      return (0, _createJestRunner.fail)(testResult(linterOutput));
+    } // Passes
+
+
+    const passResult = (0, _createJestRunner.pass)(testResult());
+
+    if (report.warningCount > 0) {
+      passResult.console = [{
+        message: linterOutput,
+        origin: testPath,
+        type: 'warn'
+      }];
+    }
+
+    return passResult;
   }
 
 }
