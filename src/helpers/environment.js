@@ -35,7 +35,9 @@ class EnvironmentHelper {
 	/**
 	 * Types of repository.
 	 *
-	 * @type {object<RepositoryType>}
+	 * @type {object<string, RepositoryType>}
+	 * @property {RepositoryType} singlePackage - Single package.
+	 * @property {RepositoryType} multiPackage - Multi package.
 	 */
 	get REPOSITORY_TYPE() {
 		return {
@@ -48,7 +50,9 @@ class EnvironmentHelper {
 	/**
 	 * Types of package.
 	 *
-	 * @type {object<PackageType>}
+	 * @type {object<string, PackageType>}
+	 * @property {PackageType} simple - Simple classic package.
+	 * @property {PackageType} ioc - IoC package.
 	 */
 	get PACKAGE_TYPE() {
 		return {
@@ -61,7 +65,11 @@ class EnvironmentHelper {
 	/**
 	 * Types of group.
 	 *
-	 * @type {object<GroupType>}
+	 * @type {object<string, GroupType>}
+	 * @property {GroupType} simple - Simple classic package.
+	 * @property {GroupType} ioc - IoC package.
+	 * @property {GroupType} multi - Multi package repository.
+	 * @property {GroupType} sub - A subpackage of a multi package repository.
 	 */
 	get GROUP_TYPE() {
 		return Object.assign({}, this.PACKAGE_TYPE, {
@@ -74,7 +82,12 @@ class EnvironmentHelper {
 	/**
 	 * Types of test.
 	 *
-	 * @type {object<TestType>}
+	 * @type {object<string, TestType>}
+	 * @property {TestType} standards - Standards tests.
+	 * @property {TestType} unit - Unit tests.
+	 * @property {TestType} feature - Feature tests.
+	 * @property {TestType} integration - Integration tests.
+	 * @property {TestType} endtoend - End-to-end tests.
 	 */
 	get TEST_TYPE() {
 		return {
@@ -90,7 +103,9 @@ class EnvironmentHelper {
 	/**
 	 * Types of CI engine.
 	 *
-	 * @type {object<CIEngine>}
+	 * @type {object<string, CIEngine>}
+	 * @property {CIEngine} travis - GitHub Travis CI.
+	 * @property {CIEngine} pipelines - Bitbucket Pipelines.
 	 */
 	get CI_ENGINE() {
 		return {
@@ -103,7 +118,7 @@ class EnvironmentHelper {
 	/**
 	 * List of subpackages and their path.
 	 *
-	 * @type {object<string>}
+	 * @type {object<string, string>}
 	 */
 	get projectSubpackages() {
 		if (fss.exists(paths.project.subpackages)) {
@@ -182,7 +197,7 @@ class EnvironmentHelper {
 	 */
 	getReadablePath(absolutePath) {
 		if (absolutePath.startsWith(paths.project.root)) {
-			const relativePath = absolutePath.substring(paths.project.root.length + 1);
+			const relativePath = absolutePath.slice(paths.project.root.length + 1);
 
 			return relativePath === '' ? '.' : `./${relativePath}`;
 		}

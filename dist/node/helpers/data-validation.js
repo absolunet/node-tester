@@ -19,12 +19,32 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
  */
 class DataValidationHelper {
   /**
+   * Absolute path {@link https://hapi.dev/family/joi/ Joi schema}.
+   *
+   * @type {Joi.StringSchema}
+   */
+  get absolutePath() {
+    return _joi.default.string().pattern(/^\//u, 'absolute path');
+  }
+  /**
+   * Variable name {@link https://hapi.dev/family/joi/ Joi schema}.
+   *
+   * @type {Joi.StringSchema}
+   */
+
+
+  get variableName() {
+    return _joi.default.string().pattern(/^[a-z]\w+$/ui, 'variable name');
+  }
+  /**
    * Validate method argument.
    *
    * @param {string} label - Name of the argument.
    * @param {*} value - Value of the argument.
-   * @param {JoiSchema} schema - {@link https://hapi.dev/family/joi/ Joi validation schema}.
+   * @param {Joi.Schema} schema - {@link https://hapi.dev/family/joi/ Joi schema}.
    */
+
+
   argument(label, value, schema) {
     const {
       error

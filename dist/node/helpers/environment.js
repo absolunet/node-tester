@@ -39,7 +39,9 @@ class EnvironmentHelper {
   /**
    * Types of repository.
    *
-   * @type {object<RepositoryType>}
+   * @type {object<string, RepositoryType>}
+   * @property {RepositoryType} singlePackage - Single package.
+   * @property {RepositoryType} multiPackage - Multi package.
    */
 
 
@@ -52,7 +54,9 @@ class EnvironmentHelper {
   /**
    * Types of package.
    *
-   * @type {object<PackageType>}
+   * @type {object<string, PackageType>}
+   * @property {PackageType} simple - Simple classic package.
+   * @property {PackageType} ioc - IoC package.
    */
 
 
@@ -65,7 +69,11 @@ class EnvironmentHelper {
   /**
    * Types of group.
    *
-   * @type {object<GroupType>}
+   * @type {object<string, GroupType>}
+   * @property {GroupType} simple - Simple classic package.
+   * @property {GroupType} ioc - IoC package.
+   * @property {GroupType} multi - Multi package repository.
+   * @property {GroupType} sub - A subpackage of a multi package repository.
    */
 
 
@@ -78,7 +86,12 @@ class EnvironmentHelper {
   /**
    * Types of test.
    *
-   * @type {object<TestType>}
+   * @type {object<string, TestType>}
+   * @property {TestType} standards - Standards tests.
+   * @property {TestType} unit - Unit tests.
+   * @property {TestType} feature - Feature tests.
+   * @property {TestType} integration - Integration tests.
+   * @property {TestType} endtoend - End-to-end tests.
    */
 
 
@@ -94,7 +107,9 @@ class EnvironmentHelper {
   /**
    * Types of CI engine.
    *
-   * @type {object<CIEngine>}
+   * @type {object<string, CIEngine>}
+   * @property {CIEngine} travis - GitHub Travis CI.
+   * @property {CIEngine} pipelines - Bitbucket Pipelines.
    */
 
 
@@ -107,7 +122,7 @@ class EnvironmentHelper {
   /**
    * List of subpackages and their path.
    *
-   * @type {object<string>}
+   * @type {object<string, string>}
    */
 
 
@@ -193,7 +208,7 @@ class EnvironmentHelper {
 
   getReadablePath(absolutePath) {
     if (absolutePath.startsWith(_paths.default.project.root)) {
-      const relativePath = absolutePath.substring(_paths.default.project.root.length + 1);
+      const relativePath = absolutePath.slice(_paths.default.project.root.length + 1);
       return relativePath === '' ? '.' : `./${relativePath}`;
     }
 

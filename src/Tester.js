@@ -34,18 +34,22 @@ class Tester {
 	 * @param {string} [options.license='MIT'] - Package license.
 	 * @param {CIEngine} [options.ciEngine='travis'] - Package CI engine.
 	 */
-	constructor({ nameScope = '@absolunet', source, author, license, ciEngine } = {}) {
-		dataValidation.argument('nameScope', nameScope,           Joi.alternatives().try('', Joi.string().pattern(/^@(?<kebab1>[a-z][a-z0-9]*)(?<kebab2>-[a-z0-9]+)*$/u, 'npm scope')));
-		dataValidation.argument('source',    `https://${source}`, Joi.string().uri());
-		dataValidation.argument('author',    author,              Joi.object({ name: Joi.string().required(), url: Joi.string().uri().required() }));
-		dataValidation.argument('license',   license,             Joi.string().valid(...spdxLicenseIds));
-		dataValidation.argument('ciEngine',  ciEngine,            Joi.string().valid(...Object.values(env.CI_ENGINE)));
+	constructor(options = {}) {
+		dataValidation.argument('options', options, Joi.object({
+			nameScope: Joi.alternatives().try('', Joi.string().pattern(/^@(?<kebab1>[a-z][a-z0-9]*)(?<kebab2>-[a-z0-9]+)*$/u, 'npm scope')),
+			source:    Joi.string().replace(/^(?<all>\.+)$/u, 'https://$<all>').uri(),
+			author:    Joi.object({ name: Joi.string().required(), url: Joi.string().uri().required() }),
+			license:   Joi.string().valid(...spdxLicenseIds),
+			ciEngine:  Joi.string().valid(...Object.values(env.CI_ENGINE))
+		}));
+
+		const nameScope = options.nameScope === undefined ? '@absolunet' : options.nameScope;
 
 		customization.nameScope = nameScope ? `${nameScope}/` : '';
-		customization.source    = source   || 'github.com/absolunet';
-		customization.author    = author   || { name: 'Absolunet', url: 'https://absolunet.com' };
-		customization.license   = license  || 'MIT';
-		customization.ciEngine  = ciEngine || env.CI_ENGINE.travis;
+		customization.source    = options.source   || 'github.com/absolunet';
+		customization.author    = options.author   || { name: 'Absolunet', url: 'https://absolunet.com' };
+		customization.license   = options.license  || 'MIT';
+		customization.ciEngine  = options.ciEngine || env.CI_ENGINE.travis;
 	}
 
 
@@ -66,7 +70,7 @@ class Tester {
 	 * @returns {string} Stripped relative path to project root.
 	 */
 	getReadablePath(absolutePath) {
-		dataValidation.argument('absolutePath', absolutePath, Joi.string().pattern(/^\//u, 'absolute path'));
+		dataValidation.argument('absolutePath', absolutePath, dataValidation.absolutePath);
 
 		return env.getReadablePath(absolutePath);
 	}
@@ -86,8 +90,10 @@ class Tester {
 	 * });
 	 */
 	init(options = {}) {
-		dataValidation.argument('repositoryType', options.repositoryType, Joi.string().valid(...Object.values(env.REPOSITORY_TYPE)).required());
-		dataValidation.argument('packageType',    options.packageType,    Joi.string().valid(...Object.values(env.PACKAGE_TYPE)).required());
+		dataValidation.argument('options', options, Joi.object({
+			repositoryType: Joi.string().valid(...Object.values(env.REPOSITORY_TYPE)).required(),
+			packageType:    Joi.string().valid(...Object.values(env.PACKAGE_TYPE)).required()
+		}));
 
 
 		//-- Check if generic tests are present

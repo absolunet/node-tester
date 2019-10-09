@@ -35,21 +35,30 @@ class ESLintHelper {
 		const { results: [report] } = cli.executeOnFiles([testPath]);
 		const problemCount = report.errorCount + report.warningCount;
 
-		if (problemCount > 0) {
-			let output;
-
-			if (problemCount > 100) {
-				output = `\n  [Too many to show...]\n\n${chalk.red.bold(`✖ ${problemCount} problems (${report.errorCount} error${report.errorCount === 1 ? '' : 's'}, ${report.warningCount} warning${report.errorCount === 1 ? '' : 's'})`)}\n\n\n`;
-			} else {
-				const rawOutput = cli.getFormatter()([report]).split('\n');
-				rawOutput.splice(1, 1);
-				output = `${rawOutput.join('\n')}\n\n`;
-			}
-
-			return fail(testResult(output));
+		if (problemCount > 100) {
+			return fail(testResult(`\n  [Too many to show...]\n\n${chalk.red.bold(`✖ ${problemCount} problems (${report.errorCount} error${report.errorCount === 1 ? '' : 's'}, ${report.warningCount} warning${report.errorCount === 1 ? '' : 's'})`)}\n\n\n`));
 		}
 
-		return pass(testResult());
+		let linterOutput;
+		if (problemCount > 0) {
+			const rawOutput = cli.getFormatter()([report]).split('\n');
+			rawOutput.splice(1, 1);
+			linterOutput = `${rawOutput.join('\n')}\n\n`;
+		}
+
+		// Fails
+		if (report.errorCount > 0) {
+			return fail(testResult(linterOutput));
+		}
+
+		// Passes
+		const passResult = pass(testResult());
+
+		if (report.warningCount > 0) {
+			passResult.console = [{ message: linterOutput, origin: testPath, type: 'warn' }];
+		}
+
+		return passResult;
 	}
 
 }
