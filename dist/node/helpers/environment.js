@@ -169,6 +169,16 @@ class EnvironmentHelper {
     return global[this.JEST_GLOBALS_KEY].packageType;
   }
   /**
+   * Current repository version.
+   *
+   * @type {string}
+   */
+
+
+  get version() {
+    return _fss.default.readJson(`${_paths.default.project.root}/${this.repositoryType === this.REPOSITORY_TYPE.multiPackage ? 'lerna' : 'package'}.json`).version;
+  }
+  /**
    * Define group.
    *
    * @param {parameters} [parameters] - Parameters.

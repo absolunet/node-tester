@@ -164,6 +164,16 @@ class EnvironmentHelper {
 
 
 	/**
+	 * Current repository version.
+	 *
+	 * @type {string}
+	 */
+	get version() {
+		return fss.readJson(`${paths.project.root}/${this.repositoryType === this.REPOSITORY_TYPE.multiPackage ? 'lerna' : 'package'}.json`).version;
+	}
+
+
+	/**
 	 * Define group.
 	 *
 	 * @param {parameters} [parameters] - Parameters.

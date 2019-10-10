@@ -20,6 +20,7 @@ const GITIGNORE = Symbol('gitignore');
 const NPMIGNORE = Symbol('npmignore');
 const TRAVIS = Symbol('travis');
 const PIPELINES = Symbol('pipelines');
+const CHANGELOG = Symbol('changelog');
 const LICENSE = Symbol('license');
 const MANAGER = Symbol('manager');
 const PACKAGE = Symbol('package');
@@ -32,7 +33,7 @@ const IGNORE = {
   [_environment.default.GROUP_TYPE.simple]: [],
   [_environment.default.GROUP_TYPE.ioc]: [],
   [_environment.default.GROUP_TYPE.multi]: [NPMIGNORE, DOCUMENTATION, DISTRIBUTION, SOURCE],
-  [_environment.default.GROUP_TYPE.sub]: [EDITORCONFIG, ESLINTIGNORE, ESLINTRC, GITIGNORE, TRAVIS, PIPELINES, MANAGER, DOCUMENTATION, TEST]
+  [_environment.default.GROUP_TYPE.sub]: [EDITORCONFIG, ESLINTIGNORE, ESLINTRC, GITIGNORE, TRAVIS, PIPELINES, CHANGELOG, MANAGER, DOCUMENTATION, TEST]
 };
 
 const extractEntries = filename => {
@@ -213,6 +214,12 @@ class ArborescenceHelper {
             directoryPath,
             groupType
           });
+        });
+      }
+
+      if (!ignore.includes(CHANGELOG)) {
+        test(`Ensure '${readablePath}/CHANGELOG.md' is valid`, () => {
+          this.fileExists('CHANGELOG.md', directoryPath);
         });
       }
 
