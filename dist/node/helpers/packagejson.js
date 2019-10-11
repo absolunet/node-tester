@@ -104,7 +104,7 @@ class PackageJsonHelper {
       const namePattern = new RegExp(`^${escapedScope}(?<kebab1>[a-z][a-z0-9]*)(?<kebab2>-[a-z0-9]+)*$`, 'u');
       const repositoryPattern = new RegExp(`^git:\\/\\/${escapedSource}\\/(?<kebab1>[a-z][a-z0-9]*)(?<kebab2>-[a-z0-9]+)*\\.git$`, 'u');
       const bugsPattern = new RegExp(`^https:\\/\\/${escapedSource}\\/(?<kebab1>[a-z][a-z0-9]*)(?<kebab2>-[a-z0-9]+)*\\/issues$`, 'u');
-      const homepagePattern = new RegExp(`^https:\\/\\/(?<domain>${escapedSource}\\/|absolunet.github.io\\/).+`, 'u');
+      const homepagePattern = new RegExp(`^https:\\/\\/(?<domain>${escapedSource}\\/|documentation.absolunet.com\\/).+`, 'u');
       const reference = {};
       this.validateIntegrity(reference, directoryPath);
       test('Ensure mandatory identification fields are valid', () => {
