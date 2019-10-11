@@ -65,7 +65,7 @@ Under `./test/[TYPE]/` folders, add your `*.test.js` Jest files.
 
 ## Documentation
 
-View [documentation](https://absolunet.github.io/node-tester)
+View [documentation](https://documentation.absolunet.com/node-tester)
 
 
 
