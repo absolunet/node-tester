@@ -4,7 +4,6 @@
 .eslintrc.yaml
 .gitignore
 .travis.yml
-CHANGELOG.md
 manager.js
 docs
 src

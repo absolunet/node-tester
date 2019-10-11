@@ -1,6 +1,6 @@
 {
   "name": "@absolunet/tester",
-  "version": "3.0.0-rc.1",
+  "version": "3.0.0-rc.2",
   "description": "Test suite for Node.js projects",
   "definition": "",
   "homepage": "https://documentation.absolunet.com/node-tester",
@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "@absolunet/manager": "2.0.0-rc.1",
-    "@absolunet/tester": "3.0.0-rc.1"
+    "@absolunet/tester": "3.0.0-rc.2"
   },
   "dependencies": {
     "@absolunet/eslint-config-browser": "1.4.1",
