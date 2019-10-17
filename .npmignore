@@ -1,17 +1,27 @@
 .DS_Store
+.github
 .editorconfig
 .eslintignore
 .eslintrc.yaml
 .gitignore
 .travis.yml
+code_of_conduct.md
+contributing.md
 manager.js
+security.md
+support.md
 docs
 src
 test
 !dist/**
 
+!.github
 !.editorconfig
 !.eslintignore
 !.eslintrc.yaml
 !.travis.yml
+!code_of_conduct.md
+!contributing.md
+!security.md
+!support.md
 !matrix/**
