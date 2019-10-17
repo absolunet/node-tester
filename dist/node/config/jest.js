@@ -32,39 +32,39 @@ const INTEGRATION = [_runner.default.config.projectIntegrationTests];
 const ENDTOEND = [_runner.default.config.projectEndtoendTests]; //-- Scope
 
 switch (scope) {
-  case 'all':
+  case _environment.default.TEST_ALL:
     runners.push(...STANDARDS, ...UNIT, ...FEATURE, ...INTEGRATION, ...ENDTOEND);
     break;
 
-  case 'standards':
+  case _environment.default.TEST_TYPE.standards:
     if (packageType !== _environment.default.PACKAGE_TYPE.ioc) {
       runners.push(...STANDARDS);
     }
 
     break;
 
-  case 'unit':
+  case _environment.default.TEST_TYPE.unit:
     if (packageType !== _environment.default.PACKAGE_TYPE.ioc) {
       runners.push(...UNIT);
     }
 
     break;
 
-  case 'feature':
+  case _environment.default.TEST_TYPE.feature:
     if (packageType !== _environment.default.PACKAGE_TYPE.ioc) {
       runners.push(...FEATURE);
     }
 
     break;
 
-  case 'integration':
+  case _environment.default.TEST_TYPE.integration:
     if (packageType !== _environment.default.PACKAGE_TYPE.ioc) {
       runners.push(...INTEGRATION);
     }
 
     break;
 
-  case 'endtoend':
+  case _environment.default.TEST_TYPE.endtoend:
     if (packageType !== _environment.default.PACKAGE_TYPE.ioc) {
       runners.push(...ENDTOEND);
     }
