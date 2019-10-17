@@ -132,16 +132,19 @@ class Tester {
 
 
     options.scope = (0, _minimist.default)(process.argv.slice(2)).scope;
-    options.customization = customization;
+    options.customization = customization; // Validate scope
+
+    if (![_environment.default.TEST_ALL, ...Object.values(_environment.default.TEST_TYPE)].includes(options.scope)) {
+      throw new Error(`Test scope '${options.scope}' is invalid`);
+    }
+
     const iocTests = [];
     let shouldRunIocTestOnly = false;
 
     if (options.packageType === _environment.default.PACKAGE_TYPE.ioc && options.scope !== _environment.default.TEST_TYPE.standards) {
-      if (options.scope === 'all') {
+      if (options.scope === _environment.default.TEST_ALL) {
         options.scope = _environment.default.TEST_TYPE.standards;
-        iocTests.push(...Object.values(_environment.default.TEST_TYPE).filter(testType => {
-          return testType !== _environment.default.TEST_TYPE.standards;
-        }));
+        iocTests.push(...Object.values(_environment.default.TEST_TYPE_IOC));
       } else if (Object.values(_environment.default.TEST_TYPE).includes(options.scope)) {
         iocTests.push(options.scope);
         shouldRunIocTestOnly = true;
