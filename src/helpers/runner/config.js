@@ -6,9 +6,12 @@ import env   from '../environment';
 import paths from '../paths';
 
 
-const JEST_PLUGINS = [
-	require.resolve('jest-chain'),
+const JEST_GENERIC_PLUGINS = [
 	require.resolve('jest-expect-message'),
+	require.resolve('jest-extended')
+];
+
+const JEST_PROJECT_PLUGINS = [
 	require.resolve('jest-extended')
 ];
 
@@ -167,7 +170,7 @@ class RunnerHelperConfig {
 		return {
 			displayName:        'Standards: Generic tests',
 			rootDir:            `${paths.project.test}/generic`,
-			setupFilesAfterEnv: JEST_PLUGINS,
+			setupFilesAfterEnv: JEST_GENERIC_PLUGINS,
 			transform:          JEST_TRANSFORM,
 			globals:            this.globals
 		};
@@ -183,7 +186,7 @@ class RunnerHelperConfig {
 		return {
 			displayName:        'Standards: Project tests',
 			rootDir:            `${paths.project.test}/standards`,
-			setupFilesAfterEnv: JEST_PLUGINS,
+			setupFilesAfterEnv: JEST_PROJECT_PLUGINS,
 			transform:          JEST_TRANSFORM
 		};
 	}
@@ -198,7 +201,7 @@ class RunnerHelperConfig {
 		return {
 			displayName:        'Unit: Project tests',
 			rootDir:            `${paths.project.test}/unit`,
-			setupFilesAfterEnv: JEST_PLUGINS,
+			setupFilesAfterEnv: JEST_PROJECT_PLUGINS,
 			transform:          JEST_TRANSFORM
 		};
 	}
@@ -213,7 +216,7 @@ class RunnerHelperConfig {
 		return {
 			displayName:        'Feature: Project tests',
 			rootDir:            `${paths.project.test}/feature`,
-			setupFilesAfterEnv: JEST_PLUGINS,
+			setupFilesAfterEnv: JEST_PROJECT_PLUGINS,
 			transform:          JEST_TRANSFORM
 		};
 	}
@@ -228,7 +231,7 @@ class RunnerHelperConfig {
 		return {
 			displayName:        'Integration: Project tests',
 			rootDir:            `${paths.project.test}/integration`,
-			setupFilesAfterEnv: JEST_PLUGINS,
+			setupFilesAfterEnv: JEST_PROJECT_PLUGINS,
 			transform:          JEST_TRANSFORM
 		};
 	}
@@ -243,7 +246,7 @@ class RunnerHelperConfig {
 		return {
 			displayName:        'End-to-end: Project tests',
 			rootDir:            `${paths.project.test}/endtoend`,
-			setupFilesAfterEnv: JEST_PLUGINS,
+			setupFilesAfterEnv: JEST_PROJECT_PLUGINS,
 			transform:          JEST_TRANSFORM
 		};
 	}

@@ -115,9 +115,11 @@ class PackageJsonHelper {
         expect(reference.config.private, 'Private must not be defined').toBeUndefined();
       });
       test('Ensure meta identification fields are valid', () => {
-        expect(reference.config.description, 'Description must be defined').toBeString().not.toBeEmpty();
+        expect(reference.config.description, 'Description must be a text').toBeString();
+        expect(reference.config.description, 'Description must be defined').not.toBeEmpty();
         expect(reference.config.author, 'Author must be valid').toContainAllEntries(Object.entries(_environment.default.packageCustomization.author));
-        expect(reference.config.keywords, 'Keywords must be defined').toBeArray().not.toBeEmpty(); // Make special check for packageType IoC
+        expect(reference.config.keywords, 'Keywords must be a list').toBeArray();
+        expect(reference.config.keywords, 'Keywords must be defined').not.toBeEmpty();
       });
       test('Ensure url fields are valid', () => {
         expect(reference.config.homepage, 'Homepage must be valid').toMatch(homepagePattern);
