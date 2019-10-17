@@ -10,10 +10,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+
+
+
+## [3.0.0] - 2019-10-17
 ### Added
 - GitHub community files and validate them
-	- `.github/ISSUE_TEMPLATE/*.md`
-	- `.github/pull_request_template.md`
+  - `.github/ISSUE_TEMPLATE/*.md`
+  - `.github/pull_request_template.md`
   - `code_of_conduct.md`
   - `contributing.md`
   - `security.md`
@@ -314,7 +318,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-[Unreleased]:   https://github.com/absolunet/eslint-config/compare/3.0.0-rc.2...HEAD
+[Unreleased]:   https://github.com/absolunet/eslint-config/compare/3.0.0...HEAD
+[3.0.0]:        https://github.com/absolunet/eslint-config/compare/3.0.0-rc.2...3.0.0
 [3.0.0-rc.2]:   https://github.com/absolunet/eslint-config/compare/3.0.0-rc.1...3.0.0-rc.2
 [3.0.0-rc.1]:   https://github.com/absolunet/eslint-config/compare/3.0.0-beta.1...3.0.0-rc.1
 [3.0.0-beta.1]: https://github.com/absolunet/eslint-config/compare/2.6.9...3.0.0-beta.1
