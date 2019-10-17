@@ -13,7 +13,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //--------------------------------------------------------
 //-- Runner config helper
 //--------------------------------------------------------
-const JEST_PLUGINS = [require.resolve('jest-chain'), require.resolve('jest-expect-message'), require.resolve('jest-extended')];
+const JEST_GENERIC_PLUGINS = [require.resolve('jest-expect-message'), require.resolve('jest-extended')];
+const JEST_PROJECT_PLUGINS = [require.resolve('jest-extended')];
 const JEST_TRANSFORM = {
   '\\.js$': `${_paths.default.transformers}/babel`
 };
@@ -164,7 +165,7 @@ class RunnerHelperConfig {
     return {
       displayName: 'Standards: Generic tests',
       rootDir: `${_paths.default.project.test}/generic`,
-      setupFilesAfterEnv: JEST_PLUGINS,
+      setupFilesAfterEnv: JEST_GENERIC_PLUGINS,
       transform: JEST_TRANSFORM,
       globals: this.globals
     };
@@ -180,7 +181,7 @@ class RunnerHelperConfig {
     return {
       displayName: 'Standards: Project tests',
       rootDir: `${_paths.default.project.test}/standards`,
-      setupFilesAfterEnv: JEST_PLUGINS,
+      setupFilesAfterEnv: JEST_PROJECT_PLUGINS,
       transform: JEST_TRANSFORM
     };
   }
@@ -195,7 +196,7 @@ class RunnerHelperConfig {
     return {
       displayName: 'Unit: Project tests',
       rootDir: `${_paths.default.project.test}/unit`,
-      setupFilesAfterEnv: JEST_PLUGINS,
+      setupFilesAfterEnv: JEST_PROJECT_PLUGINS,
       transform: JEST_TRANSFORM
     };
   }
@@ -210,7 +211,7 @@ class RunnerHelperConfig {
     return {
       displayName: 'Feature: Project tests',
       rootDir: `${_paths.default.project.test}/feature`,
-      setupFilesAfterEnv: JEST_PLUGINS,
+      setupFilesAfterEnv: JEST_PROJECT_PLUGINS,
       transform: JEST_TRANSFORM
     };
   }
@@ -225,7 +226,7 @@ class RunnerHelperConfig {
     return {
       displayName: 'Integration: Project tests',
       rootDir: `${_paths.default.project.test}/integration`,
-      setupFilesAfterEnv: JEST_PLUGINS,
+      setupFilesAfterEnv: JEST_PROJECT_PLUGINS,
       transform: JEST_TRANSFORM
     };
   }
@@ -240,7 +241,7 @@ class RunnerHelperConfig {
     return {
       displayName: 'End-to-end: Project tests',
       rootDir: `${_paths.default.project.test}/endtoend`,
-      setupFilesAfterEnv: JEST_PLUGINS,
+      setupFilesAfterEnv: JEST_PROJECT_PLUGINS,
       transform: JEST_TRANSFORM
     };
   }

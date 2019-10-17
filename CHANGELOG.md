@@ -10,6 +10,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+### Added
+- GitHub community files and validate them
+	- `.github/ISSUE_TEMPLATE/*.md`
+	- `.github/pull_request_template.md`
+  - `code_of_conduct.md`
+  - `contributing.md`
+  - `security.md`
+  - `support.md`
+- Self-tests for initialization
+
+### Changed
+- Change IoC tests responsabilities logic
+- No more `jest-chain` plugin in generic tests (40% gain in speed)
+
+### Removed
+- No more `jest-chain` and `jest-expect-message` plugins in project tests (40% gain in speed)
 
 
 
