@@ -101,6 +101,32 @@ class EnvironmentHelper {
 
 
 	/**
+	 * Types of IoC test.
+	 *
+	 * @type {object<string, TestType>}
+	 * @property {TestType} unit - Unit tests.
+	 * @property {TestType} feature - Feature tests.
+	 * @property {TestType} integration - Integration tests.
+	 * @property {TestType} endtoend - End-to-end tests.
+	 */
+	get TEST_TYPE_IOC() {
+		return Object.fromEntries(Object.entries(this.TEST_TYPE).filter(([, value]) => {
+			return value !== this.TEST_TYPE.standards;
+		}));
+	}
+
+
+	/**
+	 * All tests identifier.
+	 *
+	 * @type {string}
+	 */
+	get TEST_ALL() {
+		return 'all';
+	}
+
+
+	/**
 	 * Types of CI engine.
 	 *
 	 * @type {object<string, CIEngine>}
