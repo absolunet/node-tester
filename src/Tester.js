@@ -116,19 +116,26 @@ class Tester {
 		options.scope         = minimist(process.argv.slice(2)).scope;
 		options.customization = customization;
 
-		const iocTests = [];
-		if (options.packageType === env.PACKAGE_TYPE.ioc) {
+		const iocTests           = [];
+		let shouldRunIocTestOnly = false;
+		if (options.packageType === env.PACKAGE_TYPE.ioc && options.scope !== env.TEST_TYPE.standards) {
 			if (options.scope === 'all') {
-				iocTests.push(...env.TEST_TYPE);
-			} else if (Object.values(...env.TEST_TYPE).includes(options.scope)) {
+				options.scope = env.TEST_TYPE.standards;
+				iocTests.push(...Object.values(env.TEST_TYPE).filter((testType) => {
+					return testType !== env.TEST_TYPE.standards;
+				}));
+			} else if (Object.values(env.TEST_TYPE).includes(options.scope)) {
 				iocTests.push(options.scope);
+				shouldRunIocTestOnly = true;
 			}
 		}
 
 
 		//-- Run tests
 		try {
-			terminal.run(`export ${env.JEST_CLI_KEY}='${JSON.stringify(options)}'; node ${paths.jestBinary} --config=${paths.config}/jest.js`);
+			if (!shouldRunIocTestOnly) {
+				terminal.run(`export ${env.JEST_CLI_KEY}='${JSON.stringify(options)}'; node ${paths.jestBinary} --config=${paths.config}/jest.js`);
+			}
 
 			iocTests.forEach((type) => {
 				terminal.run(`node ioc test --type=${type}`);
