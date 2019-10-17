@@ -45,35 +45,35 @@ const ENDTOEND = [
 //-- Scope
 switch (scope) {
 
-	case 'all':
+	case env.TEST_ALL:
 		runners.push(...STANDARDS, ...UNIT, ...FEATURE, ...INTEGRATION, ...ENDTOEND);
 		break;
 
-	case 'standards':
+	case env.TEST_TYPE.standards:
 		if (packageType !== env.PACKAGE_TYPE.ioc) {
 			runners.push(...STANDARDS);
 		}
 		break;
 
-	case 'unit':
+	case env.TEST_TYPE.unit:
 		if (packageType !== env.PACKAGE_TYPE.ioc) {
 			runners.push(...UNIT);
 		}
 		break;
 
-	case 'feature':
+	case env.TEST_TYPE.feature:
 		if (packageType !== env.PACKAGE_TYPE.ioc) {
 			runners.push(...FEATURE);
 		}
 		break;
 
-	case 'integration':
+	case env.TEST_TYPE.integration:
 		if (packageType !== env.PACKAGE_TYPE.ioc) {
 			runners.push(...INTEGRATION);
 		}
 		break;
 
-	case 'endtoend':
+	case env.TEST_TYPE.endtoend:
 		if (packageType !== env.PACKAGE_TYPE.ioc) {
 			runners.push(...ENDTOEND);
 		}

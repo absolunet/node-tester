@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `security.md`
   - `support.md`
 - Self-tests for initialization
+- Scope validation
 
 ### Changed
 - Change IoC tests responsabilities logic
