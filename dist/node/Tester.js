@@ -134,18 +134,25 @@ class Tester {
     options.scope = (0, _minimist.default)(process.argv.slice(2)).scope;
     options.customization = customization;
     const iocTests = [];
+    let shouldRunIocTestOnly = false;
 
-    if (options.packageType === _environment.default.PACKAGE_TYPE.ioc) {
+    if (options.packageType === _environment.default.PACKAGE_TYPE.ioc && options.scope !== _environment.default.TEST_TYPE.standards) {
       if (options.scope === 'all') {
-        iocTests.push(..._environment.default.TEST_TYPE);
-      } else if (Object.values(..._environment.default.TEST_TYPE).includes(options.scope)) {
+        options.scope = _environment.default.TEST_TYPE.standards;
+        iocTests.push(...Object.values(_environment.default.TEST_TYPE).filter(testType => {
+          return testType !== _environment.default.TEST_TYPE.standards;
+        }));
+      } else if (Object.values(_environment.default.TEST_TYPE).includes(options.scope)) {
         iocTests.push(options.scope);
+        shouldRunIocTestOnly = true;
       }
     } //-- Run tests
 
 
     try {
-      _terminal.terminal.run(`export ${_environment.default.JEST_CLI_KEY}='${JSON.stringify(options)}'; node ${_paths.default.jestBinary} --config=${_paths.default.config}/jest.js`);
+      if (!shouldRunIocTestOnly) {
+        _terminal.terminal.run(`export ${_environment.default.JEST_CLI_KEY}='${JSON.stringify(options)}'; node ${_paths.default.jestBinary} --config=${_paths.default.config}/jest.js`);
+      }
 
       iocTests.forEach(type => {
         _terminal.terminal.run(`node ioc test --type=${type}`);
