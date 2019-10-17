@@ -13,6 +13,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //--------------------------------------------------------
 //-- Arborescence helper
 //--------------------------------------------------------
+const GITHUB_ISSUES = Symbol('github-issues');
+const GITHUB_PR = Symbol('github-pullrequests');
 const EDITORCONFIG = Symbol('editorconfig');
 const ESLINTIGNORE = Symbol('eslintignore');
 const ESLINTRC = Symbol('eslintrc');
@@ -21,10 +23,14 @@ const NPMIGNORE = Symbol('npmignore');
 const TRAVIS = Symbol('travis');
 const PIPELINES = Symbol('pipelines');
 const CHANGELOG = Symbol('changelog');
+const CODEOFCONDUCT = Symbol('code-of-conduct');
+const CONTRIBUTING = Symbol('contributing');
 const LICENSE = Symbol('license');
 const MANAGER = Symbol('manager');
 const PACKAGE = Symbol('package');
 const README = Symbol('readme');
+const SECURITY = Symbol('security');
+const SUPPORT = Symbol('support');
 const DISTRIBUTION = Symbol('distribution');
 const DOCUMENTATION = Symbol('documentation');
 const SOURCE = Symbol('source');
@@ -33,7 +39,7 @@ const IGNORE = {
   [_environment.default.GROUP_TYPE.simple]: [],
   [_environment.default.GROUP_TYPE.ioc]: [],
   [_environment.default.GROUP_TYPE.multi]: [NPMIGNORE, DOCUMENTATION, DISTRIBUTION, SOURCE],
-  [_environment.default.GROUP_TYPE.sub]: [EDITORCONFIG, ESLINTIGNORE, ESLINTRC, GITIGNORE, TRAVIS, PIPELINES, CHANGELOG, MANAGER, DOCUMENTATION, TEST]
+  [_environment.default.GROUP_TYPE.sub]: [GITHUB_ISSUES, GITHUB_PR, EDITORCONFIG, ESLINTIGNORE, ESLINTRC, GITIGNORE, TRAVIS, PIPELINES, CHANGELOG, CODEOFCONDUCT, CONTRIBUTING, MANAGER, SECURITY, SUPPORT, DOCUMENTATION, TEST]
 };
 
 const extractEntries = filename => {
@@ -141,6 +147,36 @@ class ArborescenceHelper {
 
       const ignore = IGNORE[groupType];
 
+      if (!ignore.includes(GITHUB_ISSUES)) {
+        test(`Ensure '${readablePath}/.github/ISSUE_TEMPLATE' is valid`, () => {
+          this.fileExists('.github/ISSUE_TEMPLATE/bug_report.md', directoryPath);
+          this.fileIsMatrix('.github/ISSUE_TEMPLATE/bug_report.md', {
+            directoryPath,
+            groupType
+          });
+          this.fileExists('.github/ISSUE_TEMPLATE/feature_request.md', directoryPath);
+          this.fileIsMatrix('.github/ISSUE_TEMPLATE/feature_request.md', {
+            directoryPath,
+            groupType
+          });
+          this.fileExists('.github/ISSUE_TEMPLATE/vulnerability_report.md', directoryPath);
+          this.fileIsMatrix('.github/ISSUE_TEMPLATE/vulnerability_report.md', {
+            directoryPath,
+            groupType
+          });
+        });
+      }
+
+      if (!ignore.includes(GITHUB_PR)) {
+        test(`Ensure '${readablePath}/.github/pull_request_template.md' is valid`, () => {
+          this.fileExists('.github/pull_request_template.md', directoryPath);
+          this.fileIsMatrix('.github/pull_request_template.md', {
+            directoryPath,
+            groupType
+          });
+        });
+      }
+
       if (!ignore.includes(EDITORCONFIG)) {
         test(`Ensure '${readablePath}/.editorconfig' is valid`, () => {
           this.fileExists('.editorconfig', directoryPath);
@@ -207,6 +243,26 @@ class ArborescenceHelper {
         });
       }
 
+      if (!ignore.includes(CODEOFCONDUCT)) {
+        test(`Ensure '${readablePath}/code_of_conduct.md' is valid`, () => {
+          this.fileExists('code_of_conduct.md', directoryPath);
+          this.fileIsMatrix('code_of_conduct.md', {
+            directoryPath,
+            groupType
+          });
+        });
+      }
+
+      if (!ignore.includes(CONTRIBUTING)) {
+        test(`Ensure '${readablePath}/contributing.md' is valid`, () => {
+          this.fileExists('contributing.md', directoryPath);
+          this.fileIsMatrix('contributing.md', {
+            directoryPath,
+            groupType
+          });
+        });
+      }
+
       if (!ignore.includes(LICENSE)) {
         test(`Ensure '${readablePath}/license' is valid`, () => {
           this.fileExists('license', directoryPath);
@@ -233,11 +289,32 @@ class ArborescenceHelper {
         test(`Ensure '${readablePath}/package.json' is valid`, () => {
           this.fileExists('package.json', directoryPath);
         });
-      }
+      } // TODO [>=3.1.0]: Add more tests with marked
+
 
       if (!ignore.includes(README)) {
         test(`Ensure '${readablePath}/readme.md' is valid`, () => {
           this.fileExists('readme.md', directoryPath);
+        });
+      }
+
+      if (!ignore.includes(SECURITY)) {
+        test(`Ensure '${readablePath}/security.md' is valid`, () => {
+          this.fileExists('security.md', directoryPath);
+          this.fileIsMatrix('security.md', {
+            directoryPath,
+            groupType
+          });
+        });
+      }
+
+      if (!ignore.includes(SUPPORT)) {
+        test(`Ensure '${readablePath}/support.md' is valid`, () => {
+          this.fileExists('support.md', directoryPath);
+          this.fileIsMatrix('support.md', {
+            directoryPath,
+            groupType
+          });
         });
       }
 
@@ -257,7 +334,7 @@ class ArborescenceHelper {
       if (!ignore.includes(SOURCE)) {
         test(`Ensure '${readablePath}/src/*' is valid`, () => {
           this.fileExists('src/index.js', directoryPath);
-          this.fileExists('src/.eslintrc.yaml', directoryPath); // To rework
+          this.fileExists('src/.eslintrc.yaml', directoryPath); // TODO [>=3.1.0]: Verify order and that 2nd config is node or browser
 
           this.fileContainsMatrix('src/.eslintrc.yaml', {
             directoryPath,
