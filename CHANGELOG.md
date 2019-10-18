@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+
+
+
+## [3.0.1] - 2019-10-18
 ### Added
 - TravisCI now tests on three Node.js version
   - Latest
@@ -327,7 +331,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-[Unreleased]:   https://github.com/absolunet/eslint-config/compare/3.0.0...HEAD
+[Unreleased]:   https://github.com/absolunet/eslint-config/compare/3.0.1...HEAD
+[3.0.1]:        https://github.com/absolunet/eslint-config/compare/3.0.0...3.0.1
 [3.0.0]:        https://github.com/absolunet/eslint-config/compare/3.0.0-rc.2...3.0.0
 [3.0.0-rc.2]:   https://github.com/absolunet/eslint-config/compare/3.0.0-rc.1...3.0.0-rc.2
 [3.0.0-rc.1]:   https://github.com/absolunet/eslint-config/compare/3.0.0-beta.1...3.0.0-rc.1
