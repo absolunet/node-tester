@@ -10,6 +10,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+### Added
+- TravisCI now tests on three Node.js version
+  - Latest
+	- Latest LTS
+	- First version of latest version (X.0.0)
+
+### Changed
+- Added maintenance tool which auto-updates the license year and Node.js version in package.json engines
+- Now validates that the engine version matches the tester
 
 
 

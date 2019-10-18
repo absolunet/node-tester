@@ -105,11 +105,14 @@ class PackageJsonHelper {
       const repositoryPattern = new RegExp(`^git:\\/\\/${escapedSource}\\/(?<kebab1>[a-z][a-z0-9]*)(?<kebab2>-[a-z0-9]+)*\\.git$`, 'u');
       const bugsPattern = new RegExp(`^https:\\/\\/${escapedSource}\\/(?<kebab1>[a-z][a-z0-9]*)(?<kebab2>-[a-z0-9]+)*\\/issues$`, 'u');
       const homepagePattern = new RegExp(`^https:\\/\\/(?<domain>${escapedSource}\\/|documentation.absolunet.com\\/).+`, 'u');
+
+      const testerConfig = _fss.default.readJson(`${_paths.default.root}/package.json`);
+
       const reference = {};
       this.validateIntegrity(reference, directoryPath);
       test('Ensure mandatory identification fields are valid', () => {
-        expect(reference.config.name, 'Name must be valid').toMatch(namePattern); // Make special check for packageType IoC
-
+        // TODO [>=3.1.0]: Make special check for packageType IoC
+        expect(reference.config.name, 'Name must be valid').toMatch(namePattern);
         expect(reference.config.version, 'Version must be valid').toBe(_semver.default.valid(reference.config.version));
         expect(reference.config.license, 'License must be valid').toBe(_environment.default.packageCustomization.license);
         expect(reference.config.private, 'Private must not be defined').toBeUndefined();
@@ -138,7 +141,7 @@ class PackageJsonHelper {
         });
 
         if (reference.config.main) {
-          expect(reference.config.engines, 'Engines must be valid').toContainAllEntries([['node', expect.stringMatching(/^>= \d+\.\d+\.\d+$/u)]]);
+          expect(reference.config.engines, 'Engines must be valid').toContainAllEntries([['node', testerConfig.engines.node]]);
         }
 
         expect(reference.config, 'Files must not be defined').not.toContainKey('files');
