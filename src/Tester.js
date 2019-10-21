@@ -32,7 +32,7 @@ class Tester {
 	 * @param {string} [options.source='github.com/absolunet'] - Package source.
 	 * @param {object<string>} [options.author={ name: 'Absolunet', url: 'https://absolunet.com' }] - Package author.
 	 * @param {string} [options.license='MIT'] - Package license.
-	 * @param {CIEngine} [options.ciEngine='travis'] - Package CI engine.
+	 * @param {Array<CIEngine>} [options.ciEngine=['pipelines', 'travis']] - Package CI engines.
 	 */
 	constructor(options = {}) {
 		dataValidation.argument('options', options, Joi.object({
@@ -40,7 +40,7 @@ class Tester {
 			source:    Joi.string().replace(/^(?<all>\.+)$/u, 'https://$<all>').uri(),
 			author:    Joi.object({ name: Joi.string().required(), url: Joi.string().uri().required() }),
 			license:   Joi.string().valid(...spdxLicenseIds),
-			ciEngine:  Joi.string().valid(...Object.values(env.CI_ENGINE))
+			ciEngine:  Joi.array().items(Joi.string().valid(...Object.values(env.CI_ENGINE))).min(1).unique()
 		}));
 
 		const nameScope = options.nameScope === undefined ? '@absolunet' : options.nameScope;
@@ -49,7 +49,7 @@ class Tester {
 		customization.source    = options.source   || 'github.com/absolunet';
 		customization.author    = options.author   || { name: 'Absolunet', url: 'https://absolunet.com' };
 		customization.license   = options.license  || 'MIT';
-		customization.ciEngine  = options.ciEngine || env.CI_ENGINE.travis;
+		customization.ciEngine  = options.ciEngine || Object.values(env.CI_ENGINE);
 	}
 
 

@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+### Added
+- Bitbucket Pipelines configuration identical to TravisCI
+
 ### Removed
 - No more testing of latest Node.js LTS with TravisCI
 

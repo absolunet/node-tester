@@ -185,14 +185,14 @@ class ArborescenceHelper {
 				});
 			}
 
-			if (!ignore.includes(TRAVIS) && env.packageCustomization.ciEngine === env.CI_ENGINE.travis) {
+			if (!ignore.includes(TRAVIS) && env.packageCustomization.ciEngine.includes(env.CI_ENGINE.travis)) {
 				test(`Ensure '${readablePath}/.travis.yml' is valid`, () => {
 					this.fileExists('.travis.yml', directoryPath);
 					this.fileIsMatrix('.travis.yml', { directoryPath, groupType });
 				});
 			}
 
-			if (!ignore.includes(PIPELINES) && env.packageCustomization.ciEngine === env.CI_ENGINE.pipelines) {
+			if (!ignore.includes(PIPELINES) && env.packageCustomization.ciEngine.includes(env.CI_ENGINE.pipelines)) {
 				test(`Ensure '${readablePath}/bitbucket-pipelines.yml' is valid`, () => {
 					this.fileExists('bitbucket-pipelines.yml', directoryPath);
 					this.fileIsMatrix('bitbucket-pipelines.yml', { directoryPath, groupType });
