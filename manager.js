@@ -18,7 +18,7 @@ manager.init({
 	tasks: {
 		prepare: {
 			postRun: async ({ terminal }) => {
-				terminal.println(`Update Node version in package.json / .travis.yml`);
+				terminal.println(`Update Node version in package.json / .travis.yml / bitbucket-pipelines.yml`);
 
 				const latest = await nodejsLatest.latest();
 				const { version } = semver.coerce(semver.major(latest.version));
@@ -30,8 +30,13 @@ manager.init({
 
 				const travisFile = `${paths.root}/.travis.yml`;
 				const travisData = fss.readYaml(travisFile);
-				travisData.node_js = ['node', version];  // eslint-disable-line camelcase
+				travisData.node_js[1] = version;
 				fss.writeYaml(travisFile, travisData);
+
+				const pipelinesFile = `${paths.root}/bitbucket-pipelines.yml`;
+				const pipelinesData = fss.readYaml(pipelinesFile);
+				pipelinesData.pipelines.default[0].parallel[1].step.image = `node:${version}`;
+				fss.writeYaml(pipelinesFile, pipelinesData);
 
 
 
