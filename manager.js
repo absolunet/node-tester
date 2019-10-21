@@ -30,7 +30,7 @@ manager.init({
 
 				const travisFile = `${paths.root}/.travis.yml`;
 				const travisData = fss.readYaml(travisFile);
-				travisData.node_js = ['node', 'lts/*', version];  // eslint-disable-line camelcase
+				travisData.node_js = ['node', version];  // eslint-disable-line camelcase
 				fss.writeYaml(travisFile, travisData);
 
 

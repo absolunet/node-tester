@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+### Removed
+- No more testing of latest Node.js LTS with TravisCI
 
 
 
@@ -331,51 +333,51 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-[Unreleased]:   https://github.com/absolunet/eslint-config/compare/3.0.1...HEAD
-[3.0.1]:        https://github.com/absolunet/eslint-config/compare/3.0.0...3.0.1
-[3.0.0]:        https://github.com/absolunet/eslint-config/compare/3.0.0-rc.2...3.0.0
-[3.0.0-rc.2]:   https://github.com/absolunet/eslint-config/compare/3.0.0-rc.1...3.0.0-rc.2
-[3.0.0-rc.1]:   https://github.com/absolunet/eslint-config/compare/3.0.0-beta.1...3.0.0-rc.1
-[3.0.0-beta.1]: https://github.com/absolunet/eslint-config/compare/2.6.9...3.0.0-beta.1
-[2.6.9]:        https://github.com/absolunet/eslint-config/compare/2.6.8...2.6.9
-[2.6.8]:        https://github.com/absolunet/eslint-config/compare/2.6.7...2.6.8
-[2.6.7]:        https://github.com/absolunet/eslint-config/compare/2.6.6...2.6.7
-[2.6.6]:        https://github.com/absolunet/eslint-config/compare/2.6.5...2.6.6
-[2.6.5]:        https://github.com/absolunet/eslint-config/compare/2.6.4...2.6.5
-[2.6.4]:        https://github.com/absolunet/eslint-config/compare/2.6.3...2.6.4
-[2.6.3]:        https://github.com/absolunet/eslint-config/compare/2.6.2...2.6.3
-[2.6.2]:        https://github.com/absolunet/eslint-config/compare/2.6.1...2.6.2
-[2.6.1]:        https://github.com/absolunet/eslint-config/compare/2.6.0...2.6.1
-[2.6.0]:        https://github.com/absolunet/eslint-config/compare/2.5.0...2.6.0
-[2.5.0]:        https://github.com/absolunet/eslint-config/compare/2.4.4...2.5.0
-[2.4.4]:        https://github.com/absolunet/eslint-config/compare/2.4.3...2.4.4
-[2.4.3]:        https://github.com/absolunet/eslint-config/compare/2.4.2...2.4.3
-[2.4.2]:        https://github.com/absolunet/eslint-config/compare/2.4.1...2.4.2
-[2.4.1]:        https://github.com/absolunet/eslint-config/compare/2.4.0...2.4.1
-[2.4.0]:        https://github.com/absolunet/eslint-config/compare/2.3.1...2.4.0
-[2.3.1]:        https://github.com/absolunet/eslint-config/compare/2.3.0...2.3.1
-[2.3.0]:        https://github.com/absolunet/eslint-config/compare/2.2.0...2.3.0
-[2.2.0]:        https://github.com/absolunet/eslint-config/compare/2.1.1...2.2.0
-[2.1.1]:        https://github.com/absolunet/eslint-config/compare/2.1.0...2.1.1
-[2.1.0]:        https://github.com/absolunet/eslint-config/compare/2.0.3...2.1.0
-[2.0.3]:        https://github.com/absolunet/eslint-config/compare/2.0.2...2.0.3
-[2.0.2]:        https://github.com/absolunet/eslint-config/compare/2.0.0...2.0.2
-[2.0.0]:        https://github.com/absolunet/eslint-config/compare/1.7.1...2.0.0
-[1.7.1]:        https://github.com/absolunet/eslint-config/compare/1.7.0...1.7.1
-[1.7.0]:        https://github.com/absolunet/eslint-config/compare/1.6.0...1.7.0
-[1.6.0]:        https://github.com/absolunet/eslint-config/compare/1.5.0...1.6.0
-[1.5.0]:        https://github.com/absolunet/eslint-config/compare/1.4.0...1.5.0
-[1.4.0]:        https://github.com/absolunet/eslint-config/compare/1.3.0...1.4.0
-[1.3.0]:        https://github.com/absolunet/eslint-config/compare/1.2.0...1.3.0
-[1.2.0]:        https://github.com/absolunet/eslint-config/compare/1.1.0...1.2.0
-[1.1.0]:        https://github.com/absolunet/eslint-config/compare/1.0.1...1.1.0
-[1.0.1]:        https://github.com/absolunet/eslint-config/compare/1.0.0...1.0.1
-[1.0.0]:        https://github.com/absolunet/eslint-config/compare/0.1.2...1.0.0
-[0.1.2]:        https://github.com/absolunet/eslint-config/compare/0.1.1...0.1.2
-[0.1.1]:        https://github.com/absolunet/eslint-config/compare/0.1.0...0.1.1
-[0.1.0]:        https://github.com/absolunet/eslint-config/compare/0.0.5...0.1.0
-[0.0.5]:        https://github.com/absolunet/eslint-config/compare/0.0.4...0.0.5
-[0.0.4]:        https://github.com/absolunet/eslint-config/compare/0.0.3...0.0.4
-[0.0.3]:        https://github.com/absolunet/eslint-config/compare/0.0.2...0.0.3
-[0.0.2]:        https://github.com/absolunet/eslint-config/compare/0.0.1...0.0.2
+[Unreleased]:   https://github.com/absolunet/node-tester/compare/3.0.1...HEAD
+[3.0.1]:        https://github.com/absolunet/node-tester/compare/3.0.0...3.0.1
+[3.0.0]:        https://github.com/absolunet/node-tester/compare/3.0.0-rc.2...3.0.0
+[3.0.0-rc.2]:   https://github.com/absolunet/node-tester/compare/3.0.0-rc.1...3.0.0-rc.2
+[3.0.0-rc.1]:   https://github.com/absolunet/node-tester/compare/3.0.0-beta.1...3.0.0-rc.1
+[3.0.0-beta.1]: https://github.com/absolunet/node-tester/compare/2.6.9...3.0.0-beta.1
+[2.6.9]:        https://github.com/absolunet/node-tester/compare/2.6.8...2.6.9
+[2.6.8]:        https://github.com/absolunet/node-tester/compare/2.6.7...2.6.8
+[2.6.7]:        https://github.com/absolunet/node-tester/compare/2.6.6...2.6.7
+[2.6.6]:        https://github.com/absolunet/node-tester/compare/2.6.5...2.6.6
+[2.6.5]:        https://github.com/absolunet/node-tester/compare/2.6.4...2.6.5
+[2.6.4]:        https://github.com/absolunet/node-tester/compare/2.6.3...2.6.4
+[2.6.3]:        https://github.com/absolunet/node-tester/compare/2.6.2...2.6.3
+[2.6.2]:        https://github.com/absolunet/node-tester/compare/2.6.1...2.6.2
+[2.6.1]:        https://github.com/absolunet/node-tester/compare/2.6.0...2.6.1
+[2.6.0]:        https://github.com/absolunet/node-tester/compare/2.5.0...2.6.0
+[2.5.0]:        https://github.com/absolunet/node-tester/compare/2.4.4...2.5.0
+[2.4.4]:        https://github.com/absolunet/node-tester/compare/2.4.3...2.4.4
+[2.4.3]:        https://github.com/absolunet/node-tester/compare/2.4.2...2.4.3
+[2.4.2]:        https://github.com/absolunet/node-tester/compare/2.4.1...2.4.2
+[2.4.1]:        https://github.com/absolunet/node-tester/compare/2.4.0...2.4.1
+[2.4.0]:        https://github.com/absolunet/node-tester/compare/2.3.1...2.4.0
+[2.3.1]:        https://github.com/absolunet/node-tester/compare/2.3.0...2.3.1
+[2.3.0]:        https://github.com/absolunet/node-tester/compare/2.2.0...2.3.0
+[2.2.0]:        https://github.com/absolunet/node-tester/compare/2.1.1...2.2.0
+[2.1.1]:        https://github.com/absolunet/node-tester/compare/2.1.0...2.1.1
+[2.1.0]:        https://github.com/absolunet/node-tester/compare/2.0.3...2.1.0
+[2.0.3]:        https://github.com/absolunet/node-tester/compare/2.0.2...2.0.3
+[2.0.2]:        https://github.com/absolunet/node-tester/compare/2.0.0...2.0.2
+[2.0.0]:        https://github.com/absolunet/node-tester/compare/1.7.1...2.0.0
+[1.7.1]:        https://github.com/absolunet/node-tester/compare/1.7.0...1.7.1
+[1.7.0]:        https://github.com/absolunet/node-tester/compare/1.6.0...1.7.0
+[1.6.0]:        https://github.com/absolunet/node-tester/compare/1.5.0...1.6.0
+[1.5.0]:        https://github.com/absolunet/node-tester/compare/1.4.0...1.5.0
+[1.4.0]:        https://github.com/absolunet/node-tester/compare/1.3.0...1.4.0
+[1.3.0]:        https://github.com/absolunet/node-tester/compare/1.2.0...1.3.0
+[1.2.0]:        https://github.com/absolunet/node-tester/compare/1.1.0...1.2.0
+[1.1.0]:        https://github.com/absolunet/node-tester/compare/1.0.1...1.1.0
+[1.0.1]:        https://github.com/absolunet/node-tester/compare/1.0.0...1.0.1
+[1.0.0]:        https://github.com/absolunet/node-tester/compare/0.1.2...1.0.0
+[0.1.2]:        https://github.com/absolunet/node-tester/compare/0.1.1...0.1.2
+[0.1.1]:        https://github.com/absolunet/node-tester/compare/0.1.0...0.1.1
+[0.1.0]:        https://github.com/absolunet/node-tester/compare/0.0.5...0.1.0
+[0.0.5]:        https://github.com/absolunet/node-tester/compare/0.0.4...0.0.5
+[0.0.4]:        https://github.com/absolunet/node-tester/compare/0.0.3...0.0.4
+[0.0.3]:        https://github.com/absolunet/node-tester/compare/0.0.2...0.0.3
+[0.0.2]:        https://github.com/absolunet/node-tester/compare/0.0.1...0.0.2
 [0.0.1]:        https://github.com/absolunet/node-tester/releases/tag/0.0.1
