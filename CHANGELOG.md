@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+
+
+
+## [3.0.2] - 2019-10-21
 ### Added
 - Bitbucket Pipelines configuration identical to TravisCI
 
@@ -336,7 +340,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-[Unreleased]:   https://github.com/absolunet/node-tester/compare/3.0.1...HEAD
+[Unreleased]:   https://github.com/absolunet/node-tester/compare/3.0.2...HEAD
+[3.0.2]:        https://github.com/absolunet/node-tester/compare/3.0.1...3.0.2
 [3.0.1]:        https://github.com/absolunet/node-tester/compare/3.0.0...3.0.1
 [3.0.0]:        https://github.com/absolunet/node-tester/compare/3.0.0-rc.2...3.0.0
 [3.0.0-rc.2]:   https://github.com/absolunet/node-tester/compare/3.0.0-rc.1...3.0.0-rc.2
