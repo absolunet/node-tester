@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+### Fixed
+- Added `bitbucket-pipelines.yml` to `.npmignore` matrix
 
 
 
@@ -17,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Bitbucket Pipelines configuration identical to TravisCI
 
-### Removed
+### Changed
 - No more testing of latest Node.js LTS with TravisCI
 
 
