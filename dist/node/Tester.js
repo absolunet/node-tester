@@ -39,7 +39,7 @@ class Tester {
    * @param {string} [options.source='github.com/absolunet'] - Package source.
    * @param {object<string>} [options.author={ name: 'Absolunet', url: 'https://absolunet.com' }] - Package author.
    * @param {string} [options.license='MIT'] - Package license.
-   * @param {CIEngine} [options.ciEngine='travis'] - Package CI engine.
+   * @param {Array<CIEngine>} [options.ciEngine=['pipelines', 'travis']] - Package CI engines.
    */
   constructor(options = {}) {
     _dataValidation.default.argument('options', options, _joi.default.object({
@@ -50,7 +50,7 @@ class Tester {
         url: _joi.default.string().uri().required()
       }),
       license: _joi.default.string().valid(..._spdxLicenseIds.default),
-      ciEngine: _joi.default.string().valid(...Object.values(_environment.default.CI_ENGINE))
+      ciEngine: _joi.default.array().items(_joi.default.string().valid(...Object.values(_environment.default.CI_ENGINE))).min(1).unique()
     }));
 
     const nameScope = options.nameScope === undefined ? '@absolunet' : options.nameScope;
@@ -61,7 +61,7 @@ class Tester {
       url: 'https://absolunet.com'
     };
     customization.license = options.license || 'MIT';
-    customization.ciEngine = options.ciEngine || _environment.default.CI_ENGINE.travis;
+    customization.ciEngine = options.ciEngine || Object.values(_environment.default.CI_ENGINE);
   }
   /**
    * List of subpackages.
