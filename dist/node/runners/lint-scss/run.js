@@ -24,9 +24,14 @@ var _default = ({
   return _stylelint.default.lint({
     files: testPath,
     syntax: 'scss',
-    formatter: 'string'
+    formatter: 'string',
+    allowEmptyInput: true
   }).then(data => {
     const [results] = data.results;
+
+    if (results === undefined) {
+      return (0, _createJestRunner.skip)(testResult());
+    }
 
     if (results.warnings.length !== 0 || results.deprecations.length !== 0 || results.invalidOptionWarnings.length !== 0) {
       const rawOutput = data.output.split('\n');
