@@ -37,10 +37,7 @@ switch (scope) {
     break;
 
   case _environment.default.TEST_TYPE.standards:
-    if (packageType !== _environment.default.PACKAGE_TYPE.ioc) {
-      runners.push(...STANDARDS);
-    }
-
+    runners.push(...STANDARDS);
     break;
 
   case _environment.default.TEST_TYPE.unit:

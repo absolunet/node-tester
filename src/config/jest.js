@@ -50,9 +50,7 @@ switch (scope) {
 		break;
 
 	case env.TEST_TYPE.standards:
-		if (packageType !== env.PACKAGE_TYPE.ioc) {
-			runners.push(...STANDARDS);
-		}
+		runners.push(...STANDARDS);
 		break;
 
 	case env.TEST_TYPE.unit:
