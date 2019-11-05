@@ -96,6 +96,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [2.6.10] - 2019-11-05
+### Changed
+- Update ESLint configurations
+- Update stylelint configurations
+- ESLint now reports useless disables
+- Maintenance updates
+
+
+
 ## [2.6.9] - 2019-08-28
 ### Added
 - Support `.eslintignore` during linting test phase
@@ -367,7 +376,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [3.0.0]:        https://github.com/absolunet/node-tester/compare/3.0.0-rc.2...3.0.0
 [3.0.0-rc.2]:   https://github.com/absolunet/node-tester/compare/3.0.0-rc.1...3.0.0-rc.2
 [3.0.0-rc.1]:   https://github.com/absolunet/node-tester/compare/3.0.0-beta.1...3.0.0-rc.1
-[3.0.0-beta.1]: https://github.com/absolunet/node-tester/compare/2.6.9...3.0.0-beta.1
+[3.0.0-beta.1]: https://github.com/absolunet/node-tester/compare/2.6.10...3.0.0-beta.1
+[2.6.10]:       https://github.com/absolunet/node-tester/compare/2.6.9...2.6.10
 [2.6.9]:        https://github.com/absolunet/node-tester/compare/2.6.8...2.6.9
 [2.6.8]:        https://github.com/absolunet/node-tester/compare/2.6.7...2.6.8
 [2.6.7]:        https://github.com/absolunet/node-tester/compare/2.6.6...2.6.7
