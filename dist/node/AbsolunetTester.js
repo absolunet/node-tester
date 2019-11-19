@@ -149,7 +149,16 @@ class AbsolunetTester {
 
     try {
       if (!shouldRunIocTestOnly) {
-        _terminal.terminal.run(`export ${_environment.default.JEST_CLI_KEY}='${JSON.stringify(options)}'; node ${_paths.default.jestBinary} --errorOnDeprecated --config=${_paths.default.config}/jest.js`);
+        _terminal.terminal.run(`export ${_environment.default.JEST_CLI_KEY}='${JSON.stringify(options)}'; node ${_paths.default.jestBinary} --errorOnDeprecated --config=${_paths.default.config}/jest.js`); //-- Multi package
+
+
+        if (options.repositoryType === _environment.default.REPOSITORY_TYPE.multiPackage) {
+          Object.values(_environment.default.projectSubpackages).forEach(subpackageRoot => {
+            _terminal.terminal.echo('\n\n\n');
+
+            _terminal.terminal.run(`cd ${subpackageRoot}; npm run test${options.scope !== _environment.default.TEST_ALL ? `:${options.scope}` : ''}`);
+          });
+        }
       }
 
       iocTests.forEach(type => {

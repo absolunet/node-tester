@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `--errorOnDeprecated` flag on Jest call
 
 ### Changed
+- Multi-packages tests are now run separately, with every subpackage managing its own tests
 - Maintenance updates
 
 

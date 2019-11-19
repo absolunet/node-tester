@@ -7,7 +7,7 @@ import fss             from '@absolunet/fss';
 import env             from './environment';
 import paths           from './paths';
 
-const SCRIPTS = [
+const MANAGER_SCRIPTS = [
 	['manager:install',        'node manager --task=install'],
 	['manager:outdated',       'node manager --task=outdated'],
 	['manager:build',          'node manager --task=build'],
@@ -16,16 +16,17 @@ const SCRIPTS = [
 	['manager:prepare',        'node manager --task=prepare'],
 	['manager:rebuild',        'node manager --task=rebuild'],
 	['manager:publish',        'node manager --task=publish'],
-	['manager:publish:unsafe', 'node manager --task=publish:unsafe'],
-
-	['test',                   'node test --scope=all'],
-	['test:standards',         'node test --scope=standards'],
-	['test:unit',              'node test --scope=unit'],
-	['test:feature',           'node test --scope=feature'],
-	['test:integration',       'node test --scope=integration'],
-	['test:endtoend',          'node test --scope=endtoend']
+	['manager:publish:unsafe', 'node manager --task=publish:unsafe']
 ];
 
+const TEST_SCRIPTS = [
+	['test',             'node test --scope=all'],
+	['test:standards',   'node test --scope=standards'],
+	['test:unit',        'node test --scope=unit'],
+	['test:feature',     'node test --scope=feature'],
+	['test:integration', 'node test --scope=integration'],
+	['test:endtoend',    'node test --scope=endtoend']
+];
 
 
 
@@ -166,7 +167,9 @@ class PackageJsonHelper {
 				expect(reference.config, 'Config must not be defined').not.toContainKey('config');
 
 				if (repositoryType === env.REPOSITORY_TYPE.singlePackage) {
-					expect(reference.config.scripts, 'Scripts must be valid').toContainEntries(SCRIPTS);
+					expect(reference.config.scripts, 'Scripts must be valid').toContainEntries([...MANAGER_SCRIPTS, ...TEST_SCRIPTS]);
+				} else {
+					expect(reference.config.scripts, 'Scripts must be valid').toContainEntries([...TEST_SCRIPTS]);
 				}
 			});
 
@@ -174,6 +177,8 @@ class PackageJsonHelper {
 			test('Ensure dependencies are valid', () => {
 				if (repositoryType === env.REPOSITORY_TYPE.singlePackage) {
 					expect(reference.config.devDependencies, 'devDependencies must be valid').toContainKeys(['@absolunet/manager', `${env.packageCustomization.nameScope}tester`]);
+				} else {
+					expect(reference.config.devDependencies, 'devDependencies must be valid').toContainKeys([`${env.packageCustomization.nameScope}tester`]);
 				}
 			});
 
@@ -206,7 +211,7 @@ class PackageJsonHelper {
 
 
 			test('Ensure functional fields are valid', () => {
-				expect(reference.config.scripts, 'Scripts must be valid').toContainEntries(SCRIPTS.concat([['postinstall', 'npm run manager:install']]));
+				expect(reference.config.scripts, 'Scripts must be valid').toContainEntries([...MANAGER_SCRIPTS, ...TEST_SCRIPTS, ['postinstall', 'npm run manager:install']]);
 			});
 
 

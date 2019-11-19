@@ -16,7 +16,7 @@ const STANDARDS = [
 	runner.config.lintYAML,
 	runner.config.lintBash,
 	runner.config.lintSCSS,
-	runner.config.lintFileStyles,
+	runner.config.lintFileStyles(repositoryType),
 	runner.config.genericTests,
 	runner.config.projectStandardsTests
 ];

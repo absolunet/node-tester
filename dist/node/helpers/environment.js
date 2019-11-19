@@ -42,13 +42,15 @@ class EnvironmentHelper {
    * @type {object<string, RepositoryType>}
    * @property {RepositoryType} singlePackage - Single package.
    * @property {RepositoryType} multiPackage - Multi package.
+   * @property {RepositoryType} subPackage - Subpackage.
    */
 
 
   get REPOSITORY_TYPE() {
     return {
       singlePackage: 'single-package',
-      multiPackage: 'multi-package'
+      multiPackage: 'multi-package',
+      subPackage: 'sub-package'
     };
   }
   /**
@@ -210,26 +212,22 @@ class EnvironmentHelper {
    * @param {parameters} [parameters] - Parameters.
    * @param {RepositoryType} [parameters.repositoryType=this.repositoryType] - Type of repository.
    * @param {PackageType} [parameters.packageType=this.packageType] - Type of package.
-   * @param {boolean} [parameters.subPackage=false] - If is subpackage.
    * @returns {GroupType} Type of group.
    */
 
 
   groupType({
     repositoryType = this.repositoryType,
-    packageType = this.packageType,
-    subpackage = false
+    packageType = this.packageType
   } = {}) {
     let group = packageType;
 
     if (repositoryType === this.REPOSITORY_TYPE.multiPackage) {
-      if (subpackage) {
-        if (packageType === this.PACKAGE_TYPE.simple) {
-          group = this.GROUP_TYPE.sub;
-        }
-      } else {
-        group = this.GROUP_TYPE.multi;
-      }
+      group = this.GROUP_TYPE.multi;
+    }
+
+    if (repositoryType === this.REPOSITORY_TYPE.subPackage && packageType === this.PACKAGE_TYPE.simple) {
+      group = this.GROUP_TYPE.sub;
     }
 
     return group;
