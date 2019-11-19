@@ -137,7 +137,7 @@ class AbsolunetTester {
 		//-- Run tests
 		try {
 			if (!shouldRunIocTestOnly) {
-				terminal.run(`export ${env.JEST_CLI_KEY}='${JSON.stringify(options)}'; node ${paths.jestBinary} --config=${paths.config}/jest.js`);
+				terminal.run(`export ${env.JEST_CLI_KEY}='${JSON.stringify(options)}'; node ${paths.jestBinary} --errorOnDeprecated --config=${paths.config}/jest.js`);
 			}
 
 			iocTests.forEach((type) => {
