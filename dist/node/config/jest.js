@@ -25,7 +25,7 @@ _runner.default.config.globals = {
   packageType,
   customization
 };
-const STANDARDS = [_runner.default.config.lintJS, _runner.default.config.lintJSON, _runner.default.config.lintYAML, _runner.default.config.lintBash, _runner.default.config.lintSCSS, _runner.default.config.lintFileStyles, _runner.default.config.genericTests, _runner.default.config.projectStandardsTests];
+const STANDARDS = [_runner.default.config.lintJS, _runner.default.config.lintJSON, _runner.default.config.lintYAML, _runner.default.config.lintBash, _runner.default.config.lintSCSS, _runner.default.config.lintFileStyles(repositoryType), _runner.default.config.genericTests, _runner.default.config.projectStandardsTests];
 const UNIT = [_runner.default.config.projectUnitTests];
 const FEATURE = [_runner.default.config.projectFeatureTests];
 const INTEGRATION = [_runner.default.config.projectIntegrationTests];
