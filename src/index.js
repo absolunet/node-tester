@@ -1,10 +1,13 @@
 //--------------------------------------------------------
 //-- @absolunet/tester
 //--------------------------------------------------------
-import Tester from './Tester';
+import AbsolunetTester from './AbsolunetTester';
+
+const tester = new AbsolunetTester();
 
 
-const tester = new Tester();
+
+
 
 
 /**
@@ -29,19 +32,20 @@ const tester = new Tester();
  * 	}
  * }
  */
-export {
 
-	/**
-	 * Instance of Tester.
-	 *
-	 * @type {Tester}
-	 **/
-	tester,
+/**
+ * Class definition of Tester.
+ *
+ * @name Tester
+ * @type {AbsolunetTester}
+ **/
+export { AbsolunetTester as Tester };
 
-	/**
-	 * Class definition of Tester.
-	 *
-	 * @type {class}
-	 **/
-	Tester
-};
+
+/**
+ * Instance of Tester.
+ *
+ * @name tester
+ * @type {AbsolunetTester}
+ **/
+export { tester };

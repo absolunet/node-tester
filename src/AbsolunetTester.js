@@ -1,15 +1,14 @@
 //--------------------------------------------------------
-//-- Tester
+//-- AbsolunetTester
 //--------------------------------------------------------
-import chalk          from 'chalk';
-import minimist       from 'minimist';
-import spdxLicenseIds from 'spdx-license-ids';
-import Joi            from '@hapi/joi';
-import fss            from '@absolunet/fss';
-import { terminal }   from '@absolunet/terminal';
-import dataValidation from './helpers/data-validation';
-import env            from './helpers/environment';
-import paths          from './helpers/paths';
+import chalk                     from 'chalk';
+import minimist                  from 'minimist';
+import spdxLicenseIds            from 'spdx-license-ids';
+import fss                       from '@absolunet/fss';
+import { Joi, validateArgument } from '@absolunet/joi';
+import { terminal }              from '@absolunet/terminal';
+import env                       from './helpers/environment';
+import paths                     from './helpers/paths';
 
 
 const customization = {};
@@ -22,7 +21,7 @@ const customization = {};
 /**
  * Absolunet's npm packages tester.
  */
-class Tester {
+class AbsolunetTester {
 
 	/**
 	 * Customization options when extending.
@@ -35,8 +34,8 @@ class Tester {
 	 * @param {Array<CIEngine>} [options.ciEngine=['pipelines', 'travis']] - Package CI engines.
 	 */
 	constructor(options = {}) {
-		dataValidation.argument('options', options, Joi.object({
-			nameScope: Joi.alternatives().try('', Joi.string().pattern(/^@(?<kebab1>[a-z][a-z0-9]*)(?<kebab2>-[a-z0-9]+)*$/u, 'npm scope')),
+		validateArgument('options', options, Joi.object({
+			nameScope: Joi.alternatives().try('', Joi.string().pattern(/^@[a-z0-9]+(?:-[a-z0-9]+)*$/u, 'npm scope')),
 			source:    Joi.string().replace(/^(?<all>\.+)$/u, 'https://$<all>').uri(),
 			author:    Joi.object({ name: Joi.string().required(), url: Joi.string().uri().required() }),
 			license:   Joi.string().valid(...spdxLicenseIds),
@@ -70,7 +69,7 @@ class Tester {
 	 * @returns {string} Stripped relative path to project root.
 	 */
 	getReadablePath(absolutePath) {
-		dataValidation.argument('absolutePath', absolutePath, dataValidation.absolutePath);
+		validateArgument('absolutePath', absolutePath, Joi.absolutePath());
 
 		return env.getReadablePath(absolutePath);
 	}
@@ -90,7 +89,7 @@ class Tester {
 	 * });
 	 */
 	init(options = {}) {
-		dataValidation.argument('options', options, Joi.object({
+		validateArgument('options', options, Joi.object({
 			repositoryType: Joi.string().valid(...Object.values(env.REPOSITORY_TYPE)).required(),
 			packageType:    Joi.string().valid(...Object.values(env.PACKAGE_TYPE)).required()
 		}));
@@ -164,4 +163,4 @@ class Tester {
 }
 
 
-export default Tester;
+export default AbsolunetTester;

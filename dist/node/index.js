@@ -3,19 +3,19 @@
 Object.defineProperty(exports, "Tester", {
   enumerable: true,
   get: function () {
-    return _Tester.default;
+    return _AbsolunetTester.default;
   }
 });
 exports.tester = void 0;
 
-var _Tester = _interopRequireDefault(require("./Tester"));
+var _AbsolunetTester = _interopRequireDefault(require("./AbsolunetTester"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //--------------------------------------------------------
 //-- @absolunet/tester
 //--------------------------------------------------------
-const tester = new _Tester.default();
+const tester = new _AbsolunetTester.default();
 /**
  * Exports a default instance of the tester and also the main class.
  *
@@ -38,5 +38,12 @@ const tester = new _Tester.default();
  * 	}
  * }
  */
+
+/**
+ * Class definition of Tester.
+ *
+ * @name Tester
+ * @type {AbsolunetTester}
+ **/
 
 exports.tester = tester;

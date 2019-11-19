@@ -39,7 +39,7 @@ const mockedTerminal = {
 //--------------------------------------------------------
 
 given.tester = () => {
-	const Tester = require('../../dist/node/Tester'); // eslint-disable-line global-require
+	const Tester = require('../../dist/node/AbsolunetTester'); // eslint-disable-line global-require
 	tester = new Tester();
 };
 
