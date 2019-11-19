@@ -8,13 +8,11 @@ var _minimist = _interopRequireDefault(require("minimist"));
 
 var _spdxLicenseIds = _interopRequireDefault(require("spdx-license-ids"));
 
-var _joi = _interopRequireDefault(require("@hapi/joi"));
-
 var _fss = _interopRequireDefault(require("@absolunet/fss"));
 
-var _terminal = require("@absolunet/terminal");
+var _joi = require("@absolunet/joi");
 
-var _dataValidation = _interopRequireDefault(require("./helpers/data-validation"));
+var _terminal = require("@absolunet/terminal");
 
 var _environment = _interopRequireDefault(require("./helpers/environment"));
 
@@ -23,14 +21,14 @@ var _paths = _interopRequireDefault(require("./helpers/paths"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 //--------------------------------------------------------
-//-- Tester
+//-- AbsolunetTester
 //--------------------------------------------------------
 const customization = {};
 /**
  * Absolunet's npm packages tester.
  */
 
-class Tester {
+class AbsolunetTester {
   /**
    * Customization options when extending.
    *
@@ -42,17 +40,16 @@ class Tester {
    * @param {Array<CIEngine>} [options.ciEngine=['pipelines', 'travis']] - Package CI engines.
    */
   constructor(options = {}) {
-    _dataValidation.default.argument('options', options, _joi.default.object({
-      nameScope: _joi.default.alternatives().try('', _joi.default.string().pattern(/^@(?<kebab1>[a-z][a-z0-9]*)(?<kebab2>-[a-z0-9]+)*$/u, 'npm scope')),
-      source: _joi.default.string().replace(/^(?<all>\.+)$/u, 'https://$<all>').uri(),
-      author: _joi.default.object({
-        name: _joi.default.string().required(),
-        url: _joi.default.string().uri().required()
+    (0, _joi.validateArgument)('options', options, _joi.Joi.object({
+      nameScope: _joi.Joi.alternatives().try('', _joi.Joi.string().pattern(/^@[a-z0-9]+(?:-[a-z0-9]+)*$/u, 'npm scope')),
+      source: _joi.Joi.string().replace(/^(?<all>\.+)$/u, 'https://$<all>').uri(),
+      author: _joi.Joi.object({
+        name: _joi.Joi.string().required(),
+        url: _joi.Joi.string().uri().required()
       }),
-      license: _joi.default.string().valid(..._spdxLicenseIds.default),
-      ciEngine: _joi.default.array().items(_joi.default.string().valid(...Object.values(_environment.default.CI_ENGINE))).min(1).unique()
+      license: _joi.Joi.string().valid(..._spdxLicenseIds.default),
+      ciEngine: _joi.Joi.array().items(_joi.Joi.string().valid(...Object.values(_environment.default.CI_ENGINE))).min(1).unique()
     }));
-
     const nameScope = options.nameScope === undefined ? '@absolunet' : options.nameScope;
     customization.nameScope = nameScope ? `${nameScope}/` : '';
     customization.source = options.source || 'github.com/absolunet';
@@ -82,8 +79,7 @@ class Tester {
 
 
   getReadablePath(absolutePath) {
-    _dataValidation.default.argument('absolutePath', absolutePath, _dataValidation.default.absolutePath);
-
+    (0, _joi.validateArgument)('absolutePath', absolutePath, _joi.Joi.absolutePath());
     return _environment.default.getReadablePath(absolutePath);
   }
   /**
@@ -102,11 +98,10 @@ class Tester {
 
 
   init(options = {}) {
-    _dataValidation.default.argument('options', options, _joi.default.object({
-      repositoryType: _joi.default.string().valid(...Object.values(_environment.default.REPOSITORY_TYPE)).required(),
-      packageType: _joi.default.string().valid(...Object.values(_environment.default.PACKAGE_TYPE)).required()
+    (0, _joi.validateArgument)('options', options, _joi.Joi.object({
+      repositoryType: _joi.Joi.string().valid(...Object.values(_environment.default.REPOSITORY_TYPE)).required(),
+      packageType: _joi.Joi.string().valid(...Object.values(_environment.default.PACKAGE_TYPE)).required()
     })); //-- Check if generic tests are present
-
 
     const genericTests = `${_paths.default.project.test}/generic/index.test.js`;
 
@@ -180,7 +175,7 @@ class Tester {
 
 }
 
-var _default = Tester;
+var _default = AbsolunetTester;
 exports.default = _default;
 module.exports = exports.default;
 module.exports.default = exports.default;

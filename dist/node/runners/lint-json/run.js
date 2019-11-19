@@ -13,7 +13,9 @@ var _default = ({
   testPath
 }) => {
   return _eslint.default.run(testPath, {
-    plugins: ['json'],
+    baseConfig: {
+      'extends': '@absolunet/json'
+    },
     extensions: ['.json'],
     useEslintrc: false
   });
