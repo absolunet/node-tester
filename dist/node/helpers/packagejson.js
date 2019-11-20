@@ -147,19 +147,24 @@ class PackageJsonHelper {
 
         expect(reference.config, 'Files must not be defined').not.toContainKey('files');
         expect(reference.config, 'Config must not be defined').not.toContainKey('config');
+      });
+      test('Ensure scripts are valid', () => {
+        let scripts = TEST_SCRIPTS;
 
         if (repositoryType === _environment.default.REPOSITORY_TYPE.singlePackage) {
-          expect(reference.config.scripts, 'Scripts must be valid').toContainEntries([...MANAGER_SCRIPTS, ...TEST_SCRIPTS]);
-        } else {
-          expect(reference.config.scripts, 'Scripts must be valid').toContainEntries([...TEST_SCRIPTS]);
+          scripts = scripts.concat(MANAGER_SCRIPTS);
         }
+
+        expect(reference.config.scripts, 'Scripts must be valid').toContainEntries(scripts);
       });
       test('Ensure dependencies are valid', () => {
+        const dependencies = [`${_environment.default.packageCustomization.nameScope}tester`];
+
         if (repositoryType === _environment.default.REPOSITORY_TYPE.singlePackage) {
-          expect(reference.config.devDependencies, 'devDependencies must be valid').toContainKeys(['@absolunet/manager', `${_environment.default.packageCustomization.nameScope}tester`]);
-        } else {
-          expect(reference.config.devDependencies, 'devDependencies must be valid').toContainKeys([`${_environment.default.packageCustomization.nameScope}tester`]);
+          dependencies.push('@absolunet/manager');
         }
+
+        expect(reference.config.devDependencies, 'devDependencies must be valid').toContainKeys(dependencies);
       });
     });
   }

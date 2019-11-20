@@ -142,7 +142,7 @@ class AbsolunetTester {
 				//-- Multi package
 				if (options.repositoryType === env.REPOSITORY_TYPE.multiPackage) {
 					Object.values(env.projectSubpackages).forEach((subpackageRoot) => {
-						terminal.echo('\n\n\n');
+						terminal.spacer(3);
 						terminal.run(`cd ${subpackageRoot}; npm run test${options.scope !== env.TEST_ALL ? `:${options.scope}` : ''}`);
 					});
 				}

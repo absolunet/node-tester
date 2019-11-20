@@ -214,7 +214,7 @@ class EnvironmentHelper {
 
 		if (repositoryType === this.REPOSITORY_TYPE.multiPackage) {
 			group = this.GROUP_TYPE.multi;
-		} if (repositoryType === this.REPOSITORY_TYPE.subPackage && packageType === this.PACKAGE_TYPE.simple) {
+		} else if (repositoryType === this.REPOSITORY_TYPE.subPackage && packageType === this.PACKAGE_TYPE.simple) {
 			group = this.GROUP_TYPE.sub;
 		}
 
