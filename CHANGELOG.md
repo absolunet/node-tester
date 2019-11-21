@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+
+
+
+## [3.1.0] - 2019-11-21
 ### Added
 - Added `--errorOnDeprecated` flag on Jest call
 
@@ -373,7 +377,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-[Unreleased]:   https://github.com/absolunet/node-tester/compare/3.0.5...HEAD
+[Unreleased]:   https://github.com/absolunet/node-tester/compare/3.1.0...HEAD
+[3.1.0]:        https://github.com/absolunet/node-tester/compare/3.0.5...3.1.0
 [3.0.5]:        https://github.com/absolunet/node-tester/compare/3.0.4...3.0.5
 [3.0.4]:        https://github.com/absolunet/node-tester/compare/3.0.3...3.0.4
 [3.0.3]:        https://github.com/absolunet/node-tester/compare/3.0.2...3.0.3

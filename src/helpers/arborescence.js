@@ -237,7 +237,7 @@ class ArborescenceHelper {
 				});
 			}
 
-			// TODO [>=3.1.0]: Add more tests with marked
+			// TODO [>=3.2.0]: Add more tests with marked
 			if (!ignore.includes(README)) {
 				test(`Ensure '${readablePath}/readme.md' is valid`, () => {
 					this.fileExists('readme.md', directoryPath);
@@ -276,7 +276,7 @@ class ArborescenceHelper {
 					this.fileExists('src/index.js', directoryPath);
 					this.fileExists('src/.eslintrc.yaml', directoryPath);
 
-					// TODO [>=3.1.0]: Verify order and that 2nd config is node or browser
+					// TODO [>=3.2.0]: Verify order and that 2nd config is node or browser
 					this.fileContainsMatrix('src/.eslintrc.yaml', { directoryPath, groupType });
 				});
 			}
