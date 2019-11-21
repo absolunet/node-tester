@@ -12,19 +12,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //-- Multi package - package.json tests
 //--------------------------------------------------------
 var _default = () => {
-  //-- Single package
-  if (_environment.default.repositoryType === _environment.default.REPOSITORY_TYPE.singlePackage) {
-    _packagejson.default.validatePackage(); //-- Multi package
+  //-- Multi package
+  if (_environment.default.repositoryType === _environment.default.REPOSITORY_TYPE.multiPackage) {
+    _packagejson.default.validateMulti(); //-- Rest
 
-  } else if (_environment.default.repositoryType === _environment.default.REPOSITORY_TYPE.multiPackage) {
-    _packagejson.default.validateMulti(); //-- For every package
-
-
-    Object.values(_environment.default.projectSubpackages).forEach(subpackageRoot => {
-      _packagejson.default.validatePackage({
-        directoryPath: subpackageRoot
-      });
-    });
+  } else {
+    _packagejson.default.validatePackage();
   }
 };
 

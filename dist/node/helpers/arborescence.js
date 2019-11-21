@@ -39,7 +39,7 @@ const IGNORE = {
   [_environment.default.GROUP_TYPE.simple]: [],
   [_environment.default.GROUP_TYPE.ioc]: [],
   [_environment.default.GROUP_TYPE.multi]: [NPMIGNORE, DOCUMENTATION, DISTRIBUTION, SOURCE],
-  [_environment.default.GROUP_TYPE.sub]: [GITHUB_ISSUES, GITHUB_PR, EDITORCONFIG, ESLINTIGNORE, ESLINTRC, GITIGNORE, TRAVIS, PIPELINES, CHANGELOG, CODEOFCONDUCT, CONTRIBUTING, MANAGER, SECURITY, SUPPORT, DOCUMENTATION, TEST]
+  [_environment.default.GROUP_TYPE.sub]: [GITHUB_ISSUES, GITHUB_PR, EDITORCONFIG, GITIGNORE, TRAVIS, PIPELINES, CHANGELOG, CODEOFCONDUCT, CONTRIBUTING, MANAGER, SECURITY, SUPPORT, DOCUMENTATION]
 };
 
 const extractEntries = filename => {
@@ -124,15 +124,13 @@ class ArborescenceHelper {
    * @param {string} [parameters.root=paths.project.root] - Root directory of the package.
    * @param {RepositoryType} [parameters.repositoryType=env.repositoryType] - Type of repository.
    * @param {PackageType} [parameters.packageType=env.packageType] - Type of package.
-   * @param {boolean} [parameters.subpackage=false] - If is subpackage.
    */
 
 
   validate({
     root = _paths.default.project.root,
     repositoryType = _environment.default.repositoryType,
-    packageType = _environment.default.packageType,
-    subpackage = false
+    packageType = _environment.default.packageType
   } = {}) {
     describe(`Validate arborescence`, () => {
       const directoryPath = _fss.default.realpath(root);
@@ -141,8 +139,7 @@ class ArborescenceHelper {
 
       const groupType = _environment.default.groupType({
         repositoryType,
-        packageType,
-        subpackage
+        packageType
       });
 
       const ignore = IGNORE[groupType];
