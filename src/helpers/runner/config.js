@@ -81,7 +81,7 @@ class RunnerHelperConfig {
 			displayName: 'Standards: Lint JSON',
 			runner:      `${paths.runners}/lint-json`,
 			rootDir:     paths.project.root,
-			testMatch:   ['**/*.json', '!**/package-lock.json'],
+			testMatch:   ['**/*.json', '!**/package-lock.json', '!**/packages/**/*'],
 			globals:     this.globals
 		};
 	}
@@ -98,7 +98,7 @@ class RunnerHelperConfig {
 			runner:               `${paths.runners}/lint-yaml`,
 			rootDir:              paths.project.root,
 			moduleFileExtensions: ['yaml', 'yml'],
-			testMatch:            ['**/*.{yaml,yml}'],
+			testMatch:            ['**/*.{yaml,yml}', '!**/packages/**/*'],
 			globals:              this.globals
 		};
 	}
@@ -115,7 +115,7 @@ class RunnerHelperConfig {
 			runner:               `${paths.runners}/lint-bash`,
 			rootDir:              paths.project.root,
 			moduleFileExtensions: ['sh'],
-			testMatch:            ['**/*.sh'],
+			testMatch:            ['**/*.sh', '!**/packages/**/*'],
 			globals:              this.globals
 		};
 	}
@@ -141,10 +141,13 @@ class RunnerHelperConfig {
 	/**
 	 * Configuration for linting files styling.
 	 *
-	 * @type {object}
+	 * @param {RepositoryType} repositoryType - Repository type.
+	 * @returns {object} Configuration.
 	 */
-	get lintFileStyles() {
-		const rawConfig   = fss.readFile(`${paths.project.root}/.editorconfig`, 'utf8');
+	lintFileStyles(repositoryType) {
+		const prefix = repositoryType === env.REPOSITORY_TYPE.subPackage ? `/../..` : '';
+
+		const rawConfig   = fss.readFile(`${paths.project.root}${prefix}/.editorconfig`, 'utf8');
 		const rawPatterns = [...rawConfig.matchAll(/^\[(?<pattern>.+)\]$/gum)];
 		const patterns    = rawPatterns.map((item) => {
 			return `**/${item[1]}`;
@@ -155,7 +158,7 @@ class RunnerHelperConfig {
 			runner:               `${paths.runners}/lint-file-styles`,
 			rootDir:              paths.project.root,
 			moduleFileExtensions: ['*'],
-			testMatch:            [...patterns, '!**/*.{js,scss}', '!**/package-lock.json'],
+			testMatch:            [...patterns, '!**/*.{js,scss}', '!**/package-lock.json', '!**/packages/**/*'],
 			globals:              this.globals
 		};
 	}

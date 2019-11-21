@@ -17,7 +17,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //--------------------------------------------------------
 //-- package.json helper
 //--------------------------------------------------------
-const SCRIPTS = [['manager:install', 'node manager --task=install'], ['manager:outdated', 'node manager --task=outdated'], ['manager:build', 'node manager --task=build'], ['manager:watch', 'node manager --task=watch'], ['manager:documentation', 'node manager --task=documentation'], ['manager:prepare', 'node manager --task=prepare'], ['manager:rebuild', 'node manager --task=rebuild'], ['manager:publish', 'node manager --task=publish'], ['manager:publish:unsafe', 'node manager --task=publish:unsafe'], ['test', 'node test --scope=all'], ['test:standards', 'node test --scope=standards'], ['test:unit', 'node test --scope=unit'], ['test:feature', 'node test --scope=feature'], ['test:integration', 'node test --scope=integration'], ['test:endtoend', 'node test --scope=endtoend']];
+const MANAGER_SCRIPTS = [['manager:install', 'node manager --task=install'], ['manager:outdated', 'node manager --task=outdated'], ['manager:build', 'node manager --task=build'], ['manager:watch', 'node manager --task=watch'], ['manager:documentation', 'node manager --task=documentation'], ['manager:prepare', 'node manager --task=prepare'], ['manager:rebuild', 'node manager --task=rebuild'], ['manager:publish', 'node manager --task=publish'], ['manager:publish:unsafe', 'node manager --task=publish:unsafe']];
+const TEST_SCRIPTS = [['test', 'node test --scope=all'], ['test:standards', 'node test --scope=standards'], ['test:unit', 'node test --scope=unit'], ['test:feature', 'node test --scope=feature'], ['test:integration', 'node test --scope=integration'], ['test:endtoend', 'node test --scope=endtoend']];
 /**
  * Package.json validation helper.
  *
@@ -146,15 +147,24 @@ class PackageJsonHelper {
 
         expect(reference.config, 'Files must not be defined').not.toContainKey('files');
         expect(reference.config, 'Config must not be defined').not.toContainKey('config');
+      });
+      test('Ensure scripts are valid', () => {
+        let scripts = TEST_SCRIPTS;
 
         if (repositoryType === _environment.default.REPOSITORY_TYPE.singlePackage) {
-          expect(reference.config.scripts, 'Scripts must be valid').toContainEntries(SCRIPTS);
+          scripts = scripts.concat(MANAGER_SCRIPTS);
         }
+
+        expect(reference.config.scripts, 'Scripts must be valid').toContainEntries(scripts);
       });
       test('Ensure dependencies are valid', () => {
+        const dependencies = [`${_environment.default.packageCustomization.nameScope}tester`];
+
         if (repositoryType === _environment.default.REPOSITORY_TYPE.singlePackage) {
-          expect(reference.config.devDependencies, 'devDependencies must be valid').toContainKeys(['@absolunet/manager', `${_environment.default.packageCustomization.nameScope}tester`]);
+          dependencies.push('@absolunet/manager');
         }
+
+        expect(reference.config.devDependencies, 'devDependencies must be valid').toContainKeys(dependencies);
       });
     });
   }
@@ -181,7 +191,7 @@ class PackageJsonHelper {
         expect(reference.config, 'Author must not be defined').not.toContainKey('author');
       });
       test('Ensure functional fields are valid', () => {
-        expect(reference.config.scripts, 'Scripts must be valid').toContainEntries(SCRIPTS.concat([['postinstall', 'npm run manager:install']]));
+        expect(reference.config.scripts, 'Scripts must be valid').toContainEntries([...MANAGER_SCRIPTS, ...TEST_SCRIPTS, ['postinstall', 'npm run manager:install']]);
       });
       test('Ensure dependencies are valid', () => {
         expect(reference.config.devDependencies, 'devDependencies must be valid').toContainKey('lerna');

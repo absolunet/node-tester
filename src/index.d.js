@@ -1,5 +1,5 @@
 /**
- * Type of repository: 'single-package', 'multi-package'.
+ * Type of repository: 'single-package', 'multi-package', 'sub-package'.
  *
  * @typedef {string} RepositoryType
  */
