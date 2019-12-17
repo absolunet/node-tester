@@ -31,7 +31,7 @@ const mockedFss = {
 };
 
 const mockedTerminal = {
-	run: jest.fn()
+	runWithOptions: jest.fn()
 };
 
 
@@ -135,19 +135,21 @@ then.shouldHaveExitWithCode = (code) => {
 
 then.shouldHaveRunThroughTester = (scope) => {
 	then.shouldNotHaveThrown();
-	expect(mockedTerminal.run).toHaveBeenCalled();
-	expect(mockedTerminal.run.mock.calls[0][0]).toMatch(new RegExp(`export __ABSOLUNET_TESTER_JEST_CONFIG__=.*"scope":"${scope}"`, 'u'));
+	expect(mockedTerminal.runWithOptions).toHaveBeenCalled();
+	expect(mockedTerminal.runWithOptions.mock.calls[0][1].env.__ABSOLUNET_TESTER_JEST_CONFIG__).toMatch(new RegExp(`"scope":"${scope}"`, 'u'));
 };
 
 then.shouldHaveRunThroughIoC = (scope) => {
 	then.shouldNotHaveThrown();
-	expect(mockedTerminal.run).toHaveBeenCalled();
-	expect(mockedTerminal.run.mock.calls).toContainEqual([`node ioc test --type=${scope}`]);
+	expect(mockedTerminal.runWithOptions).toHaveBeenCalled();
+	expect(mockedTerminal.runWithOptions.mock.calls).toContainEqual([`node ioc test --type=${scope}`]);
 };
 
 then.shouldNotHaveRunTests = () => {
 	then.shouldNotHaveThrown();
-	expect(mockedTerminal.run.mock.calls[0][0]).not.toMatch(/export __ABSOLUNET_TESTER_JEST_CONFIG__=/u);
+	const parameters  = mockedTerminal.runWithOptions.mock.calls[0][1] || {};
+	const environment = parameters.env || {};
+	expect(environment).not.toContainKey('__ABSOLUNET_TESTER_JEST_CONFIG__');
 };
 
 then.shouldHaveRunAllTests = () => {
@@ -192,7 +194,7 @@ then.shouldHaveRunEndToEndTestsThroughIoC = () => {
 
 then.shouldNotHaveRunStandardsTestsThroughIoC = () => {
 	then.shouldNotHaveThrown();
-	expect(mockedTerminal.run.mock.calls).not.toContainEqual([`node ioc test --scope=standards`]);
+	expect(mockedTerminal.runWithOptions.mock.calls).not.toContainEqual([`node ioc test --scope=standards`]);
 };
 
 

@@ -10,7 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
-
+### Fixed
+- Fixed calls to Jest to support Windows terminal
 
 
 ## [3.1.0] - 2019-11-21
