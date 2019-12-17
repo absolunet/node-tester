@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Fixed
 - Fixed calls to Jest to support Windows terminal
+- Added `--passWithNoTests` flag to Jest call so it does not fail on subpackages not having all the same test types
+
 
 
 ## [3.1.0] - 2019-11-21
