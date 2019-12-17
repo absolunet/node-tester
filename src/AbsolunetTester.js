@@ -149,7 +149,7 @@ class AbsolunetTester {
 		try {
 			if (!shouldRunIocTestOnly) {
 				terminal.runWithOptions(
-					`node ${paths.jestBinary} --errorOnDeprecated --config=${paths.config}/jest.js`,
+					`node ${paths.jestBinary} --errorOnDeprecated --passWithNoTests --config=${paths.config}/jest.js`,
 					{ env: { [env.JEST_CLI_KEY]: JSON.stringify(options) } } // eslint-disable-line unicorn/prevent-abbreviations
 				);
 
