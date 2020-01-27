@@ -1,10 +1,11 @@
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.default = void 0;
 
 var _chalk = _interopRequireDefault(require("chalk"));
-
-var _child_process = require("child_process");
 
 var _minimist = _interopRequireDefault(require("minimist"));
 
@@ -25,27 +26,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //--------------------------------------------------------
 //-- AbsolunetTester
 //--------------------------------------------------------
-const customization = {}; // Temporary workaround for unit tests until this method is implemented in @absolunet/terminal
-
-if (!_terminal.terminal.runWithOptions) {
-  _terminal.terminal.runWithOptions = (cmd, options) => {
-    const {
-      cwd
-    } = options;
-    const environment = options.env || {};
-    (0, _child_process.execSync)(cmd, {
-      stdio: 'inherit',
-      cwd,
-      env: { ...process.env,
-        ...environment
-      }
-    }); // eslint-disable-line unicorn/prevent-abbreviations, no-process-env
-  };
-}
+const customization = {};
 /**
  * Absolunet's npm packages tester.
  */
-
 
 class AbsolunetTester {
   /**
@@ -168,27 +152,26 @@ class AbsolunetTester {
 
     try {
       if (!shouldRunIocTestOnly) {
-        _terminal.terminal.runWithOptions(`node ${_paths.default.jestBinary} --errorOnDeprecated --passWithNoTests --config=${_paths.default.config}/jest.js`, {
-          env: {
+        _terminal.terminal.process.run(`node ${_paths.default.jestBinary} --errorOnDeprecated --passWithNoTests --config=${_paths.default.config}/jest.js`, {
+          environment: {
             [_environment.default.JEST_CLI_KEY]: JSON.stringify(options)
           }
-        } // eslint-disable-line unicorn/prevent-abbreviations
-        ); //-- Multi package
+        }); //-- Multi package
 
 
         if (options.repositoryType === _environment.default.REPOSITORY_TYPE.multiPackage) {
           Object.values(_environment.default.projectSubpackages).forEach(subpackageRoot => {
             _terminal.terminal.spacer(3);
 
-            _terminal.terminal.runWithOptions(`npm run test${options.scope !== _environment.default.TEST_ALL ? `:${options.scope}` : ''}`, {
-              cwd: subpackageRoot
+            _terminal.terminal.process.run(`npm run test${options.scope !== _environment.default.TEST_ALL ? `:${options.scope}` : ''}`, {
+              directory: subpackageRoot
             });
           });
         }
       }
 
       iocTests.forEach(type => {
-        _terminal.terminal.runWithOptions(`node ioc test --type=${type}`);
+        _terminal.terminal.process.run(`node ioc test --type=${type}`);
       });
     } catch (error) {
       process.exit(1); // eslint-disable-line no-process-exit, unicorn/no-process-exit
