@@ -18,7 +18,7 @@ manager.init({
 	tasks: {
 		prepare: {
 			postRun: async ({ terminal }) => {
-				terminal.println(`Update Node version in package.json / .travis.yml / bitbucket-pipelines.yml`);
+				terminal.print(`Update Node version in package.json / .travis.yml / bitbucket-pipelines.yml`).spacer();
 
 				const latest = await nodejsLatest.latest();
 				const { version } = semver.coerce(semver.major(latest.version));
@@ -40,7 +40,7 @@ manager.init({
 
 
 
-				terminal.println(`Update year in license`);
+				terminal.print(`Update year in license`).spacer();
 				const licenseFile = `${paths.root}/license`;
 				let licenseData = fss.readFile(licenseFile, 'utf8');
 				licenseData = licenseData.replace(/Copyright \(c\) 2011-\d{4}/u, `Copyright (c) 2011-${new Date().getFullYear()}`);
