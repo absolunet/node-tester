@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
+- Update version support to consider latest major even version to be stable and latest odd version to be unstable
 - Update to Jest 25
 - Update license to 2020
 - Maintenance updates
