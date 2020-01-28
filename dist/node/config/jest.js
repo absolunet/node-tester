@@ -1,5 +1,8 @@
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.projects = void 0;
 
 var _environment = _interopRequireDefault(require("../helpers/environment"));
