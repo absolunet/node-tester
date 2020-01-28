@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+
+
+
+## [3.1.3] - 2020-01-28
 ### Changed
 - Test on latest Node.js + latest stable Node.js
 
@@ -401,7 +405,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-[Unreleased]:   https://github.com/absolunet/node-tester/compare/3.1.2...HEAD
+[Unreleased]:   https://github.com/absolunet/node-tester/compare/3.1.3...HEAD
+[3.1.3]:        https://github.com/absolunet/node-tester/compare/3.1.2...3.1.3
 [3.1.2]:        https://github.com/absolunet/node-tester/compare/3.1.1...3.1.2
 [3.1.1]:        https://github.com/absolunet/node-tester/compare/3.1.0...3.1.1
 [3.1.0]:        https://github.com/absolunet/node-tester/compare/3.0.5...3.1.0
