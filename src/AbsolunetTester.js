@@ -2,7 +2,6 @@
 //-- AbsolunetTester
 //--------------------------------------------------------
 import chalk                     from 'chalk';
-import { execSync }              from 'child_process';
 import minimist                  from 'minimist';
 import spdxLicenseIds            from 'spdx-license-ids';
 import fss                       from '@absolunet/fss';
@@ -13,16 +12,6 @@ import paths                     from './helpers/paths';
 
 
 const customization = {};
-
-// Temporary workaround for unit tests until this method is implemented in @absolunet/terminal
-if (!terminal.runWithOptions) {
-	terminal.runWithOptions = (cmd, options) => {
-		const { cwd }     = options;
-		const environment = options.env || {};
-
-		execSync(cmd, { stdio: 'inherit', cwd, env: { ...process.env, ...environment } }); // eslint-disable-line unicorn/prevent-abbreviations, no-process-env
-	};
-}
 
 
 
@@ -148,22 +137,22 @@ class AbsolunetTester {
 		//-- Run tests
 		try {
 			if (!shouldRunIocTestOnly) {
-				terminal.runWithOptions(
+				terminal.process.run(
 					`node ${paths.jestBinary} --errorOnDeprecated --passWithNoTests --config=${paths.config}/jest.js`,
-					{ env: { [env.JEST_CLI_KEY]: JSON.stringify(options) } } // eslint-disable-line unicorn/prevent-abbreviations
+					{ environment: { [env.JEST_CLI_KEY]: JSON.stringify(options) } }
 				);
 
 				//-- Multi package
 				if (options.repositoryType === env.REPOSITORY_TYPE.multiPackage) {
 					Object.values(env.projectSubpackages).forEach((subpackageRoot) => {
 						terminal.spacer(3);
-						terminal.runWithOptions(`npm run test${options.scope !== env.TEST_ALL ? `:${options.scope}` : ''}`, { cwd: subpackageRoot });
+						terminal.process.run(`npm run test${options.scope !== env.TEST_ALL ? `:${options.scope}` : ''}`, { directory: subpackageRoot });
 					});
 				}
 			}
 
 			iocTests.forEach((type) => {
-				terminal.runWithOptions(`node ioc test --type=${type}`);
+				terminal.process.run(`node ioc test --type=${type}`);
 			});
 		} catch (error) {
 			process.exit(1);  // eslint-disable-line no-process-exit, unicorn/no-process-exit
