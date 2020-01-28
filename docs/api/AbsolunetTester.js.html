@@ -37,7 +37,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Fira+Mono:400,500,700|Lato:100,100i,300,300i,400,400i,700,700i,900,900i|Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
 
 	
-	<!-- @absolunet/manager@2.0.0 (c) 2011-2019 Absolunet -->
+	<!-- @absolunet/manager@2.0.1 (c) 2011-2020 Absolunet -->
 </head>
 <body>
 	
@@ -68,7 +68,6 @@
 //-- AbsolunetTester
 //--------------------------------------------------------
 import chalk                     from 'chalk';
-import { execSync }              from 'child_process';
 import minimist                  from 'minimist';
 import spdxLicenseIds            from 'spdx-license-ids';
 import fss                       from '@absolunet/fss';
@@ -79,16 +78,6 @@ import paths                     from './helpers/paths';
 
 
 const customization = {};
-
-// Temporary workaround for unit tests until this method is implemented in @absolunet/terminal
-if (!terminal.runWithOptions) {
-	terminal.runWithOptions = (cmd, options) => {
-		const { cwd }     = options;
-		const environment = options.env || {};
-
-		execSync(cmd, { stdio: 'inherit', cwd, env: { ...process.env, ...environment } }); // eslint-disable-line unicorn/prevent-abbreviations, no-process-env
-	};
-}
 
 
 
@@ -214,22 +203,22 @@ class AbsolunetTester {
 		//-- Run tests
 		try {
 			if (!shouldRunIocTestOnly) {
-				terminal.runWithOptions(
+				terminal.process.run(
 					`node ${paths.jestBinary} --errorOnDeprecated --passWithNoTests --config=${paths.config}/jest.js`,
-					{ env: { [env.JEST_CLI_KEY]: JSON.stringify(options) } } // eslint-disable-line unicorn/prevent-abbreviations
+					{ environment: { [env.JEST_CLI_KEY]: JSON.stringify(options) } }
 				);
 
 				//-- Multi package
 				if (options.repositoryType === env.REPOSITORY_TYPE.multiPackage) {
 					Object.values(env.projectSubpackages).forEach((subpackageRoot) => {
 						terminal.spacer(3);
-						terminal.runWithOptions(`npm run test${options.scope !== env.TEST_ALL ? `:${options.scope}` : ''}`, { cwd: subpackageRoot });
+						terminal.process.run(`npm run test${options.scope !== env.TEST_ALL ? `:${options.scope}` : ''}`, { directory: subpackageRoot });
 					});
 				}
 			}
 
 			iocTests.forEach((type) => {
-				terminal.runWithOptions(`node ioc test --type=${type}`);
+				terminal.process.run(`node ioc test --type=${type}`);
 			});
 		} catch (error) {
 			process.exit(1);  // eslint-disable-line no-process-exit, unicorn/no-process-exit
@@ -263,7 +252,7 @@ export default AbsolunetTester;
 	</div>
 
 	<footer>
-		MIT © 2011-2019 <span class="made">Made with <span class="adjective" data-component="adjective">&#x2764;</span> by <a href="https://absolunet.com" data-external="external">Absolunet</a></span>
+		MIT © 2011-2020 <span class="made">Made with <span class="adjective" data-component="adjective">&#x2764;</span> by <a href="https://absolunet.com" data-external="external">Absolunet</a></span>
 	</footer>
 
 	<script src="../assets__/main.js"></script>
