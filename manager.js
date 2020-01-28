@@ -32,25 +32,26 @@ manager.init({
 			postRun: async ({ terminal }) => {
 				terminal.print(`Update Node version in package.json / .travis.yml / bitbucket-pipelines.yml`).spacer();
 
-				const latest = await nodejsLatest.latest();
-				const { version: latestVersion } = semver.coerce(semver.major(latest.version));
-				const stableVersion = semver.major(latestVersion) % 2 === 0 ? latestVersion : semver.coerce(semver.major(latestVersion) - 1).version;
+				const latest              = await nodejsLatest.latest();
+				const latestMajor         = semver.major(latest.version);
+				const currentStableMajor  = latestMajor - (latestMajor % 2 === 0 ? 0 : 1);
+				const previousStableMajor = latestMajor ===	currentStableMajor ? currentStableMajor - 2 : currentStableMajor;
 
 
 				//-- package.json
 				const packageFile = `${paths.root}/package.json`;
 				const packageData = fss.readJson(packageFile);
-				packageData.engines.node = `>= ${stableVersion}`;
+				packageData.engines.node = `>= ${currentStableMajor}`;
 				fss.writeJson(packageFile, packageData, { space: 2 });
 
 
 				//-- .travis.yml
 				const travisFile = `${paths.root}/.travis.yml`;
 				const travisData = fss.readYaml(travisFile);
-				travisData.node_js = ['node', latestVersion];  // eslint-disable-line camelcase
+				travisData.node_js = ['node', currentStableMajor];  // eslint-disable-line camelcase
 
-				if (latestVersion !== stableVersion) {
-					travisData.node_js.push(stableVersion);
+				if (previousStableMajor !== currentStableMajor) {
+					travisData.node_js.push(previousStableMajor);
 				}
 
 				fss.writeYaml(travisFile, travisData);
@@ -59,10 +60,10 @@ manager.init({
 				//-- bitbucket-pipelines.yml
 				const pipelinesFile = `${paths.root}/bitbucket-pipelines.yml`;
 				const pipelinesData = fss.readYaml(pipelinesFile);
-				pipelinesData.pipelines.default[0].parallel = [getPipelineStep('latest', 'latest'), getPipelineStep('original latest', latestVersion)];
+				pipelinesData.pipelines.default[0].parallel = [getPipelineStep('latest', 'latest'), getPipelineStep('latest stable', currentStableMajor)];
 
-				if (latestVersion !== stableVersion) {
-					pipelinesData.pipelines.default[0].parallel.push(getPipelineStep('original latest stable', stableVersion));
+				if (previousStableMajor !== currentStableMajor) {
+					pipelinesData.pipelines.default[0].parallel.push(getPipelineStep('latest stable', previousStableMajor));
 				}
 
 				fss.writeYaml(pipelinesFile, pipelinesData);
