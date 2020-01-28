@@ -10,6 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+### Changed
+- Update to Jest 25
+- Update license to 2020
+- Maintenance updates
+
+### Fixed
+- Fixed calls to call IoC tests
 
 
 
