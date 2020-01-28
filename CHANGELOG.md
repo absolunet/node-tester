@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+
+
+
+## [3.1.2] - 2020-01-28
 ### Changed
 - Update version support to consider latest major even version to be stable and latest odd version to be unstable
 - Update to Jest 25
@@ -395,7 +399,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-[Unreleased]:   https://github.com/absolunet/node-tester/compare/3.1.1...HEAD
+[Unreleased]:   https://github.com/absolunet/node-tester/compare/3.1.2...HEAD
+[3.1.2]:        https://github.com/absolunet/node-tester/compare/3.1.1...3.1.2
 [3.1.1]:        https://github.com/absolunet/node-tester/compare/3.1.0...3.1.1
 [3.1.0]:        https://github.com/absolunet/node-tester/compare/3.0.5...3.1.0
 [3.0.5]:        https://github.com/absolunet/node-tester/compare/3.0.4...3.0.5
