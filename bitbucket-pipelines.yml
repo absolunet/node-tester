@@ -7,7 +7,7 @@ pipelines:
             caches:
               - node
             script:
-              - npm install
+              - npm install --unsafe-perm
               - npm test
         - step:
             name: Test latest stable Node.js version
@@ -15,5 +15,5 @@ pipelines:
             caches:
               - node
             script:
-              - npm install
+              - npm install --unsafe-perm
               - npm test
