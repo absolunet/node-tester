@@ -289,7 +289,7 @@ class ArborescenceHelper {
         test(`Ensure '${readablePath}/package.json' is valid`, () => {
           this.fileExists('package.json', directoryPath);
         });
-      } // TODO [>=3.2.0]: Add more tests with marked
+      } // TODO [>=3.3.0]: Add more tests with marked
 
 
       if (!ignore.includes(README)) {
@@ -334,7 +334,7 @@ class ArborescenceHelper {
       if (!ignore.includes(SOURCE)) {
         test(`Ensure '${readablePath}/src/*' is valid`, () => {
           this.fileExists('src/index.js', directoryPath);
-          this.fileExists('src/.eslintrc.yaml', directoryPath); // TODO [>=3.2.0]: Verify order and that 2nd config is node or browser
+          this.fileExists('src/.eslintrc.yaml', directoryPath); // TODO [>=3.3.0]: Verify order and that 2nd config is node or browser
 
           this.fileContainsMatrix('src/.eslintrc.yaml', {
             directoryPath,

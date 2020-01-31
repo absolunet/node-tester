@@ -1,6 +1,6 @@
 {
   "name": "@absolunet/tester",
-  "version": "3.1.3",
+  "version": "3.2.0",
   "description": "Test suite for Node.js projects",
   "definition": "",
   "homepage": "https://documentation.absolunet.com/node-tester",
@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "@absolunet/manager": "2.0.1",
-    "@absolunet/tester": "3.1.3",
+    "@absolunet/tester": "3.2.0",
     "nodejs-latest": "1.1.0"
   },
   "dependencies": {
