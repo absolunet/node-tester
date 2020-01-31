@@ -197,7 +197,7 @@ class PackageJsonHelper {
         expect(reference.config.scripts, 'Scripts must be valid').toContainEntries([...MANAGER_SCRIPTS, ...TEST_SCRIPTS, ['postinstall', 'npm run manager:install']]);
       });
       test('Ensure dependencies are valid', () => {
-        expect(reference.config.devDependencies, 'devDependencies must be valid').toContainKey('lerna');
+        expect(reference.config.devDependencies, 'devDependencies must be valid').not.toContainKey('lerna');
         expect(reference.config, 'Dependencies must not be defined').not.toContainKey('dependencies');
       });
     });

@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+### Changed
+- Validate that `lerna` is not a direct devDependency in multi-package projects, to be in sync with `@absolunet/manager` change in 2.1.0
+- Maintenance updates
+
+### Fixed
+- Bitbucket Pipelines `npm install` without permissions changes so postinstall scripts work
 
 
 
