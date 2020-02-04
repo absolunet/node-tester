@@ -32,7 +32,7 @@
   },
   "main": "index.js",
   "scripts": {
-    "test": "ava test/index.js",
+    "test": "ava test/index.js --timeout=10m",
     "installer": "node manager.js --task=installer",
     "outdated": "node manager.js --task=outdated",
     "build": "node manager.js --task=build",
@@ -53,11 +53,11 @@
     "@absolunet/eslint-config-react": "1.4.4",
     "@absolunet/eslint-config-test": "1.4.4",
     "@absolunet/stylelint-config-nwayo": "1.3.0",
-    "ava": "^2.4.0",
+    "ava": "^3.2.0",
     "eclint": "^2.8.1",
     "glob-all": "^3.1.0",
     "gulp-reporter": "^2.10.0",
-    "read-package-json": "^2.1.0",
+    "read-package-json": "^2.1.1",
     "replaceall": "^0.1.6",
     "vinyl-fs": "^3.0.3",
     "yaml-lint": "^1.2.4"
