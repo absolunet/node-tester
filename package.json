@@ -28,7 +28,7 @@
     "url": "https://github.com/absolunet/node-tester/issues"
   },
   "engines": {
-    "node": ">= 12.0.0"
+    "node": ">= 12"
   },
   "main": "index.js",
   "scripts": {
