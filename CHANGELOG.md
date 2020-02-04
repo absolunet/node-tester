@@ -144,6 +144,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [2.6.11] - 2020-02-04
+### Changed
+- Update license to 2020
+- Update to AVA 3
+- Maintenance updates
+
+
+
 ## [2.6.10] - 2019-11-05
 ### Changed
 - Update ESLint configurations
@@ -429,7 +437,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [3.0.0]:        https://github.com/absolunet/node-tester/compare/3.0.0-rc.2...3.0.0
 [3.0.0-rc.2]:   https://github.com/absolunet/node-tester/compare/3.0.0-rc.1...3.0.0-rc.2
 [3.0.0-rc.1]:   https://github.com/absolunet/node-tester/compare/3.0.0-beta.1...3.0.0-rc.1
-[3.0.0-beta.1]: https://github.com/absolunet/node-tester/compare/2.6.10...3.0.0-beta.1
+[3.0.0-beta.1]: https://github.com/absolunet/node-tester/compare/2.6.11...3.0.0-beta.1
+[2.6.11]:       https://github.com/absolunet/node-tester/compare/2.6.10...2.6.11
 [2.6.10]:       https://github.com/absolunet/node-tester/compare/2.6.9...2.6.10
 [2.6.9]:        https://github.com/absolunet/node-tester/compare/2.6.8...2.6.9
 [2.6.8]:        https://github.com/absolunet/node-tester/compare/2.6.7...2.6.8
