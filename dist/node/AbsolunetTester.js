@@ -179,14 +179,20 @@ class AbsolunetTester {
   }
   /**
    * Run generic repository tests.
+   *
+   * @param {object} [options] - Options.
+   * @param {object<string>} [options.fileMatrix] - Files matrix overwrites.
    */
 
 
-  genericRepositoryTests() {
+  genericRepositoryTests(options = {}) {
+    (0, _joi.validateArgument)('options', options, _joi.Joi.object({
+      fileMatrix: _joi.Joi.object().pattern(_joi.Joi.string(), _joi.Joi.string())
+    }));
     const repositoryPath = `${_paths.default.tests}/repository`;
 
     _fss.default.readdir(repositoryPath).forEach(file => {
-      require(`${repositoryPath}/${file}`)(); // eslint-disable-line global-require
+      require(`${repositoryPath}/${file}`)(options); // eslint-disable-line global-require
 
     });
   }
