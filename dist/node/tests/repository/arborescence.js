@@ -12,8 +12,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //--------------------------------------------------------
 //-- Repository - Arborescence tests
 //--------------------------------------------------------
-var _default = () => {
-  _arborescence.default.validate();
+var _default = options => {
+  _arborescence.default.validate(options);
 };
 
 exports.default = _default;
