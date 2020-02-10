@@ -37,7 +37,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Fira+Mono:400,500,700|Lato:100,100i,300,300i,400,400i,700,700i,900,900i|Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
 
 	
-	<!-- @absolunet/manager@2.0.1 (c) 2011-2020 Absolunet -->
+	<!-- @absolunet/manager@2.1.0 (c) 2011-2020 Absolunet -->
 </head>
 <body>
 	
@@ -112,13 +112,15 @@ const extractEntries = (filename) => {
 };
 
 
-const matrix = (filename, type) => {
+const matrix = (filename, type, fileMatrix) => {
 	const cleaned    = filename.replace(/^(?&lt;prefix>(?&lt;remove>[\w./-])+\/)?\.(?&lt;filename>[\w./-]+)/u, `$&lt;prefix>$&lt;filename>`);
 	const rootPath   = `${paths.root}/${filename}`;
 	const matrixPath = `${paths.matrix}/root/${cleaned}`;
 	const typePath   = `${paths.matrix}/${type}/${cleaned}`;
 
-	if (fss.exists(typePath)) {
+	if (fileMatrix[filename]) {
+		return fss.realpath(fileMatrix[filename]);
+	} else if (fss.exists(typePath)) {
 		return fss.realpath(typePath);
 	} else if (fss.exists(matrixPath)) {
 		return fss.realpath(matrixPath);
@@ -160,7 +162,7 @@ class ArborescenceHelper {
 	 */
 	fileIsMatrix(filename, { directoryPath, groupType }) {
 		const content       = fss.readFile(`${directoryPath}/${filename}`, 'utf8');
-		const matrixContent = fss.readFile(matrix(filename, groupType), 'utf8');
+		const matrixContent = fss.readFile(matrix(filename, groupType, this.fileMatrix), 'utf8');
 		expect(content, `'${filename}' must be identical to matrix`).toBe(matrixContent);
 	}
 
@@ -175,7 +177,7 @@ class ArborescenceHelper {
 	 */
 	fileContainsMatrix(filename, { directoryPath, groupType }) {
 		const entries       = extractEntries(`${directoryPath}/${filename}`);
-		const matrixEntries = extractEntries(matrix(filename, groupType));
+		const matrixEntries = extractEntries(matrix(filename, groupType, this.fileMatrix));
 		expect(entries, `'${filename}' must contain matrix`).toIncludeAllMembers(matrixEntries);
 	}
 
@@ -187,8 +189,11 @@ class ArborescenceHelper {
 	 * @param {string} [parameters.root=paths.project.root] - Root directory of the package.
 	 * @param {RepositoryType} [parameters.repositoryType=env.repositoryType] - Type of repository.
 	 * @param {PackageType} [parameters.packageType=env.packageType] - Type of package.
+	 * @param {object&lt;string>} [parameters.fileMatrix] - Files matrix overwrites.
 	 */
-	validate({ root = paths.project.root, repositoryType = env.repositoryType, packageType = env.packageType } = {}) {
+	validate({ root = paths.project.root, repositoryType = env.repositoryType, packageType = env.packageType, fileMatrix = {} } = {}) {
+		this.fileMatrix = fileMatrix;
+
 		describe(`Validate arborescence`, () => {
 			const directoryPath = fss.realpath(root);
 			const readablePath  = env.getReadablePath(directoryPath);

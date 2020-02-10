@@ -50,7 +50,7 @@
     "test:endtoend": "node test --scope=endtoend"
   },
   "devDependencies": {
-    "@absolunet/manager": "2.0.1",
+    "@absolunet/manager": "2.1.0",
     "@absolunet/tester": "3.2.0",
     "nodejs-latest": "1.1.0"
   },
