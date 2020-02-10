@@ -46,13 +46,15 @@ const extractEntries = (filename) => {
 };
 
 
-const matrix = (filename, type) => {
+const matrix = (filename, type, fileMatrix) => {
 	const cleaned    = filename.replace(/^(?<prefix>(?<remove>[\w./-])+\/)?\.(?<filename>[\w./-]+)/u, `$<prefix>$<filename>`);
 	const rootPath   = `${paths.root}/${filename}`;
 	const matrixPath = `${paths.matrix}/root/${cleaned}`;
 	const typePath   = `${paths.matrix}/${type}/${cleaned}`;
 
-	if (fss.exists(typePath)) {
+	if (fileMatrix[filename]) {
+		return fss.realpath(fileMatrix[filename]);
+	} else if (fss.exists(typePath)) {
 		return fss.realpath(typePath);
 	} else if (fss.exists(matrixPath)) {
 		return fss.realpath(matrixPath);
@@ -94,7 +96,7 @@ class ArborescenceHelper {
 	 */
 	fileIsMatrix(filename, { directoryPath, groupType }) {
 		const content       = fss.readFile(`${directoryPath}/${filename}`, 'utf8');
-		const matrixContent = fss.readFile(matrix(filename, groupType), 'utf8');
+		const matrixContent = fss.readFile(matrix(filename, groupType, this.fileMatrix), 'utf8');
 		expect(content, `'${filename}' must be identical to matrix`).toBe(matrixContent);
 	}
 
@@ -109,7 +111,7 @@ class ArborescenceHelper {
 	 */
 	fileContainsMatrix(filename, { directoryPath, groupType }) {
 		const entries       = extractEntries(`${directoryPath}/${filename}`);
-		const matrixEntries = extractEntries(matrix(filename, groupType));
+		const matrixEntries = extractEntries(matrix(filename, groupType, this.fileMatrix));
 		expect(entries, `'${filename}' must contain matrix`).toIncludeAllMembers(matrixEntries);
 	}
 
@@ -121,8 +123,11 @@ class ArborescenceHelper {
 	 * @param {string} [parameters.root=paths.project.root] - Root directory of the package.
 	 * @param {RepositoryType} [parameters.repositoryType=env.repositoryType] - Type of repository.
 	 * @param {PackageType} [parameters.packageType=env.packageType] - Type of package.
+	 * @param {object<string>} [parameters.fileMatrix] - Files matrix overwrites.
 	 */
-	validate({ root = paths.project.root, repositoryType = env.repositoryType, packageType = env.packageType } = {}) {
+	validate({ root = paths.project.root, repositoryType = env.repositoryType, packageType = env.packageType, fileMatrix = {} } = {}) {
+		this.fileMatrix = fileMatrix;
+
 		describe(`Validate arborescence`, () => {
 			const directoryPath = fss.realpath(root);
 			const readablePath  = env.getReadablePath(directoryPath);
