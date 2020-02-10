@@ -4,6 +4,6 @@
 import arborescence from '../../helpers/arborescence';
 
 
-export default () => {
-	arborescence.validate();
+export default (options) => {
+	arborescence.validate(options);
 };
