@@ -127,8 +127,8 @@ class ArborescenceHelper {
    *
    * @param {object} [parameters] - Parameters.
    * @param {string} [parameters.root=paths.project.root] - Root directory of the package.
-   * @param {RepositoryType} [parameters.repositoryType=env.repositoryType] - Type of repository.
-   * @param {PackageType} [parameters.packageType=env.packageType] - Type of package.
+   * @param {RepositoryType} [parameters.repositoryType=environment.repositoryType] - Type of repository.
+   * @param {PackageType} [parameters.packageType=environment.packageType] - Type of package.
    * @param {object<string>} [parameters.fileMatrix] - Files matrix overwrites.
    */
 

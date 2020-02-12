@@ -30,24 +30,24 @@ const __ = {};
 
 class RunnerHelperConfig {
   /**
-   * Set Jest globals variables.
-   *
-   * @param {object} globals - Data to be exposed globally by Jest.
-   */
-  set globals(globals) {
-    __.globals = globals;
-  }
-  /**
    * Jest globals variables.
    *
    * @type {object}
    */
-
-
   get globals() {
     return {
       [_environment.default.JEST_GLOBALS_KEY]: __.globals
     };
+  }
+  /**
+   * Set Jest globals variables.
+   *
+   * @param {object} globals - Data to be exposed globally by Jest.
+   */
+
+
+  set globals(globals) {
+    __.globals = globals;
   }
   /* eslint-disable unicorn/prevent-abbreviations */
 

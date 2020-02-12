@@ -1,12 +1,12 @@
 //--------------------------------------------------------
 //-- Jest config
 //--------------------------------------------------------
-import env    from '../helpers/environment';
-import runner from '../helpers/runner';
+import environment from '../helpers/environment';
+import runner      from '../helpers/runner';
 
 
 const runners = [];
-const { repositoryType, packageType, scope, customization } = JSON.parse(process.env[env.JEST_CLI_KEY]);  // eslint-disable-line no-process-env
+const { repositoryType, packageType, scope, customization } = JSON.parse(process.env[environment.JEST_CLI_KEY]);  // eslint-disable-line no-process-env
 runner.config.globals = { repositoryType, packageType, customization };
 
 
@@ -45,34 +45,34 @@ const ENDTOEND = [
 //-- Scope
 switch (scope) {
 
-	case env.TEST_ALL:
+	case environment.TEST_ALL:
 		runners.push(...STANDARDS, ...UNIT, ...FEATURE, ...INTEGRATION, ...ENDTOEND);
 		break;
 
-	case env.TEST_TYPE.standards:
+	case environment.TEST_TYPE.standards:
 		runners.push(...STANDARDS);
 		break;
 
-	case env.TEST_TYPE.unit:
-		if (packageType !== env.PACKAGE_TYPE.ioc) {
+	case environment.TEST_TYPE.unit:
+		if (packageType !== environment.PACKAGE_TYPE.ioc) {
 			runners.push(...UNIT);
 		}
 		break;
 
-	case env.TEST_TYPE.feature:
-		if (packageType !== env.PACKAGE_TYPE.ioc) {
+	case environment.TEST_TYPE.feature:
+		if (packageType !== environment.PACKAGE_TYPE.ioc) {
 			runners.push(...FEATURE);
 		}
 		break;
 
-	case env.TEST_TYPE.integration:
-		if (packageType !== env.PACKAGE_TYPE.ioc) {
+	case environment.TEST_TYPE.integration:
+		if (packageType !== environment.PACKAGE_TYPE.ioc) {
 			runners.push(...INTEGRATION);
 		}
 		break;
 
-	case env.TEST_TYPE.endtoend:
-		if (packageType !== env.PACKAGE_TYPE.ioc) {
+	case environment.TEST_TYPE.endtoend:
+		if (packageType !== environment.PACKAGE_TYPE.ioc) {
 			runners.push(...ENDTOEND);
 		}
 		break;
