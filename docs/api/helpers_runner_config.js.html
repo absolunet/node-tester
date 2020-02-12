@@ -67,9 +67,9 @@
             <pre id="line" class="line-numbers"><code class="language-js">//--------------------------------------------------------
 //-- Runner config helper
 //--------------------------------------------------------
-import fss   from '@absolunet/fss';
-import env   from '../environment';
-import paths from '../paths';
+import fss         from '@absolunet/fss';
+import environment from '../environment';
+import paths       from '../paths';
 
 
 const JEST_GENERIC_PLUGINS = [
@@ -100,22 +100,22 @@ const __ = {};
 class RunnerHelperConfig {
 
 	/**
+	 * Jest globals variables.
+	 *
+	 * @type {object}
+	 */
+	get globals() {
+		return { [environment.JEST_GLOBALS_KEY]: __.globals };
+	}
+
+
+	/**
 	 * Set Jest globals variables.
 	 *
 	 * @param {object} globals - Data to be exposed globally by Jest.
 	 */
 	set globals(globals) {
 		__.globals = globals;
-	}
-
-
-	/**
-	 * Jest globals variables.
-	 *
-	 * @type {object}
-	 */
-	get globals() {
-		return { [env.JEST_GLOBALS_KEY]: __.globals };
 	}
 
 
@@ -211,7 +211,7 @@ class RunnerHelperConfig {
 	 * @returns {object} Configuration.
 	 */
 	lintFileStyles(repositoryType) {
-		const prefix = repositoryType === env.REPOSITORY_TYPE.subPackage ? `/../..` : '';
+		const prefix = repositoryType === environment.REPOSITORY_TYPE.subPackage ? `/../..` : '';
 
 		const rawConfig   = fss.readFile(`${paths.project.root}${prefix}/.editorconfig`, 'utf8');
 		const rawPatterns = [...rawConfig.matchAll(/^\[(?&lt;pattern>.+)\]$/gum)];
