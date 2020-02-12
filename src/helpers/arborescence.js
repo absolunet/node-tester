@@ -1,9 +1,9 @@
 //--------------------------------------------------------
 //-- Arborescence helper
 //--------------------------------------------------------
-import fss   from '@absolunet/fss';
-import env   from './environment';
-import paths from './paths';
+import fss         from '@absolunet/fss';
+import environment from './environment';
+import paths       from './paths';
 
 
 const GITHUB_ISSUES = Symbol('github-issues');
@@ -30,10 +30,10 @@ const SOURCE        = Symbol('source');
 const TEST          = Symbol('test');
 
 const IGNORE = {
-	[env.GROUP_TYPE.simple]: [],
-	[env.GROUP_TYPE.ioc]:    [],
-	[env.GROUP_TYPE.multi]:  [NPMIGNORE, DOCUMENTATION, DISTRIBUTION, SOURCE],
-	[env.GROUP_TYPE.sub]:    [GITHUB_ISSUES, GITHUB_PR, EDITORCONFIG, GITIGNORE, TRAVIS, PIPELINES, CHANGELOG, CODEOFCONDUCT, CONTRIBUTING, MANAGER, SECURITY, SUPPORT, DOCUMENTATION]
+	[environment.GROUP_TYPE.simple]: [],
+	[environment.GROUP_TYPE.ioc]:    [],
+	[environment.GROUP_TYPE.multi]:  [NPMIGNORE, DOCUMENTATION, DISTRIBUTION, SOURCE],
+	[environment.GROUP_TYPE.sub]:    [GITHUB_ISSUES, GITHUB_PR, EDITORCONFIG, GITIGNORE, TRAVIS, PIPELINES, CHANGELOG, CODEOFCONDUCT, CONTRIBUTING, MANAGER, SECURITY, SUPPORT, DOCUMENTATION]
 };
 
 
@@ -121,17 +121,17 @@ class ArborescenceHelper {
 	 *
 	 * @param {object} [parameters] - Parameters.
 	 * @param {string} [parameters.root=paths.project.root] - Root directory of the package.
-	 * @param {RepositoryType} [parameters.repositoryType=env.repositoryType] - Type of repository.
-	 * @param {PackageType} [parameters.packageType=env.packageType] - Type of package.
+	 * @param {RepositoryType} [parameters.repositoryType=environment.repositoryType] - Type of repository.
+	 * @param {PackageType} [parameters.packageType=environment.packageType] - Type of package.
 	 * @param {object<string>} [parameters.fileMatrix] - Files matrix overwrites.
 	 */
-	validate({ root = paths.project.root, repositoryType = env.repositoryType, packageType = env.packageType, fileMatrix = {} } = {}) {
+	validate({ root = paths.project.root, repositoryType = environment.repositoryType, packageType = environment.packageType, fileMatrix = {} } = {}) {
 		this.fileMatrix = fileMatrix;
 
 		describe(`Validate arborescence`, () => {
 			const directoryPath = fss.realpath(root);
-			const readablePath  = env.getReadablePath(directoryPath);
-			const groupType     = env.groupType({ repositoryType, packageType });
+			const readablePath  = environment.getReadablePath(directoryPath);
+			const groupType     = environment.groupType({ repositoryType, packageType });
 			const ignore        = IGNORE[groupType];
 
 
@@ -189,14 +189,14 @@ class ArborescenceHelper {
 				});
 			}
 
-			if (!ignore.includes(TRAVIS) && env.packageCustomization.ciEngine.includes(env.CI_ENGINE.travis)) {
+			if (!ignore.includes(TRAVIS) && environment.packageCustomization.ciEngine.includes(environment.CI_ENGINE.travis)) {
 				test(`Ensure '${readablePath}/.travis.yml' is valid`, () => {
 					this.fileExists('.travis.yml', directoryPath);
 					this.fileIsMatrix('.travis.yml', { directoryPath, groupType });
 				});
 			}
 
-			if (!ignore.includes(PIPELINES) && env.packageCustomization.ciEngine.includes(env.CI_ENGINE.pipelines)) {
+			if (!ignore.includes(PIPELINES) && environment.packageCustomization.ciEngine.includes(environment.CI_ENGINE.pipelines)) {
 				test(`Ensure '${readablePath}/bitbucket-pipelines.yml' is valid`, () => {
 					this.fileExists('bitbucket-pipelines.yml', directoryPath);
 					this.fileIsMatrix('bitbucket-pipelines.yml', { directoryPath, groupType });
