@@ -73,7 +73,7 @@ import spdxLicenseIds            from 'spdx-license-ids';
 import fss                       from '@absolunet/fss';
 import { Joi, validateArgument } from '@absolunet/joi';
 import { terminal }              from '@absolunet/terminal';
-import env                       from './helpers/environment';
+import environment               from './helpers/environment';
 import paths                     from './helpers/paths';
 
 
@@ -105,7 +105,7 @@ class AbsolunetTester {
 			source:    Joi.string().replace(/^(?&lt;all>\.+)$/u, 'https://$&lt;all>').uri(),
 			author:    Joi.object({ name: Joi.string().required(), url: Joi.string().uri().required() }),
 			license:   Joi.string().valid(...spdxLicenseIds),
-			ciEngine:  Joi.array().items(Joi.string().valid(...Object.values(env.CI_ENGINE))).min(1).unique()
+			ciEngine:  Joi.array().items(Joi.string().valid(...Object.values(environment.CI_ENGINE))).min(1).unique()
 		}));
 
 		const nameScope = options.nameScope === undefined ? '@absolunet' : options.nameScope;
@@ -114,7 +114,7 @@ class AbsolunetTester {
 		customization.source    = options.source   || 'github.com/absolunet';
 		customization.author    = options.author   || { name: 'Absolunet', url: 'https://absolunet.com' };
 		customization.license   = options.license  || 'MIT';
-		customization.ciEngine  = options.ciEngine || Object.values(env.CI_ENGINE);
+		customization.ciEngine  = options.ciEngine || Object.values(environment.CI_ENGINE);
 	}
 
 
@@ -124,7 +124,7 @@ class AbsolunetTester {
 	 * @type {object&lt;string>}
 	 */
 	get subpackages() {
-		return env.projectSubpackages;
+		return environment.projectSubpackages;
 	}
 
 
@@ -137,7 +137,7 @@ class AbsolunetTester {
 	getReadablePath(absolutePath) {
 		validateArgument('absolutePath', absolutePath, Joi.absolutePath());
 
-		return env.getReadablePath(absolutePath);
+		return environment.getReadablePath(absolutePath);
 	}
 
 
@@ -156,8 +156,8 @@ class AbsolunetTester {
 	 */
 	init(options = {}) {
 		validateArgument('options', options, Joi.object({
-			repositoryType: Joi.string().valid(...Object.values(env.REPOSITORY_TYPE)).required(),
-			packageType:    Joi.string().valid(...Object.values(env.PACKAGE_TYPE)).required()
+			repositoryType: Joi.string().valid(...Object.values(environment.REPOSITORY_TYPE)).required(),
+			packageType:    Joi.string().valid(...Object.values(environment.PACKAGE_TYPE)).required()
 		}));
 
 
@@ -182,18 +182,18 @@ class AbsolunetTester {
 		options.customization = customization;
 
 		// Validate scope
-		if (![env.TEST_ALL, ...Object.values(env.TEST_TYPE)].includes(options.scope)) {
+		if (![environment.TEST_ALL, ...Object.values(environment.TEST_TYPE)].includes(options.scope)) {
 			throw new Error(`Test scope '${options.scope}' is invalid`);
 		}
 
 		const iocTests           = [];
 		let shouldRunIocTestOnly = false;
-		if (options.packageType === env.PACKAGE_TYPE.ioc &amp;&amp; options.scope !== env.TEST_TYPE.standards) {
-			if (options.scope === env.TEST_ALL) {
-				options.scope = env.TEST_TYPE.standards;
-				iocTests.push(...Object.values(env.TEST_TYPE_IOC));
+		if (options.packageType === environment.PACKAGE_TYPE.ioc &amp;&amp; options.scope !== environment.TEST_TYPE.standards) {
+			if (options.scope === environment.TEST_ALL) {
+				options.scope = environment.TEST_TYPE.standards;
+				iocTests.push(...Object.values(environment.TEST_TYPE_IOC));
 
-			} else if (Object.values(env.TEST_TYPE).includes(options.scope)) {
+			} else if (Object.values(environment.TEST_TYPE).includes(options.scope)) {
 				iocTests.push(options.scope);
 				shouldRunIocTestOnly = true;
 			}
@@ -205,14 +205,14 @@ class AbsolunetTester {
 			if (!shouldRunIocTestOnly) {
 				terminal.process.run(
 					`node ${paths.jestBinary} --errorOnDeprecated --passWithNoTests --config=${paths.config}/jest.js`,
-					{ environment: { [env.JEST_CLI_KEY]: JSON.stringify(options) } }
+					{ environment: { [environment.JEST_CLI_KEY]: JSON.stringify(options) } }
 				);
 
 				//-- Multi package
-				if (options.repositoryType === env.REPOSITORY_TYPE.multiPackage) {
-					Object.values(env.projectSubpackages).forEach((subpackageRoot) => {
+				if (options.repositoryType === environment.REPOSITORY_TYPE.multiPackage) {
+					Object.values(environment.projectSubpackages).forEach((subpackageRoot) => {
 						terminal.spacer(3);
-						terminal.process.run(`npm run test${options.scope !== env.TEST_ALL ? `:${options.scope}` : ''}`, { directory: subpackageRoot });
+						terminal.process.run(`npm run test${options.scope !== environment.TEST_ALL ? `:${options.scope}` : ''}`, { directory: subpackageRoot });
 					});
 				}
 			}
