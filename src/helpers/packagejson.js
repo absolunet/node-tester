@@ -4,7 +4,7 @@
 import readPackageJson from 'read-package-json';
 import semver          from 'semver';
 import fss             from '@absolunet/fss';
-import env             from './environment';
+import environment     from './environment';
 import paths           from './paths';
 
 const MANAGER_SCRIPTS = [
@@ -102,14 +102,14 @@ class PackageJsonHelper {
 	 *
 	 * @param {string} [parameters] - Parameters.
 	 * @param {string} [parameters.directoryPath=paths.project.root] - Path to the package.json file.
-	 * @param {RepositoryType} [parameters.repositoryType=env.repositoryType] - Type of repository.
-	 * @param {PackageType} [parameters.packageType=env.packageType] - Type of package.
+	 * @param {RepositoryType} [parameters.repositoryType=environment.repositoryType] - Type of repository.
+	 * @param {PackageType} [parameters.packageType=environment.packageType] - Type of package.
 	 */
-	validatePackage({ directoryPath = paths.project.root, repositoryType = env.repositoryType /* , packageType = env.packageType */ } = {}) {
-		describe(`Validate ${env.getReadablePath(directoryPath)}/package.json`, () => {
+	validatePackage({ directoryPath = paths.project.root, repositoryType = environment.repositoryType /* , packageType = environment.packageType */ } = {}) {
+		describe(`Validate ${environment.getReadablePath(directoryPath)}/package.json`, () => {
 
-			const escapedScope      = env.packageCustomization.nameScope.replace('/', '\\/');
-			const escapedSource     = env.packageCustomization.source.replace('/', '\\/');
+			const escapedScope      = environment.packageCustomization.nameScope.replace('/', '\\/');
+			const escapedSource     = environment.packageCustomization.source.replace('/', '\\/');
 			const namePattern       = new RegExp(`^${escapedScope}(?<kebab1>[a-z][a-z0-9]*)(?<kebab2>-[a-z0-9]+)*$`, 'u');
 			const repositoryPattern = new RegExp(`^git:\\/\\/${escapedSource}\\/(?<kebab1>[a-z][a-z0-9]*)(?<kebab2>-[a-z0-9]+)*\\.git$`, 'u');
 			const bugsPattern       = new RegExp(`^https:\\/\\/${escapedSource}\\/(?<kebab1>[a-z][a-z0-9]*)(?<kebab2>-[a-z0-9]+)*\\/issues$`, 'u');
@@ -124,7 +124,7 @@ class PackageJsonHelper {
 				// TODO [>=3.3.0]: Make special check for packageType IoC
 				expect(reference.config.name,    'Name must be valid').toMatch(namePattern);
 				expect(reference.config.version, 'Version must be valid').toBe(semver.valid(reference.config.version));
-				expect(reference.config.license, 'License must be valid').toBe(env.packageCustomization.license);
+				expect(reference.config.license, 'License must be valid').toBe(environment.packageCustomization.license);
 				expect(reference.config.private, 'Private must not be defined').toBeUndefined();
 			});
 
@@ -133,7 +133,7 @@ class PackageJsonHelper {
 				expect(reference.config.description, 'Description must be a text').toBeString();
 				expect(reference.config.description, 'Description must be defined').not.toBeEmpty();
 
-				expect(reference.config.author, 'Author must be valid').toContainAllEntries(Object.entries(env.packageCustomization.author));
+				expect(reference.config.author, 'Author must be valid').toContainAllEntries(Object.entries(environment.packageCustomization.author));
 
 				expect(reference.config.keywords, 'Keywords must be a list').toBeArray();
 				expect(reference.config.keywords, 'Keywords must be defined').not.toBeEmpty();
@@ -171,7 +171,7 @@ class PackageJsonHelper {
 			test('Ensure scripts are valid', () => {
 				let scripts = TEST_SCRIPTS;
 
-				if (repositoryType === env.REPOSITORY_TYPE.singlePackage) {
+				if (repositoryType === environment.REPOSITORY_TYPE.singlePackage) {
 					scripts = scripts.concat(MANAGER_SCRIPTS);
 				}
 
@@ -180,9 +180,9 @@ class PackageJsonHelper {
 
 
 			test('Ensure dependencies are valid', () => {
-				const dependencies = [`${env.packageCustomization.nameScope}tester`];
+				const dependencies = [`${environment.packageCustomization.nameScope}tester`];
 
-				if (repositoryType === env.REPOSITORY_TYPE.singlePackage) {
+				if (repositoryType === environment.REPOSITORY_TYPE.singlePackage) {
 					dependencies.push('@absolunet/manager');
 				}
 
@@ -200,7 +200,7 @@ class PackageJsonHelper {
 	 * @param {string} [parameters.directoryPath=paths.project.root] - Path to the package.json file.
 	 */
 	validateMulti({ directoryPath = paths.project.root } = {}) {
-		describe(`Validate ${env.getReadablePath(directoryPath)}/package.json`, () => {
+		describe(`Validate ${environment.getReadablePath(directoryPath)}/package.json`, () => {
 
 			const reference = {};
 			this.validateIntegrity(reference, directoryPath);

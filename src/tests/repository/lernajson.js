@@ -4,17 +4,17 @@
 import semver       from 'semver';
 import fss          from '@absolunet/fss';
 import arborescence from '../../helpers/arborescence';
-import env          from '../../helpers/environment';
+import environment  from '../../helpers/environment';
 import paths        from '../../helpers/paths';
 
 
 export default () => {
 
 		//-- Multi package
-	if (env.repositoryType === env.REPOSITORY_TYPE.multiPackage) {
+	if (environment.repositoryType === environment.REPOSITORY_TYPE.multiPackage) {
 		const FILE = 'lerna.json';
 
-		describe(`Validate ${env.getReadablePath(paths.project.root)}/${FILE}`, () => {
+		describe(`Validate ${environment.getReadablePath(paths.project.root)}/${FILE}`, () => {
 
 			test(`Ensure '${FILE}' is valid`, () => {
 				arborescence.fileExists(FILE, paths.project.root);

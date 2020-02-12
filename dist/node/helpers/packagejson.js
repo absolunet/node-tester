@@ -89,15 +89,15 @@ class PackageJsonHelper {
    *
    * @param {string} [parameters] - Parameters.
    * @param {string} [parameters.directoryPath=paths.project.root] - Path to the package.json file.
-   * @param {RepositoryType} [parameters.repositoryType=env.repositoryType] - Type of repository.
-   * @param {PackageType} [parameters.packageType=env.packageType] - Type of package.
+   * @param {RepositoryType} [parameters.repositoryType=environment.repositoryType] - Type of repository.
+   * @param {PackageType} [parameters.packageType=environment.packageType] - Type of package.
    */
 
 
   validatePackage({
     directoryPath = _paths.default.project.root,
     repositoryType = _environment.default.repositoryType
-    /* , packageType = env.packageType */
+    /* , packageType = environment.packageType */
 
   } = {}) {
     describe(`Validate ${_environment.default.getReadablePath(directoryPath)}/package.json`, () => {
