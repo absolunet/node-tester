@@ -1,11 +1,11 @@
 //--------------------------------------------------------
 //-- Repository - Changelog tests
 //--------------------------------------------------------
-import marked from 'marked';
-import semver from 'semver';
-import fss    from '@absolunet/fss';
-import env    from '../../helpers/environment';
-import paths  from '../../helpers/paths';
+import marked      from 'marked';
+import semver      from 'semver';
+import fss         from '@absolunet/fss';
+import environment from '../../helpers/environment';
+import paths       from '../../helpers/paths';
 
 
 const extractValues = (raw, pattern) => {
@@ -63,13 +63,13 @@ const parseFile = (file) => {
 export default () => {
 
 	//-- Not subpackage
-	if (env.repositoryType !== env.REPOSITORY_TYPE.subPackage) {
+	if (environment.repositoryType !== environment.REPOSITORY_TYPE.subPackage) {
 
 		const FILE     = 'CHANGELOG.md';
 		const filePath = `${paths.project.root}/${FILE}`;
 		const { header, unreleased, releases, types, links } = parseFile(filePath);
 
-		describe(`Validate ${env.getReadablePath(paths.project.root)}/${FILE} respects 'Keep a Changelog'`, () => {
+		describe(`Validate ${environment.getReadablePath(paths.project.root)}/${FILE} respects 'Keep a Changelog'`, () => {
 
 			test(`Ensure header is valid`, () => {
 				expect(header, 'Header must be identical').toEqual([
@@ -87,7 +87,7 @@ export default () => {
 
 			test(`Ensure current version is documented`, () => {
 				const versions = releases.map(({ version }) => { return version; });
-				expect(versions, 'Release headings must contain current version').toContain(env.version);
+				expect(versions, 'Release headings must contain current version').toContain(environment.version);
 			});
 
 			releases.forEach(({ version, date, raw }) => {
