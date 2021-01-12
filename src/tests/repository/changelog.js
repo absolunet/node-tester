@@ -19,7 +19,9 @@ const parseFile = (file) => {
 	const parsedText = fss.readFile(file, 'utf8');
 	const tokens     = marked.lexer(parsedText);
 
-	const header = tokens.splice(0, 4);
+	const header = tokens.splice(0, 4).map(({ type, depth, text }) => {
+		return { type, depth, text };
+	});
 
 	let unreleased = false;
 	const releases = tokens

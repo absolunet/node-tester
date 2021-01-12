@@ -10,6 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+### Changed
+- Update to Node.js 14
+- Update to Jest 26
+- Update to ESLint 7
+- Update license to 2021
+- Maintenance updates
+
 ### Removed
 - Remove distribution from git repository
 
