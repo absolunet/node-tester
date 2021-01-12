@@ -13,7 +13,7 @@ const tester = new AbsolunetTester();
 /**
  * Exports a default instance of the tester and also the main class.
  *
- * @module @absolunet/tester
+ * @module absolunet/tester
  *
  * @example
  * import { tester } from '@absolunet/tester';

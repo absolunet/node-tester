@@ -41,7 +41,7 @@ const mockedTerminal = {
 //--------------------------------------------------------
 
 given.tester = () => {
-	const Tester = require('../../dist/node/AbsolunetTester'); // eslint-disable-line global-require
+	const Tester = require('../../dist/node/AbsolunetTester'); // eslint-disable-line node/global-require
 	tester = new Tester();
 };
 
@@ -80,7 +80,7 @@ given.existingGenericTests = () => {
 };
 
 given.scope = (scope) => {
-	process.argv.push(`--scope=${scope}`);
+	process.argv.push(`--scope=${scope}`);  // eslint-disable-line unicorn/consistent-destructuring
 };
 
 given.emptyOptions = () => {

@@ -6,7 +6,7 @@ import runner      from '../helpers/runner';
 
 
 const runners = [];
-const { repositoryType, packageType, scope, customization } = JSON.parse(process.env[environment.JEST_CLI_KEY]);  // eslint-disable-line no-process-env
+const { repositoryType, packageType, scope, customization } = JSON.parse(process.env[environment.JEST_CLI_KEY]);  // eslint-disable-line node/no-process-env
 runner.config.globals = { repositoryType, packageType, customization };
 
 

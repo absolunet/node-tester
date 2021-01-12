@@ -2,7 +2,7 @@
 //-- Lint SCSS runner - Run
 //--------------------------------------------------------
 import { pass, fail, skip } from 'create-jest-runner';
-import stylelint            from 'stylelint';
+import stylelint            from 'stylelint';  // eslint-disable-line node/no-missing-import
 import runner               from '../../helpers/runner';
 
 
@@ -22,7 +22,7 @@ export default ({ testPath }) => {
 				return skip(testResult());
 			}
 
-			if (results.warnings.length !== 0 || results.deprecations.length !== 0 || results.invalidOptionWarnings.length !== 0) {
+			if (results.warnings.length > 0 || results.deprecations.length > 0 || results.invalidOptionWarnings.length > 0) {
 				const rawOutput = data.output.split('\n');
 				rawOutput.splice(0, 2);
 
