@@ -150,11 +150,14 @@ class EnvironmentHelper {
 	 */
 	get projectSubpackages() {
 		if (fss.exists(paths.project.subpackages)) {
-			return fss.scandir(paths.project.subpackages, 'dir', { fullPath: true }).reduce((list, path) => {
-				list[path.split('/').pop()] = path;
+			const rawList = fss.scandir(paths.project.subpackages, 'dir', { fullPath: true });
 
-				return list;
-			}, {});
+			const list = {};
+			for (const path of rawList) {
+				list[path.split('/').pop()] = path;
+			}
+
+			return list;
 		}
 
 		return {};
