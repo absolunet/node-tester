@@ -20,6 +20,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 - Remove distribution from git repository
 
+### Fixed
+- Do not try to run tests on non-existing directories (#16)
+
 
 
 ## [3.2.2] - 2020-02-12
