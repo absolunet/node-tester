@@ -11,12 +11,6 @@
  */
 
 /**
- * Type of group: All {@link PackageType} and 'multi', 'sub'.
- *
- * @typedef {string} GroupType
- */
-
-/**
  * Type of test: 'standards', 'unit', 'feature', 'integration', 'endtoend'.
  *
  * @typedef {string} TestType

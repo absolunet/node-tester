@@ -65,23 +65,6 @@ class EnvironmentHelper {
 
 
 	/**
-	 * Types of group.
-	 *
-	 * @type {object<string, GroupType>}
-	 * @property {GroupType} simple - Simple classic package.
-	 * @property {GroupType} ioc - IoC package.
-	 * @property {GroupType} multi - Multi package repository.
-	 * @property {GroupType} sub - A subpackage of a multi package repository.
-	 */
-	get GROUP_TYPE() {
-		return Object.assign({}, this.PACKAGE_TYPE, {
-			multi: 'multi',
-			sub:   'sub'
-		});
-	}
-
-
-	/**
 	 * Types of test.
 	 *
 	 * @type {object<string, TestType>}
@@ -201,27 +184,6 @@ class EnvironmentHelper {
 	 */
 	get version() {
 		return fss.readJson(`${paths.project.root}/${this.repositoryType === this.REPOSITORY_TYPE.multiPackage ? 'lerna' : 'package'}.json`).version;
-	}
-
-
-	/**
-	 * Define group.
-	 *
-	 * @param {parameters} [parameters] - Parameters.
-	 * @param {RepositoryType} [parameters.repositoryType=this.repositoryType] - Type of repository.
-	 * @param {PackageType} [parameters.packageType=this.packageType] - Type of package.
-	 * @returns {GroupType} Type of group.
-	 */
-	groupType({ repositoryType = this.repositoryType, packageType = this.packageType } = {}) {
-		let group = packageType;
-
-		if (repositoryType === this.REPOSITORY_TYPE.multiPackage) {
-			group = this.GROUP_TYPE.multi;
-		} else if (repositoryType === this.REPOSITORY_TYPE.subPackage && packageType === this.PACKAGE_TYPE.simple) {
-			group = this.GROUP_TYPE.sub;
-		}
-
-		return group;
 	}
 
 
