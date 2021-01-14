@@ -121,7 +121,7 @@ class PackageJsonHelper {
 			this.validateIntegrity(reference, directoryPath);
 
 			test('Ensure mandatory identification fields are valid', () => {
-				// TODO [>=3.3.0]: Make special check for packageType IoC
+				// TODO [>=4.0.0]: Make special check for packageType IoC
 				expect(reference.config.name,    'Name must be valid').toMatch(namePattern);
 				expect(reference.config.version, 'Version must be valid').toBe(semver.valid(reference.config.version));
 				expect(reference.config.license, 'License must be valid').toBe(environment.packageCustomization.license);
