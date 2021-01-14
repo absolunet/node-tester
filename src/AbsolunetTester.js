@@ -36,7 +36,7 @@ class AbsolunetTester {
 	constructor(options = {}) {
 		validateArgument('options', options, Joi.object({
 			nameScope: Joi.alternatives().try('', Joi.string().pattern(/^@[a-z0-9]+(?:-[a-z0-9]+)*$/u, 'npm scope')),
-			source:    Joi.string().replace(/^(?<all>\.+)$/u, 'https://$<all>').uri(),
+			source:    Joi.string().replace(/^(?<all>.+)$/u, 'https://$<all>').uri(),
 			author:    Joi.object({ name: Joi.string().required(), url: Joi.string().uri().required() }),
 			license:   Joi.string().valid(...spdxLicenseIds),
 			ciEngine:  Joi.array().items(Joi.string().valid(...Object.values(environment.CI_ENGINE))).min(1).unique()
