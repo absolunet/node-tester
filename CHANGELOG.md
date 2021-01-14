@@ -10,13 +10,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+### Added
+- `package-lock.json` now mandatory
+- Add env NODE_ENV=test when running IoC tests (#14)
+
 ### Changed
 - Update to Node.js 14
 - Update to Jest 26
 - Update to ESLint 7
 - Update license to 2021
 - Bitbucket Pipelines `npm ci` instead of `npm install` (#17)
-- `package-lock.json` now mandatory
 - Maintenance updates
 
 ### Removed
