@@ -180,7 +180,7 @@ class PackageJsonHelper {
 
 
 			test('Ensure dependencies are valid', () => {
-				const dependencies = [`${environment.packageCustomization.nameScope}tester`];
+				const dependencies = [`@absolunet/tester`];
 
 				if (repositoryType === environment.REPOSITORY_TYPE.singlePackage) {
 					dependencies.push('@absolunet/manager');
