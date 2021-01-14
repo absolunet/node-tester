@@ -154,7 +154,7 @@ class AbsolunetTester {
 			}
 
 			iocTests.forEach((type) => {
-				terminal.process.run(`node ioc test --type=${type}`);
+				terminal.process.run(`node ioc test --type=${type}`, { environment: { NODE_ENV: 'test' } });
 			});
 		} catch {
 			process.exit(1);  // eslint-disable-line node/no-process-exit, unicorn/no-process-exit

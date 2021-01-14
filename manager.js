@@ -7,7 +7,6 @@ const nodejsLatest = require('nodejs-latest');
 const semver       = require('semver');
 const fss          = require('@absolunet/fss');
 const { manager }  = require('@absolunet/manager');
-const paths        = require('./dist/node/helpers/paths');
 
 
 const getPipelineStep = (name, version) => {
@@ -32,6 +31,7 @@ manager.init({
 			postRun: async ({ terminal }) => {
 				terminal.print(`Update Node version in package.json / .travis.yml / bitbucket-pipelines.yml`).spacer();
 
+				const paths               = require('./dist/node/helpers/paths');  // eslint-disable-line node/global-require
 				const latest              = await nodejsLatest.latest();
 				const latestMajor         = semver.major(latest.version);
 				const currentStableMajor  = latestMajor - (latestMajor % 2 === 0 ? 0 : 1);

@@ -144,7 +144,7 @@ then.shouldHaveRunThroughTester = (scope) => {
 then.shouldHaveRunThroughIoC = (scope) => {
 	then.shouldNotHaveThrown();
 	expect(mockedTerminal.process.run).toHaveBeenCalled();
-	expect(mockedTerminal.process.run.mock.calls).toContainEqual([`node ioc test --type=${scope}`]);
+	expect(mockedTerminal.process.run.mock.calls).toContainEqual([`node ioc test --type=${scope}`, { environment: { NODE_ENV: 'test' } }]);
 };
 
 then.shouldNotHaveRunTests = () => {
