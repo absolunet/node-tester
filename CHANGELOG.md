@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update to Jest 26
 - Update to ESLint 7
 - Update license to 2021
+- Bitbucket Pipelines `npm ci` instead of `npm install` (#17)
+- `package-lock.json` now mandatory
 - Maintenance updates
 
 ### Removed
