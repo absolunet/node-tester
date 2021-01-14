@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Remove group type concept (#8, #9)
 - Do not try to run tests on non-existing directories (#16)
+- Bug on package source validation (#18)
 
 
 
