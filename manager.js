@@ -16,7 +16,7 @@ const getPipelineStep = (name, version) => {
 			name:   `Test ${name} Node.js version`,
 			image:  `node:${version}`,
 			caches: ['node'],
-			script: ['npm install --unsafe-perm', 'npm test']
+			script: ['npm-install-ci-test --unsafe-perm']
 		}
 	};
 };
