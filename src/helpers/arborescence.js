@@ -218,7 +218,7 @@ class ArborescenceHelper {
 											name: 'Test latest Node.js version',
 											image: 'node:latest',
 											caches: ['node'],
-											script: ['npm-install-ci-test --unsafe-perm']
+											script: ['npm install-ci-test --unsafe-perm']
 										}
 									},
 									...environment.LTS_VERSIONS
@@ -231,7 +231,7 @@ class ArborescenceHelper {
 													name:   `Test LTS ${version} Node.js version`,
 													image:  `node:${version}`,
 													caches: ['node'],
-													script: ['npm-install-ci-test --unsafe-perm']
+													script: ['npm install-ci-test --unsafe-perm']
 												}
 											};
 										})
