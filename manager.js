@@ -3,8 +3,7 @@
 //--------------------------------------------------------
 'use strict';
 
-const nodejsLatest = require('nodejs-latest');
-const semver       = require('semver');
+const ltsSchedule  = require('lts-schedule');
 const fss          = require('@absolunet/fss');
 const { manager }  = require('@absolunet/manager');
 
@@ -28,43 +27,43 @@ manager.init({
 	},
 	tasks: {
 		prepare: {
-			postRun: async ({ terminal }) => {
+			postRun: ({ terminal }) => {
 				terminal.print(`Update Node version in package.json / .travis.yml / bitbucket-pipelines.yml`).spacer();
 
-				const paths               = require('./dist/node/helpers/paths');  // eslint-disable-line node/global-require
-				const latest              = await nodejsLatest.latest();
-				const latestMajor         = semver.major(latest.version);
-				const currentStableMajor  = latestMajor - (latestMajor % 2 === 0 ? 0 : 1);
-				const previousStableMajor = latestMajor ===	currentStableMajor ? currentStableMajor - 2 : currentStableMajor;
+				const paths = require('./dist/node/helpers/paths');  // eslint-disable-line node/global-require
 
+				const lts = Object.keys(ltsSchedule.json).sort().reverse()
+					.filter((version) => {
+						return new Date(ltsSchedule.json[version].lts) <= Date.now() && new Date(ltsSchedule.json[version].end) >= Date.now();
+					})
+					.map((version) => {
+						return Number(version.slice(1));
+					})
+				;
 
 				//-- package.json
 				const packageFile = `${paths.root}/package.json`;
 				const packageData = fss.readJson(packageFile);
-				packageData.engines.node = `>= ${currentStableMajor}`;
+				packageData.engines.node = `>= ${lts[lts.length - 1]}`;
 				fss.writeJson(packageFile, packageData, { space: 2 });
 
 
 				//-- .travis.yml
 				const travisFile = `${paths.root}/.travis.yml`;
 				const travisData = fss.readYaml(travisFile);
-				travisData.node_js = ['node', currentStableMajor];  // eslint-disable-line camelcase
-
-				if (previousStableMajor !== currentStableMajor) {
-					travisData.node_js.push(previousStableMajor);
-				}
-
+				travisData.node_js = ['node', ...lts];  // eslint-disable-line camelcase
 				fss.writeYaml(travisFile, travisData);
 
 
 				//-- bitbucket-pipelines.yml
 				const pipelinesFile = `${paths.root}/bitbucket-pipelines.yml`;
 				const pipelinesData = fss.readYaml(pipelinesFile);
-				pipelinesData.pipelines.default[0].parallel = [getPipelineStep('latest', 'latest'), getPipelineStep('latest stable', currentStableMajor)];
-
-				if (previousStableMajor !== currentStableMajor) {
-					pipelinesData.pipelines.default[0].parallel.push(getPipelineStep('latest stable', previousStableMajor));
-				}
+				pipelinesData.pipelines.default[0].parallel = [
+					getPipelineStep('latest', 'latest'),
+					...lts.map((version) => {
+						return getPipelineStep(`LTS ${version}`, version);
+					})
+				];
 
 				fss.writeYaml(pipelinesFile, pipelinesData);
 

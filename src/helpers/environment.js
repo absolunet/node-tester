@@ -127,6 +127,16 @@ class EnvironmentHelper {
 
 
 	/**
+	 * Node.js LTS versions.
+	 *
+	 * @type {Array<number>}
+	 */
+	get LTS_VERSIONS() {
+		return fss.readYaml(`${paths.root}/.travis.yml`).node_js.splice(1);
+	}
+
+
+	/**
 	 * List of subpackages and their path.
 	 *
 	 * @type {object<string, string>}
@@ -184,6 +194,16 @@ class EnvironmentHelper {
 	 */
 	get version() {
 		return fss.readJson(`${paths.project.root}/${this.repositoryType === this.REPOSITORY_TYPE.multiPackage ? 'lerna' : 'package'}.json`).version;
+	}
+
+
+	/**
+	 * Current repository Node.js version.
+	 *
+	 * @type {number}
+	 */
+	get nodeVersion() {
+		return this.repositoryType !== this.REPOSITORY_TYPE.multiPackage ? Number(fss.readJson(`${paths.project.root}/package.json`).engines.node.slice(2)) : undefined;
 	}
 
 

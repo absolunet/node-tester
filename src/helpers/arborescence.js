@@ -189,14 +189,56 @@ class ArborescenceHelper {
 			if (!ignore.includes(TRAVIS) && environment.packageCustomization.ciEngine.includes(environment.CI_ENGINE.travis)) {
 				test(`Ensure '${readablePath}/.travis.yml' is valid`, () => {
 					this.fileExists('.travis.yml', directoryPath);
-					this.fileIsMatrix('.travis.yml', { directoryPath, repositoryType });
+
+					expect(fss.readYaml(`${root}/.travis.yml`), '.travis.yml must be valid').toContainAllEntries([
+						['language', 'node_js'],
+						[
+							'node_js',
+							[
+								'node',
+								...environment.LTS_VERSIONS.filter((version) => {
+									return version >= environment.nodeVersion;
+								})
+							]
+						]
+					]);
 				});
 			}
 
 			if (!ignore.includes(PIPELINES) && environment.packageCustomization.ciEngine.includes(environment.CI_ENGINE.pipelines)) {
 				test(`Ensure '${readablePath}/bitbucket-pipelines.yml' is valid`, () => {
 					this.fileExists('bitbucket-pipelines.yml', directoryPath);
-					this.fileIsMatrix('bitbucket-pipelines.yml', { directoryPath, repositoryType });
+
+					expect(fss.readYaml(`${root}/bitbucket-pipelines.yml`), 'bitbucket-pipelines.yml must be valid').toContainAllEntries([[
+						'pipelines', {
+							'default': [{
+								parallel: [
+									{
+										step: {
+											name: 'Test latest Node.js version',
+											image: 'node:latest',
+											caches: ['node'],
+											script: ['npm-install-ci-test --unsafe-perm']
+										}
+									},
+									...environment.LTS_VERSIONS
+										.filter((version) => {
+											return version >= environment.nodeVersion;
+										})
+										.map((version) => {
+											return {
+												step: {
+													name:   `Test LTS ${version} Node.js version`,
+													image:  `node:${version}`,
+													caches: ['node'],
+													script: ['npm-install-ci-test --unsafe-perm']
+												}
+											};
+										})
+								]
+							}]
+						}
+					]]);
 				});
 			}
 

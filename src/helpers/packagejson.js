@@ -114,7 +114,6 @@ class PackageJsonHelper {
 			const repositoryPattern = new RegExp(`^git:\\/\\/${escapedSource}\\/(?<kebab1>[a-z][a-z0-9]*)(?<kebab2>-[a-z0-9]+)*\\.git$`, 'u');
 			const bugsPattern       = new RegExp(`^https:\\/\\/${escapedSource}\\/(?<kebab1>[a-z][a-z0-9]*)(?<kebab2>-[a-z0-9]+)*\\/issues$`, 'u');
 			const homepagePattern   = new RegExp(`^https:\\/\\/(?<domain>${escapedSource}\\/|documentation.absolunet.com\\/).+`, 'u');
-			const testerConfig      = fss.readJson(`${paths.root}/package.json`);
 
 
 			const reference = {};
@@ -158,8 +157,10 @@ class PackageJsonHelper {
 				});
 
 				if (reference.config.main) {
-					expect(reference.config.engines, 'Engines must be valid').toContainAllEntries([
-						['node', testerConfig.engines.node]
+					expect(reference.config.engines, 'Engines must be valid').toContainAnyEntries([
+						...environment.LTS_VERSIONS.map((version) => {
+							return ['node', `>= ${version}`];
+						})
 					]);
 				}
 
