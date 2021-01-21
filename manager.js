@@ -3,9 +3,9 @@
 //--------------------------------------------------------
 'use strict';
 
-const ltsSchedule  = require('lts-schedule');
-const fss          = require('@absolunet/fss');
-const { manager }  = require('@absolunet/manager');
+const ltsSchedule = require('lts-schedule');
+const fss         = require('@absolunet/fss');
+const { manager } = require('@absolunet/manager');
 
 
 const getPipelineStep = (name, version) => {
@@ -31,14 +31,17 @@ manager.init({
 				terminal.print(`Update Node version in package.json / .travis.yml / bitbucket-pipelines.yml`).spacer();
 
 				const paths = require('./dist/node/helpers/paths');  // eslint-disable-line node/global-require
+				const today = Date.now();
 
-				const lts = Object.keys(ltsSchedule.json).sort().reverse()
-					.filter((version) => {
-						return new Date(ltsSchedule.json[version].lts) <= Date.now() && new Date(ltsSchedule.json[version].end) >= Date.now();
+				const lts = Object.entries(ltsSchedule.json)
+					.filter(([, { lts: start, end }]) => {
+						return today >= new Date(start) && today <= new Date(end);
 					})
-					.map((version) => {
+					.map(([version]) => {
 						return Number(version.slice(1));
 					})
+					.sort()
+					.reverse()
 				;
 
 				//-- package.json
