@@ -191,6 +191,8 @@ class ArborescenceHelper {
 					this.fileExists('.travis.yml', directoryPath);
 
 					expect(fss.readYaml(`${root}/.travis.yml`), '.travis.yml must be valid').toContainAllEntries([
+						['os', ['linux', 'osx', 'windows']],
+						['dist', 'xenial'],
 						['language', 'node_js'],
 						[
 							'node_js',
@@ -200,7 +202,8 @@ class ArborescenceHelper {
 									return version >= environment.nodeVersion;
 								})
 							]
-						]
+						],
+						['before_script', ['npm run build']]
 					]);
 				});
 			}
@@ -218,7 +221,11 @@ class ArborescenceHelper {
 											name: 'Test latest Node.js version',
 											image: 'node:latest',
 											caches: ['node'],
-											script: ['npm install-ci-test --unsafe-perm']
+											script: [
+												'npm ci --unsafe-perm',
+												'npm run build',
+												'npm test'
+											]
 										}
 									},
 									...environment.LTS_VERSIONS
@@ -231,7 +238,11 @@ class ArborescenceHelper {
 													name:   `Test LTS ${version} Node.js version`,
 													image:  `node:${version}`,
 													caches: ['node'],
-													script: ['npm install-ci-test --unsafe-perm']
+													script: [
+														'npm ci --unsafe-perm',
+														'npm run build',
+														'npm test'
+													]
 												}
 											};
 										})

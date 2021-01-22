@@ -22,6 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update license to 2021
 - Supports all stable active and maintenance LTS Node.js
 - Validate that packages support some form of stable LTS Node.js versions
+- Add build step to CI files, since `dist` are not committed anymore
+- TravisCI tests multiple OSes
 - Custom name scope only affect package name validation (#10)
 - Bitbucket Pipelines `npm ci` instead of `npm install` (#17)
 - Maintenance updates
