@@ -74,13 +74,13 @@ given.mockedTerminal = () => {
 given.existingGenericTests = () => {
 	fakeFiles['path/to/root/test/generic/index.test.js'] = `
 		import { tester } from '@absolunet/tester';
-		
+
 		tester.genericRepositoryTests();
 	`;
 };
 
 given.scope = (scope) => {
-	process.argv.push(`--scope=${scope}`);  // eslint-disable-line unicorn/consistent-destructuring
+	process.argv.push(`--scope=${scope}`);
 };
 
 given.emptyOptions = () => {
