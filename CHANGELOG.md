@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - `package-lock.json` now mandatory
+- Add Node.js engine to multi-package projects, so we can validate CI engines config
 - Add env NODE_ENV=test when running IoC tests (#14)
 
 ### Changed
