@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Update to Jest 26
 - Update to ESLint 7
+- ESLint config update to 2.0.0
 - Update license to 2021
 - Supports all stable active and maintenance LTS Node.js
 - Validate that packages support some form of stable LTS Node.js versions
