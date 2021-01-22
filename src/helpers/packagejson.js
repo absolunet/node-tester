@@ -219,6 +219,15 @@ class PackageJsonHelper {
 
 
 			test('Ensure functional fields are valid', () => {
+				expect(reference.config.engines, 'Engines must be valid').toContainAnyEntries([
+					...environment.LTS_VERSIONS.map((version) => {
+						return ['node', `>= ${version}`];
+					})
+				]);
+			});
+
+
+			test('Ensure scripts are valid', () => {
 				expect(reference.config.scripts, 'Scripts must be valid').toContainEntries([...MANAGER_SCRIPTS, ...TEST_SCRIPTS, ['postinstall', 'npm run manager:install']]);
 			});
 

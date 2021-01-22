@@ -203,7 +203,7 @@ class EnvironmentHelper {
 	 * @type {number}
 	 */
 	get nodeVersion() {
-		return this.repositoryType !== this.REPOSITORY_TYPE.multiPackage ? Number(fss.readJson(`${paths.project.root}/package.json`).engines.node.slice(2)) : undefined;
+		return Number(fss.readJson(`${paths.project.root}/package.json`).engines.node.slice(2));
 	}
 
 
