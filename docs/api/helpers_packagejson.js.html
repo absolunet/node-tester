@@ -43,7 +43,7 @@
 	
 
 	<header>
-		<p class="package"><a href="../">@absolunet/tester</a><span class="version">4.0.1</span></p>
+		<p class="package"><a href="../">@absolunet/tester</a><span class="version">4.0.2</span></p>
 		<a href="https://github.com/absolunet/node-tester" class="github" data-external="external">View on GitHub</a>
 	</header>
 
@@ -186,7 +186,7 @@ class PackageJsonHelper {
 			this.validateIntegrity(reference, directoryPath);
 
 			test('Ensure mandatory identification fields are valid', () => {
-				// TODO [>=4.0.0]: Make special check for packageType IoC
+				// TODO [>=5.0.0]: Make special check for packageType IoC
 				expect(reference.config.name,    'Name must be valid').toMatch(namePattern);
 				expect(reference.config.version, 'Version must be valid').toBe(semver.valid(reference.config.version));
 				expect(reference.config.license, 'License must be valid').toBe(environment.packageCustomization.license);
