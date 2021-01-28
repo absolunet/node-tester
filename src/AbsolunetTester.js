@@ -36,7 +36,7 @@ class AbsolunetTester {
 	constructor(options = {}) {
 		validateArgument('options', options, Joi.object({
 			nameScope: Joi.alternatives().try('', Joi.string().pattern(/^@[a-z0-9]+(?:-[a-z0-9]+)*$/u, 'npm scope')),
-			source:    Joi.string().replace(/^(?<all>\.+)$/u, 'https://$<all>').uri(),
+			source:    Joi.string().replace(/^(?<all>.+)$/u, 'https://$<all>').uri(),
 			author:    Joi.object({ name: Joi.string().required(), url: Joi.string().uri().required() }),
 			license:   Joi.string().valid(...spdxLicenseIds),
 			ciEngine:  Joi.array().items(Joi.string().valid(...Object.values(environment.CI_ENGINE))).min(1).unique()
@@ -82,6 +82,8 @@ class AbsolunetTester {
 	 * @param {RepositoryType} options.repositoryType - Type of repository.
 	 * @param {PackageType} options.packageType - Type of package.
 	 *
+	 * @throws {Error} If scope is invalid.
+	 *
 	 * @example
 	 * tester.init({
 	 * 		repositoryType: 'single-package',
@@ -98,7 +100,7 @@ class AbsolunetTester {
 		//-- Check if generic tests are present
 		const genericTests = `${paths.project.test}/generic/index.test.js`;
 		if (fss.exists(genericTests)) {
-			const esprima = require('esprima');  // eslint-disable-line global-require
+			const esprima = require('esprima');  // eslint-disable-line node/global-require
 
 			const code  = fss.readFile(genericTests, 'utf8');
 			const found = esprima.tokenize(code).some(({ type, value }) => { return type === 'Identifier' && value === 'genericRepositoryTests'; });
@@ -152,10 +154,10 @@ class AbsolunetTester {
 			}
 
 			iocTests.forEach((type) => {
-				terminal.process.run(`node ioc test --type=${type}`);
+				terminal.process.run(`node ioc test --type=${type}`, { environment: { NODE_ENV: 'test' } });
 			});
-		} catch (error) {
-			process.exit(1);  // eslint-disable-line no-process-exit, unicorn/no-process-exit
+		} catch {
+			process.exit(1);  // eslint-disable-line node/no-process-exit, unicorn/no-process-exit
 		}
 	}
 
@@ -174,7 +176,7 @@ class AbsolunetTester {
 		const repositoryPath = `${paths.tests}/repository`;
 
 		fss.readdir(repositoryPath).forEach((file) => {
-			require(`${repositoryPath}/${file}`)(options);  // eslint-disable-line global-require
+			require(`${repositoryPath}/${file}`)(options);  // eslint-disable-line node/global-require
 		});
 	}
 

@@ -65,23 +65,6 @@ class EnvironmentHelper {
 
 
 	/**
-	 * Types of group.
-	 *
-	 * @type {object<string, GroupType>}
-	 * @property {GroupType} simple - Simple classic package.
-	 * @property {GroupType} ioc - IoC package.
-	 * @property {GroupType} multi - Multi package repository.
-	 * @property {GroupType} sub - A subpackage of a multi package repository.
-	 */
-	get GROUP_TYPE() {
-		return Object.assign({}, this.PACKAGE_TYPE, {
-			multi: 'multi',
-			sub:   'sub'
-		});
-	}
-
-
-	/**
 	 * Types of test.
 	 *
 	 * @type {object<string, TestType>}
@@ -144,17 +127,30 @@ class EnvironmentHelper {
 
 
 	/**
+	 * Node.js LTS versions.
+	 *
+	 * @type {Array<number>}
+	 */
+	get LTS_VERSIONS() {
+		return fss.readYaml(`${paths.root}/.travis.yml`).node_js.splice(1);
+	}
+
+
+	/**
 	 * List of subpackages and their path.
 	 *
 	 * @type {object<string, string>}
 	 */
 	get projectSubpackages() {
 		if (fss.exists(paths.project.subpackages)) {
-			return fss.scandir(paths.project.subpackages, 'dir', { fullPath: true }).reduce((list, path) => {
-				list[path.split('/').pop()] = path;
+			const rawList = fss.scandir(paths.project.subpackages, 'dir', { fullPath: true });
 
-				return list;
-			}, {});
+			const list = {};
+			for (const path of rawList) {
+				list[path.split('/').pop()] = path;
+			}
+
+			return list;
 		}
 
 		return {};
@@ -202,23 +198,12 @@ class EnvironmentHelper {
 
 
 	/**
-	 * Define group.
+	 * Current repository Node.js version.
 	 *
-	 * @param {parameters} [parameters] - Parameters.
-	 * @param {RepositoryType} [parameters.repositoryType=this.repositoryType] - Type of repository.
-	 * @param {PackageType} [parameters.packageType=this.packageType] - Type of package.
-	 * @returns {GroupType} Type of group.
+	 * @type {number}
 	 */
-	groupType({ repositoryType = this.repositoryType, packageType = this.packageType } = {}) {
-		let group = packageType;
-
-		if (repositoryType === this.REPOSITORY_TYPE.multiPackage) {
-			group = this.GROUP_TYPE.multi;
-		} else if (repositoryType === this.REPOSITORY_TYPE.subPackage && packageType === this.PACKAGE_TYPE.simple) {
-			group = this.GROUP_TYPE.sub;
-		}
-
-		return group;
+	get nodeVersion() {
+		return Number(fss.readJson(`${paths.project.root}/package.json`).engines.node.slice(2));
 	}
 
 

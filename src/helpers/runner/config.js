@@ -81,7 +81,7 @@ class RunnerHelperConfig {
 			displayName: 'Standards: Lint JSON',
 			runner:      `${paths.runners}/lint-json`,
 			rootDir:     paths.project.root,
-			testMatch:   ['**/*.json', '!**/package-lock.json', '!**/packages/**/*'],
+			testMatch:   ['**/*.json', '!**/packages/**/*'],
 			globals:     this.globals
 		};
 	}
@@ -158,7 +158,7 @@ class RunnerHelperConfig {
 			runner:               `${paths.runners}/lint-file-styles`,
 			rootDir:              paths.project.root,
 			moduleFileExtensions: ['*'],
-			testMatch:            [...patterns, '!**/*.{js,scss}', '!**/package-lock.json', '!**/packages/**/*'],
+			testMatch:            [...patterns, '!**/*.{js,scss}', '!**/packages/**/*'],
 			globals:              this.globals
 		};
 	}
