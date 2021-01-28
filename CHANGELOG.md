@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+
+
+
+## [4.0.0] - 2021-01-28
 ### Added
 - `package-lock.json` now mandatory
 - Add Node.js engine to multi-package projects, so we can validate CI engines config
@@ -464,7 +468,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-[Unreleased]:   https://github.com/absolunet/node-tester/compare/3.2.2...HEAD
+[Unreleased]:   https://github.com/absolunet/node-tester/compare/4.0.0...HEAD
+[4.0.0]:        https://github.com/absolunet/node-tester/compare/3.2.2...4.0.0
 [3.2.2]:        https://github.com/absolunet/node-tester/compare/3.2.1...3.2.2
 [3.2.1]:        https://github.com/absolunet/node-tester/compare/3.2.0...3.2.1
 [3.2.0]:        https://github.com/absolunet/node-tester/compare/3.1.3...3.2.0
