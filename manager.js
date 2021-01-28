@@ -16,7 +16,7 @@ const getPipelineStep = (name, version) => {
 			caches: ['node'],
 			script: [
 				'npm ci --unsafe-perm',
-				'npm run build',
+				'npm run manager:build',
 				'npm test'
 			]
 		}

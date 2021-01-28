@@ -10,4 +10,4 @@ node_js:
   - 12
   - 10
 before_script:
-  - npm run build
+  - 'npm run manager:build'

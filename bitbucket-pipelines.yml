@@ -8,7 +8,7 @@ pipelines:
               - node
             script:
               - npm ci --unsafe-perm
-              - npm run build
+              - 'npm run manager:build'
               - npm test
         - step:
             name: Test LTS 14 Node.js version
@@ -17,7 +17,7 @@ pipelines:
               - node
             script:
               - npm ci --unsafe-perm
-              - npm run build
+              - 'npm run manager:build'
               - npm test
         - step:
             name: Test LTS 12 Node.js version
@@ -26,7 +26,7 @@ pipelines:
               - node
             script:
               - npm ci --unsafe-perm
-              - npm run build
+              - 'npm run manager:build'
               - npm test
         - step:
             name: Test LTS 10 Node.js version
@@ -35,5 +35,5 @@ pipelines:
               - node
             script:
               - npm ci --unsafe-perm
-              - npm run build
+              - 'npm run manager:build'
               - npm test
