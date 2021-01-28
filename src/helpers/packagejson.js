@@ -173,7 +173,7 @@ class PackageJsonHelper {
 				let scripts = TEST_SCRIPTS;
 
 				if (repositoryType === environment.REPOSITORY_TYPE.singlePackage) {
-					scripts = scripts.concat(MANAGER_SCRIPTS);
+					scripts = [...scripts, ...MANAGER_SCRIPTS];
 				}
 
 				expect(reference.config.scripts, 'Scripts must be valid').toContainEntries(scripts);
