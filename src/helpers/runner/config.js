@@ -1,9 +1,14 @@
 //--------------------------------------------------------
 //-- Runner config helper
 //--------------------------------------------------------
+import matchAll    from 'string.prototype.matchall';
 import fss         from '@absolunet/fss';
 import environment from '../environment';
 import paths       from '../paths';
+
+// TODO [>=5.0.0]: Remove polyfill
+matchAll.shim();
+
 
 
 const JEST_GENERIC_PLUGINS = [
