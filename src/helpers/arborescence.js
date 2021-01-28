@@ -191,7 +191,7 @@ class ArborescenceHelper {
 					this.fileExists('.travis.yml', directoryPath);
 
 					expect(fss.readYaml(`${root}/.travis.yml`), '.travis.yml must be valid').toContainAllEntries([
-						['os', ['linux', 'osx', 'windows']],
+						['os', ['linux', 'osx']],
 						['dist', 'xenial'],
 						['language', 'node_js'],
 						[
@@ -292,7 +292,7 @@ class ArborescenceHelper {
 				});
 			}
 
-			// TODO [>=4.0.0]: Add more tests with marked
+			// TODO [>=5.0.0]: Add more tests with marked
 			if (!ignore.includes(README)) {
 				test(`Ensure '${readablePath}/readme.md' is valid`, () => {
 					this.fileExists('readme.md', directoryPath);
@@ -331,7 +331,7 @@ class ArborescenceHelper {
 					this.fileExists('src/index.js', directoryPath);
 					this.fileExists('src/.eslintrc.yaml', directoryPath);
 
-					// TODO [>=4.0.0]: Verify order and that 2nd config is node or browser
+					// TODO [>=5.0.0]: Verify order and that 2nd config is node or browser
 					this.fileContainsMatrix('src/.eslintrc.yaml', { directoryPath, repositoryType });
 				});
 			}

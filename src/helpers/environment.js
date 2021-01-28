@@ -1,9 +1,15 @@
 //--------------------------------------------------------
 //-- Environment
 //--------------------------------------------------------
-import fss   from '@absolunet/fss';
-import paths from './paths';
+import fromEntries from 'object.fromentries';
+import fss         from '@absolunet/fss';
+import paths       from './paths';
 
+
+// TODO [>=5.0.0]: Remove polyfill
+if (!Object.fromEntries) {
+	fromEntries.shim();
+}
 
 /**
  * Environment.

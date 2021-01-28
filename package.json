@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "@absolunet/manager": "2.1.0",
-    "@absolunet/tester": "4.0.0",
+    "@absolunet/tester": "4.0.1",
     "lts-schedule": "2.2.0"
   },
   "dependencies": {
@@ -81,10 +81,12 @@
     "jest-extended": "^0.11.5",
     "marked": "^1.2.8",
     "minimist": "^1.2.5",
+    "object.fromentries": "^2.0.3",
     "pkg-dir": "^5.0.0",
     "read-package-json": "^3.0.0",
     "semver": "^7.3.4",
     "spdx-license-ids": "^3.0.7",
+    "string.prototype.matchall": "^4.0.3",
     "vinyl-fs": "^3.0.3",
     "yaml-lint": "^1.2.4"
   }
