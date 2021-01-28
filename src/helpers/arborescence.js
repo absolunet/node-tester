@@ -203,7 +203,7 @@ class ArborescenceHelper {
 								})
 							]
 						],
-						['before_script', ['npm run build']]
+						['before_script', ['npm run manager:build']]
 					]);
 				});
 			}
@@ -223,7 +223,7 @@ class ArborescenceHelper {
 											caches: ['node'],
 											script: [
 												'npm ci --unsafe-perm',
-												'npm run build',
+												'npm run manager:build',
 												'npm test'
 											]
 										}
@@ -240,7 +240,7 @@ class ArborescenceHelper {
 													caches: ['node'],
 													script: [
 														'npm ci --unsafe-perm',
-														'npm run build',
+														'npm run manager:build',
 														'npm test'
 													]
 												}
