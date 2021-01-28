@@ -43,7 +43,7 @@
 	
 
 	<header>
-		<p class="package"><a href="../">@absolunet/tester</a><span class="version">4.0.0</span></p>
+		<p class="package"><a href="../">@absolunet/tester</a><span class="version">4.0.1</span></p>
 		<a href="https://github.com/absolunet/node-tester" class="github" data-external="external">View on GitHub</a>
 	</header>
 
@@ -269,7 +269,7 @@ class ArborescenceHelper {
 								})
 							]
 						],
-						['before_script', ['npm run build']]
+						['before_script', ['npm run manager:build']]
 					]);
 				});
 			}
@@ -289,7 +289,7 @@ class ArborescenceHelper {
 											caches: ['node'],
 											script: [
 												'npm ci --unsafe-perm',
-												'npm run build',
+												'npm run manager:build',
 												'npm test'
 											]
 										}
@@ -306,7 +306,7 @@ class ArborescenceHelper {
 													caches: ['node'],
 													script: [
 														'npm ci --unsafe-perm',
-														'npm run build',
+														'npm run manager:build',
 														'npm test'
 													]
 												}
