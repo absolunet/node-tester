@@ -114,14 +114,13 @@ class PackageJsonHelper {
 			const repositoryPattern = new RegExp(`^git:\\/\\/${escapedSource}\\/(?<kebab1>[a-z][a-z0-9]*)(?<kebab2>-[a-z0-9]+)*\\.git$`, 'u');
 			const bugsPattern       = new RegExp(`^https:\\/\\/${escapedSource}\\/(?<kebab1>[a-z][a-z0-9]*)(?<kebab2>-[a-z0-9]+)*\\/issues$`, 'u');
 			const homepagePattern   = new RegExp(`^https:\\/\\/(?<domain>${escapedSource}\\/|documentation.absolunet.com\\/).+`, 'u');
-			const testerConfig      = fss.readJson(`${paths.root}/package.json`);
 
 
 			const reference = {};
 			this.validateIntegrity(reference, directoryPath);
 
 			test('Ensure mandatory identification fields are valid', () => {
-				// TODO [>=3.3.0]: Make special check for packageType IoC
+				// TODO [>=4.0.0]: Make special check for packageType IoC
 				expect(reference.config.name,    'Name must be valid').toMatch(namePattern);
 				expect(reference.config.version, 'Version must be valid').toBe(semver.valid(reference.config.version));
 				expect(reference.config.license, 'License must be valid').toBe(environment.packageCustomization.license);
@@ -158,8 +157,10 @@ class PackageJsonHelper {
 				});
 
 				if (reference.config.main) {
-					expect(reference.config.engines, 'Engines must be valid').toContainAllEntries([
-						['node', testerConfig.engines.node]
+					expect(reference.config.engines, 'Engines must be valid').toContainAnyEntries([
+						...environment.LTS_VERSIONS.map((version) => {
+							return ['node', `>= ${version}`];
+						})
 					]);
 				}
 
@@ -180,7 +181,7 @@ class PackageJsonHelper {
 
 
 			test('Ensure dependencies are valid', () => {
-				const dependencies = [`${environment.packageCustomization.nameScope}tester`];
+				const dependencies = [`@absolunet/tester`];
 
 				if (repositoryType === environment.REPOSITORY_TYPE.singlePackage) {
 					dependencies.push('@absolunet/manager');
@@ -218,6 +219,15 @@ class PackageJsonHelper {
 
 
 			test('Ensure functional fields are valid', () => {
+				expect(reference.config.engines, 'Engines must be valid').toContainAnyEntries([
+					...environment.LTS_VERSIONS.map((version) => {
+						return ['node', `>= ${version}`];
+					})
+				]);
+			});
+
+
+			test('Ensure scripts are valid', () => {
 				expect(reference.config.scripts, 'Scripts must be valid').toContainEntries([...MANAGER_SCRIPTS, ...TEST_SCRIPTS, ['postinstall', 'npm run manager:install']]);
 			});
 

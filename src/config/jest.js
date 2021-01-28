@@ -1,12 +1,13 @@
 //--------------------------------------------------------
 //-- Jest config
 //--------------------------------------------------------
+import fss         from '@absolunet/fss';
 import environment from '../helpers/environment';
 import runner      from '../helpers/runner';
 
 
 const runners = [];
-const { repositoryType, packageType, scope, customization } = JSON.parse(process.env[environment.JEST_CLI_KEY]);  // eslint-disable-line no-process-env
+const { repositoryType, packageType, scope, customization } = JSON.parse(process.env[environment.JEST_CLI_KEY]);  // eslint-disable-line node/no-process-env
 runner.config.globals = { repositoryType, packageType, customization };
 
 
@@ -38,6 +39,13 @@ const ENDTOEND = [
 ];
 
 
+const addRunners = (...configs) => {
+	runners.push(configs.filter(({ rootDir }) => {
+		return fss.exists(rootDir);
+	}));
+};
+
+
 
 
 
@@ -46,34 +54,34 @@ const ENDTOEND = [
 switch (scope) {
 
 	case environment.TEST_ALL:
-		runners.push(...STANDARDS, ...UNIT, ...FEATURE, ...INTEGRATION, ...ENDTOEND);
+		addRunners(...STANDARDS, ...UNIT, ...FEATURE, ...INTEGRATION, ...ENDTOEND);
 		break;
 
 	case environment.TEST_TYPE.standards:
-		runners.push(...STANDARDS);
+		addRunners(...STANDARDS);
 		break;
 
 	case environment.TEST_TYPE.unit:
 		if (packageType !== environment.PACKAGE_TYPE.ioc) {
-			runners.push(...UNIT);
+			addRunners(...UNIT);
 		}
 		break;
 
 	case environment.TEST_TYPE.feature:
 		if (packageType !== environment.PACKAGE_TYPE.ioc) {
-			runners.push(...FEATURE);
+			addRunners(...FEATURE);
 		}
 		break;
 
 	case environment.TEST_TYPE.integration:
 		if (packageType !== environment.PACKAGE_TYPE.ioc) {
-			runners.push(...INTEGRATION);
+			addRunners(...INTEGRATION);
 		}
 		break;
 
 	case environment.TEST_TYPE.endtoend:
 		if (packageType !== environment.PACKAGE_TYPE.ioc) {
-			runners.push(...ENDTOEND);
+			addRunners(...ENDTOEND);
 		}
 		break;
 

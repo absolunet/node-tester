@@ -41,7 +41,7 @@ const mockedTerminal = {
 //--------------------------------------------------------
 
 given.tester = () => {
-	const Tester = require('../../dist/node/AbsolunetTester'); // eslint-disable-line global-require
+	const Tester = require('../../dist/node/AbsolunetTester'); // eslint-disable-line node/global-require
 	tester = new Tester();
 };
 
@@ -74,7 +74,7 @@ given.mockedTerminal = () => {
 given.existingGenericTests = () => {
 	fakeFiles['path/to/root/test/generic/index.test.js'] = `
 		import { tester } from '@absolunet/tester';
-		
+
 		tester.genericRepositoryTests();
 	`;
 };
@@ -144,7 +144,7 @@ then.shouldHaveRunThroughTester = (scope) => {
 then.shouldHaveRunThroughIoC = (scope) => {
 	then.shouldNotHaveThrown();
 	expect(mockedTerminal.process.run).toHaveBeenCalled();
-	expect(mockedTerminal.process.run.mock.calls).toContainEqual([`node ioc test --type=${scope}`]);
+	expect(mockedTerminal.process.run.mock.calls).toContainEqual([`node ioc test --type=${scope}`, { environment: { NODE_ENV: 'test' } }]);
 };
 
 then.shouldNotHaveRunTests = () => {
