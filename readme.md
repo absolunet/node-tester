@@ -3,7 +3,7 @@
 [![npm](https://img.shields.io/npm/v/@absolunet/tester.svg)](https://www.npmjs.com/package/@absolunet/tester)
 [![npm dependencies](https://david-dm.org/absolunet/node-tester/status.svg)](https://david-dm.org/absolunet/node-tester)
 [![npms](https://badges.npms.io/%40absolunet%2Ftester.svg)](https://npms.io/search?q=%40absolunet%2Ftester)
-[![Tests](https://github.com/absolunet/node-tester/workflows/Tests/badge.svg?branch=master&event=status)](https://github.com/absolunet/node-tester/actions?query=workflow%3ATests)
+[![tests](https://github.com/absolunet/node-tester/workflows/tests/badge.svg?branch=master)](https://github.com/absolunet/node-tester/actions?query=workflow%3Atests+branch%3Amaster)
 [![Code style](https://img.shields.io/badge/code_style-@absolunet/node-659d32.svg)](https://github.com/absolunet/eslint-config)
 
 > Test suite for JavaScript projects via [🃏Jest](https://jestjs.io)
