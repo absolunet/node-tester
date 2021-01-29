@@ -191,7 +191,7 @@ class ArborescenceHelper {
 					this.fileExists('.travis.yml', directoryPath);
 
 					expect(fss.readYaml(`${root}/.travis.yml`), '.travis.yml must be valid').toContainAllEntries([
-						['os', ['linux', 'osx']],
+						['os', ['linux']],
 						['dist', 'xenial'],
 						['language', 'node_js'],
 						[
