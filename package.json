@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "@absolunet/manager": "2.1.0",
-    "@absolunet/tester": "4.0.2",
+    "@absolunet/tester": "4.0.3",
     "lts-schedule": "2.2.0"
   },
   "dependencies": {
