@@ -6,33 +6,33 @@ import environment from './environment';
 import paths       from './paths';
 
 
-const GITHUB_ISSUES = Symbol('github-issues');
-const GITHUB_PR     = Symbol('github-pullrequests');
-const EDITORCONFIG  = Symbol('editorconfig');
-const ESLINTIGNORE  = Symbol('eslintignore');
-const ESLINTRC      = Symbol('eslintrc');
-const GITIGNORE     = Symbol('gitignore');
-const NPMIGNORE     = Symbol('npmignore');
-const TRAVIS        = Symbol('travis');
-const PIPELINES     = Symbol('pipelines');
-const CHANGELOG     = Symbol('changelog');
-const CODEOFCONDUCT = Symbol('code-of-conduct');
-const CONTRIBUTING  = Symbol('contributing');
-const LICENSE       = Symbol('license');
-const MANAGER       = Symbol('manager');
-const PACKAGE       = Symbol('package');
-const README        = Symbol('readme');
-const SECURITY      = Symbol('security');
-const SUPPORT       = Symbol('support');
-const DISTRIBUTION  = Symbol('distribution');
-const DOCUMENTATION = Symbol('documentation');
-const SOURCE        = Symbol('source');
-const TEST          = Symbol('test');
+const GITHUB_ISSUES  = Symbol('github-issues');
+const GITHUB_PR      = Symbol('github-pullrequests');
+const EDITORCONFIG   = Symbol('editorconfig');
+const ESLINTIGNORE   = Symbol('eslintignore');
+const ESLINTRC       = Symbol('eslintrc');
+const GITIGNORE      = Symbol('gitignore');
+const NPMIGNORE      = Symbol('npmignore');
+const GITHUB_ACTIONS = Symbol('github-actions');
+const PIPELINES      = Symbol('pipelines');
+const CHANGELOG      = Symbol('changelog');
+const CODEOFCONDUCT  = Symbol('code-of-conduct');
+const CONTRIBUTING   = Symbol('contributing');
+const LICENSE        = Symbol('license');
+const MANAGER        = Symbol('manager');
+const PACKAGE        = Symbol('package');
+const README         = Symbol('readme');
+const SECURITY       = Symbol('security');
+const SUPPORT        = Symbol('support');
+const DISTRIBUTION   = Symbol('distribution');
+const DOCUMENTATION  = Symbol('documentation');
+const SOURCE         = Symbol('source');
+const TEST           = Symbol('test');
 
 const IGNORE = {
 	[environment.REPOSITORY_TYPE.singlePackage]: [],
 	[environment.REPOSITORY_TYPE.multiPackage]:  [NPMIGNORE, DOCUMENTATION, DISTRIBUTION, SOURCE],
-	[environment.REPOSITORY_TYPE.subPackage]:    [GITHUB_ISSUES, GITHUB_PR, EDITORCONFIG, GITIGNORE, TRAVIS, PIPELINES, CHANGELOG, CODEOFCONDUCT, CONTRIBUTING, MANAGER, SECURITY, SUPPORT, DOCUMENTATION]
+	[environment.REPOSITORY_TYPE.subPackage]:    [GITHUB_ISSUES, GITHUB_PR, EDITORCONFIG, GITIGNORE, GITHUB_ACTIONS, PIPELINES, CHANGELOG, CODEOFCONDUCT, CONTRIBUTING, MANAGER, SECURITY, SUPPORT, DOCUMENTATION]
 };
 
 
@@ -186,25 +186,49 @@ class ArborescenceHelper {
 				});
 			}
 
-			if (!ignore.includes(TRAVIS) && environment.packageCustomization.ciEngine.includes(environment.CI_ENGINE.travis)) {
-				test(`Ensure '${readablePath}/.travis.yml' is valid`, () => {
-					this.fileExists('.travis.yml', directoryPath);
+			if (!ignore.includes(GITHUB_ACTIONS) && environment.packageCustomization.ciEngine.includes(environment.CI_ENGINE.githubActions)) {
+				test(`Ensure '${readablePath}/.github/workflow/tests.yaml' is valid`, () => {
+					this.fileExists('.github/workflow/tests.yaml', directoryPath);
 
-					expect(fss.readYaml(`${root}/.travis.yml`), '.travis.yml must be valid').toContainAllEntries([
-						['os', ['linux']],
-						['dist', 'xenial'],
-						['language', 'node_js'],
+					/* eslint-disable no-template-curly-in-string, camelcase */
+					expect(fss.readYaml(`${root}/.github/workflow/tests.yaml`), '.github/workflow/tests.yaml must be valid').toContainAllEntries([
+						['name', 'Tests'],
+						['on', ['push', 'pull_request']],
 						[
-							'node_js',
-							[
-								'node',
-								...environment.LTS_VERSIONS.filter((version) => {
-									return version >= environment.nodeVersion;
-								})
-							]
-						],
-						['before_script', ['npm run manager:build']]
+							'jobs', {
+								build: {
+									'runs-on': '${{ matrix.os }}',
+									'strategy': {
+										matrix: {
+											os: ['ubuntu-latest', 'macos-latest'],
+											node_version: [
+												...environment.LTS_VERSIONS.filter((version) => {
+													return version >= environment.nodeVersion;
+												})
+											]
+										}
+									},
+									'name': 'Node ${{ matrix.node_version }} - on ${{ matrix.os }}',
+									'steps': [
+										{ uses: 'actions/checkout@v2' },
+										{
+											'name': 'Setup node',
+											'uses': 'actions/setup-node@v2',
+											'with': {
+												'check-latest': true,
+												'node-version': '${{ matrix.node_version }}'
+											}
+										},
+										{ run: 'npm ci' },
+										{ run: 'npm run manager:build' },
+										{ run: 'npm test' }
+									]
+								}
+							}
+						]
 					]);
+					/* eslint-enable no-template-curly-in-string, camelcase */
+
 				});
 			}
 

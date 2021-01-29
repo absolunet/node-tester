@@ -17,7 +17,7 @@
  */
 
 /**
- * Type of CI engine: 'travis', 'pipeline'.
+ * Type of CI engine: 'pipeline', 'github-actions'.
  *
  * @typedef {string} CIEngine
  */

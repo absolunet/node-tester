@@ -31,7 +31,7 @@ class AbsolunetTester {
 	 * @param {string} [options.source='github.com/absolunet'] - Package source.
 	 * @param {object<string>} [options.author={ name: 'Absolunet', url: 'https://absolunet.com' }] - Package author.
 	 * @param {string} [options.license='MIT'] - Package license.
-	 * @param {Array<CIEngine>} [options.ciEngine=['pipelines', 'travis']] - Package CI engines.
+	 * @param {Array<CIEngine>} [options.ciEngine=['pipelines', 'github-actions']] - Package CI engines.
 	 */
 	constructor(options = {}) {
 		validateArgument('options', options, Joi.object({
