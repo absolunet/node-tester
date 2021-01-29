@@ -11,7 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
-- Migrate from TravisCI to GitHub Actions
+- Migrate from TravisCI to GitHub Actions (#19)
+- Remove cache from Bitbucket Pipelines (#15)
 
 
 
