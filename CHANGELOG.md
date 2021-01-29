@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+
+
+
+## [4.0.3] - 2021-01-28
 ### Removed
 - Remove macOS from TravisCI tests because of new TravisCI OSS policy
 
@@ -485,7 +489,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-[Unreleased]:   https://github.com/absolunet/node-tester/compare/4.0.2...HEAD
+[Unreleased]:   https://github.com/absolunet/node-tester/compare/4.0.3...HEAD
+[4.0.3]:        https://github.com/absolunet/node-tester/compare/4.0.2...4.0.3
 [4.0.2]:        https://github.com/absolunet/node-tester/compare/4.0.1...4.0.2
 [4.0.1]:        https://github.com/absolunet/node-tester/compare/4.0.0...4.0.1
 [4.0.0]:        https://github.com/absolunet/node-tester/compare/3.2.2...4.0.0
