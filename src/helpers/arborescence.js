@@ -186,13 +186,13 @@ class ArborescenceHelper {
 				});
 			}
 
-			if (!ignore.includes(GITHUB_ACTIONS) && environment.packageCustomization.ciEngine.includes(environment.CI_ENGINE.githubActions)) {
+			if (!ignore.includes(GITHUB_ACTIONS) && environment.packageCustomization.ciEngine[environment.CI_ENGINE.githubActions].enabled === true) {
 				test(`Ensure '${readablePath}/.github/workflow/tests.yaml' is valid`, () => {
 					this.fileExists('.github/workflow/tests.yaml', directoryPath);
 
 					/* eslint-disable no-template-curly-in-string, camelcase */
 					expect(fss.readYaml(`${root}/.github/workflow/tests.yaml`), '.github/workflow/tests.yaml must be valid').toContainAllEntries([
-						['name', 'Tests'],
+						['name', 'tests'],
 						['on', ['push', 'pull_request']],
 						[
 							'jobs', {
@@ -232,7 +232,25 @@ class ArborescenceHelper {
 				});
 			}
 
-			if (!ignore.includes(PIPELINES) && environment.packageCustomization.ciEngine.includes(environment.CI_ENGINE.pipelines)) {
+			if (!ignore.includes(PIPELINES) && environment.packageCustomization.ciEngine[environment.CI_ENGINE.pipelines].enabled === true) {
+				const stepDefinition = (version) => {
+					const step = {
+						name:   `Test ${Number.isInteger(version) ? 'LTS ' : ''}${version} Node.js version`,
+						image:  `node:${version}`,
+						script: [
+							'npm ci --unsafe-perm',
+							'npm run manager:build',
+							'npm test'
+						]
+					};
+
+					if (environment.packageCustomization.ciEngine[environment.CI_ENGINE.pipelines].cache) {
+						step.caches = ['node'];
+					}
+
+					return { step };
+				};
+
 				test(`Ensure '${readablePath}/bitbucket-pipelines.yml' is valid`, () => {
 					this.fileExists('bitbucket-pipelines.yml', directoryPath);
 
@@ -240,33 +258,13 @@ class ArborescenceHelper {
 						'pipelines', {
 							'default': [{
 								parallel: [
-									{
-										step: {
-											name: 'Test latest Node.js version',
-											image: 'node:latest',
-											script: [
-												'npm ci --unsafe-perm',
-												'npm run manager:build',
-												'npm test'
-											]
-										}
-									},
+									stepDefinition('latest'),
 									...environment.LTS_VERSIONS
 										.filter((version) => {
 											return version >= environment.nodeVersion;
 										})
 										.map((version) => {
-											return {
-												step: {
-													name:   `Test LTS ${version} Node.js version`,
-													image:  `node:${version}`,
-													script: [
-														'npm ci --unsafe-perm',
-														'npm run manager:build',
-														'npm test'
-													]
-												}
-											};
+											return stepDefinition(version);
 										})
 								]
 							}]

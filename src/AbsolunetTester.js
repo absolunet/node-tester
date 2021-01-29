@@ -2,6 +2,7 @@
 //-- AbsolunetTester
 //--------------------------------------------------------
 import chalk                     from 'chalk';
+import deepmerge                 from 'deepmerge';
 import minimist                  from 'minimist';
 import spdxLicenseIds            from 'spdx-license-ids';
 import fss                       from '@absolunet/fss';
@@ -31,7 +32,10 @@ class AbsolunetTester {
 	 * @param {string} [options.source='github.com/absolunet'] - Package source.
 	 * @param {object<string>} [options.author={ name: 'Absolunet', url: 'https://absolunet.com' }] - Package author.
 	 * @param {string} [options.license='MIT'] - Package license.
-	 * @param {Array<CIEngine>} [options.ciEngine=['pipelines', 'github-actions']] - Package CI engines.
+	 * @param {object<CIEngine, object>} [options.ciEngine] - Package CI engines.
+	 * @param {boolean} [options.ciEngine.pipelines.enabled=true] - If Bitbucket Pipelines is enabled.
+	 * @param {boolean} [options.ciEngine.pipelines.cache=true] - If cache is enabled.
+	 * @param {boolean} [options.ciEngine.githubActions.enabled=true] - If GitHub Actions is enabled.
 	 */
 	constructor(options = {}) {
 		validateArgument('options', options, Joi.object({
@@ -39,7 +43,10 @@ class AbsolunetTester {
 			source:    Joi.string().replace(/^(?<all>.+)$/u, 'https://$<all>').uri(),
 			author:    Joi.object({ name: Joi.string().required(), url: Joi.string().uri().required() }),
 			license:   Joi.string().valid(...spdxLicenseIds),
-			ciEngine:  Joi.array().items(Joi.string().valid(...Object.values(environment.CI_ENGINE))).min(1).unique()
+			ciEngine:  Joi.object({
+				[environment.CI_ENGINE.pipelines]:     Joi.object({ enabled: Joi.boolean(), cache: Joi.boolean()	}),
+				[environment.CI_ENGINE.githubActions]: Joi.object({ enabled: Joi.boolean() })
+			})
 		}));
 
 		const nameScope = options.nameScope === undefined ? '@absolunet' : options.nameScope;
@@ -48,7 +55,10 @@ class AbsolunetTester {
 		customization.source    = options.source   || 'github.com/absolunet';
 		customization.author    = options.author   || { name: 'Absolunet', url: 'https://absolunet.com' };
 		customization.license   = options.license  || 'MIT';
-		customization.ciEngine  = options.ciEngine || Object.values(environment.CI_ENGINE);
+		customization.ciEngine  = deepmerge({
+			[environment.CI_ENGINE.pipelines]:     { enabled: true, cache: true },
+			[environment.CI_ENGINE.githubActions]: { enabled: true }
+		}, options.ciEngine || {});
 	}
 
 
