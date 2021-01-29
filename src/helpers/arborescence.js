@@ -244,7 +244,6 @@ class ArborescenceHelper {
 										step: {
 											name: 'Test latest Node.js version',
 											image: 'node:latest',
-											caches: ['node'],
 											script: [
 												'npm ci --unsafe-perm',
 												'npm run manager:build',
@@ -261,7 +260,6 @@ class ArborescenceHelper {
 												step: {
 													name:   `Test LTS ${version} Node.js version`,
 													image:  `node:${version}`,
-													caches: ['node'],
 													script: [
 														'npm ci --unsafe-perm',
 														'npm run manager:build',

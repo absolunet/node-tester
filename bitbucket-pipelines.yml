@@ -4,8 +4,6 @@ pipelines:
         - step:
             name: Test latest Node.js version
             image: 'node:latest'
-            caches:
-              - node
             script:
               - npm ci --unsafe-perm
               - 'npm run manager:build'
@@ -13,8 +11,6 @@ pipelines:
         - step:
             name: Test LTS 14 Node.js version
             image: 'node:14'
-            caches:
-              - node
             script:
               - npm ci --unsafe-perm
               - 'npm run manager:build'
@@ -22,8 +18,6 @@ pipelines:
         - step:
             name: Test LTS 12 Node.js version
             image: 'node:12'
-            caches:
-              - node
             script:
               - npm ci --unsafe-perm
               - 'npm run manager:build'
@@ -31,8 +25,6 @@ pipelines:
         - step:
             name: Test LTS 10 Node.js version
             image: 'node:10'
-            caches:
-              - node
             script:
               - npm ci --unsafe-perm
               - 'npm run manager:build'
