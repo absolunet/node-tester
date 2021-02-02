@@ -138,7 +138,7 @@ class EnvironmentHelper {
 	 * @type {Array<number>}
 	 */
 	get LTS_VERSIONS() {
-		return fss.readYaml(`${paths.root}/.github/workflow/tests.yaml`).jobs.build.strategy.matrix.node_version;
+		return fss.readYaml(`${paths.root}/.github/workflows/tests.yaml`).jobs.build.strategy.matrix.node_version;
 	}
 
 

@@ -187,11 +187,11 @@ class ArborescenceHelper {
 			}
 
 			if (!ignore.includes(GITHUB_ACTIONS) && environment.packageCustomization.ciEngine[environment.CI_ENGINE.githubActions].enabled === true) {
-				test(`Ensure '${readablePath}/.github/workflow/tests.yaml' is valid`, () => {
-					this.fileExists('.github/workflow/tests.yaml', directoryPath);
+				test(`Ensure '${readablePath}/.github/workflows/tests.yaml' is valid`, () => {
+					this.fileExists('.github/workflows/tests.yaml', directoryPath);
 
 					/* eslint-disable no-template-curly-in-string, camelcase */
-					expect(fss.readYaml(`${root}/.github/workflow/tests.yaml`), '.github/workflow/tests.yaml must be valid').toContainAllEntries([
+					expect(fss.readYaml(`${root}/.github/workflows/tests.yaml`), '.github/workflows/tests.yaml must be valid').toContainAllEntries([
 						['name', 'tests'],
 						['on', ['push', 'pull_request']],
 						[

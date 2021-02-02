@@ -32,7 +32,7 @@ manager.init({
 	tasks: {
 		prepare: {
 			postRun: ({ terminal }) => {
-				terminal.print(`Update Node version in package.json / bitbucket-pipelines.yml / .github/workflow/tests.yaml`).spacer();
+				terminal.print(`Update Node version in package.json / bitbucket-pipelines.yml / .github/workflows/tests.yaml`).spacer();
 
 				const paths = require('./dist/node/helpers/paths');  // eslint-disable-line node/global-require
 				const today = Date.now();
@@ -55,8 +55,8 @@ manager.init({
 				fss.writeJson(packageFile, packageData, { space: 2 });
 
 
-				//-- .github/workflow/tests.yaml
-				const githubActionsFile = `${paths.root}/.github/workflow/tests.yaml`;
+				//-- .github/workflows/tests.yaml
+				const githubActionsFile = `${paths.root}/.github/workflows/tests.yaml`;
 				const githubActionsData = fss.readYaml(githubActionsFile);
 				githubActionsData.jobs.build.strategy.matrix.node_version = [...lts];  // eslint-disable-line camelcase
 				fss.writeYaml(githubActionsFile, githubActionsData);
