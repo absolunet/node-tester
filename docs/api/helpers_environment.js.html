@@ -43,7 +43,7 @@
 	
 
 	<header>
-		<p class="package"><a href="../">@absolunet/tester</a><span class="version">4.1.0</span></p>
+		<p class="package"><a href="../">@absolunet/tester</a><span class="version">4.1.1</span></p>
 		<a href="https://github.com/absolunet/node-tester" class="github" data-external="external">View on GitHub</a>
 	</header>
 
@@ -204,7 +204,7 @@ class EnvironmentHelper {
 	 * @type {Array&lt;number>}
 	 */
 	get LTS_VERSIONS() {
-		return fss.readYaml(`${paths.root}/.github/workflow/tests.yaml`).jobs.build.strategy.matrix.node_version;
+		return fss.readYaml(`${paths.root}/.github/workflows/tests.yaml`).jobs.build.strategy.matrix.node_version;
 	}
 
 
