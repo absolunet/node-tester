@@ -43,7 +43,7 @@
 	
 
 	<header>
-		<p class="package"><a href="../">@absolunet/tester</a><span class="version">4.0.3</span></p>
+		<p class="package"><a href="../">@absolunet/tester</a><span class="version">4.1.0</span></p>
 		<a href="https://github.com/absolunet/node-tester" class="github" data-external="external">View on GitHub</a>
 	</header>
 
@@ -187,13 +187,13 @@ class EnvironmentHelper {
 	 * Types of CI engine.
 	 *
 	 * @type {object&lt;string, CIEngine>}
-	 * @property {CIEngine} travis - GitHub Travis CI.
 	 * @property {CIEngine} pipelines - Bitbucket Pipelines.
+	 * @property {CIEngine} githubActions - GitHub Actions.
 	 */
 	get CI_ENGINE() {
 		return {
-			travis:    'travis',
-			pipelines: 'pipelines'
+			pipelines:     'pipelines',
+			githubActions: 'github-actions'
 		};
 	}
 
@@ -204,7 +204,7 @@ class EnvironmentHelper {
 	 * @type {Array&lt;number>}
 	 */
 	get LTS_VERSIONS() {
-		return fss.readYaml(`${paths.root}/.travis.yml`).node_js.splice(1);
+		return fss.readYaml(`${paths.root}/.github/workflow/tests.yaml`).jobs.build.strategy.matrix.node_version;
 	}
 
 
