@@ -121,13 +121,13 @@ class EnvironmentHelper {
 	 * Types of CI engine.
 	 *
 	 * @type {object<string, CIEngine>}
-	 * @property {CIEngine} travis - GitHub Travis CI.
 	 * @property {CIEngine} pipelines - Bitbucket Pipelines.
+	 * @property {CIEngine} githubActions - GitHub Actions.
 	 */
 	get CI_ENGINE() {
 		return {
-			travis:    'travis',
-			pipelines: 'pipelines'
+			pipelines:     'pipelines',
+			githubActions: 'github-actions'
 		};
 	}
 
@@ -138,7 +138,7 @@ class EnvironmentHelper {
 	 * @type {Array<number>}
 	 */
 	get LTS_VERSIONS() {
-		return fss.readYaml(`${paths.root}/.travis.yml`).node_js.splice(1);
+		return fss.readYaml(`${paths.root}/.github/workflow/tests.yaml`).jobs.build.strategy.matrix.node_version;
 	}
 
 

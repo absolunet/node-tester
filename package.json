@@ -73,6 +73,7 @@
     "babel-jest": "^26.6.3",
     "chalk": "^4.1.0",
     "create-jest-runner": "^0.7.0",
+    "deepmerge": "^4.2.2",
     "eclint": "^2.8.1",
     "esprima": "^4.0.1",
     "gulp-reporter": "^2.10.0",
