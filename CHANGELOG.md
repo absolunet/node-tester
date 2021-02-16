@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+### Changed
+- ESLint config update to 2.2.0
+- Maintenance update
+
+### Fixed
+- Validate `dist` is ignored
 
 
 
