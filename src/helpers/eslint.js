@@ -3,7 +3,7 @@
 //--------------------------------------------------------
 import chalk                from 'chalk';
 import { pass, fail, skip } from 'create-jest-runner';
-import { ESLint }           from 'eslint';
+import { ESLint }           from 'eslint';  // eslint-disable-line node/no-extraneous-import
 import runner               from './runner';
 
 
