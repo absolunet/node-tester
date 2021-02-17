@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+
+
+
+## [4.1.4] - 2021-02-18
 ### Fixed
 - Validate that sources ESLint is multiline so it can extend multiple rulesets
 
@@ -522,7 +526,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-[Unreleased]:   https://github.com/absolunet/node-tester/compare/4.1.3...HEAD
+[Unreleased]:   https://github.com/absolunet/node-tester/compare/4.1.4...HEAD
+[4.1.4]:        https://github.com/absolunet/node-tester/compare/4.1.3...4.1.4
 [4.1.3]:        https://github.com/absolunet/node-tester/compare/4.1.2...4.1.3
 [4.1.2]:        https://github.com/absolunet/node-tester/compare/4.1.1...4.1.2
 [4.1.1]:        https://github.com/absolunet/node-tester/compare/4.1.0...4.1.1
