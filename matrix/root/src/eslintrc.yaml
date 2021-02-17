@@ -1,2 +1,1 @@
-extends:
-  - '@absolunet/package'
+extends: '@absolunet/node-package'
