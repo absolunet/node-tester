@@ -75,9 +75,9 @@ manager.init({
 				fss.writeYaml(pipelinesFile, pipelinesData);
 
 
-				//-- license
-				terminal.print(`Update year in license`).spacer();
-				const licenseFile = `${paths.root}/license`;
+				//-- LICENSE
+				terminal.print(`Update year in LICENSE`).spacer();
+				const licenseFile = `${paths.root}/LICENSE`;
 				let licenseData = fss.readFile(licenseFile, 'utf8');
 				licenseData = licenseData.replace(/Copyright \(c\) 2011-\d{4}/u, `Copyright (c) 2011-${new Date().getFullYear()}`);
 				fss.writeFile(licenseFile, licenseData);
