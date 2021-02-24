@@ -148,7 +148,7 @@ class EnvironmentHelper {
 	 * @type {object<string, string>}
 	 */
 	get projectSubpackages() {
-		if (fss.exists(paths.project.subpackages)) {
+		if (fss.existsCase(paths.project.subpackages)) {
 			const rawList = fss.scandir(paths.project.subpackages, 'dir', { fullPath: true });
 
 			const list = {};
