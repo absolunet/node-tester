@@ -43,7 +43,7 @@
 	
 
 	<header>
-		<p class="package"><a href="../">@absolunet/tester</a><span class="version">4.1.4</span></p>
+		<p class="package"><a href="../">@absolunet/tester</a><span class="version">4.2.0</span></p>
 		<a href="https://github.com/absolunet/node-tester" class="github" data-external="external">View on GitHub</a>
 	</header>
 
@@ -175,7 +175,7 @@ class AbsolunetTester {
 
 		//-- Check if generic tests are present
 		const genericTests = `${paths.project.test}/generic/index.test.js`;
-		if (fss.exists(genericTests)) {
+		if (fss.existsCase(genericTests)) {
 			const esprima = require('esprima');  // eslint-disable-line node/global-require
 
 			const code  = fss.readFile(genericTests, 'utf8');
