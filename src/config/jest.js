@@ -41,7 +41,7 @@ const ENDTOEND = [
 
 const addRunners = (...configs) => {
 	runners.push(configs.filter(({ rootDir }) => {
-		return fss.exists(rootDir);
+		return fss.existsCase(rootDir);
 	}));
 };
 

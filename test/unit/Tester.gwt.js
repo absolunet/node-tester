@@ -22,7 +22,7 @@ const mockedFss = {
 	realpath: jest.fn((relativePath) => {
 		return `path/to/root${relativePath === '.' ? '' : `/${relativePath}`}`;
 	}),
-	exists: jest.fn(() => {
+	existsCase: jest.fn(() => {
 		return true;
 	}),
 	readFile: jest.fn((fileName) => {
