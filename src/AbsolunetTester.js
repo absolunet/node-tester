@@ -109,7 +109,7 @@ class AbsolunetTester {
 
 		//-- Check if generic tests are present
 		const genericTests = `${paths.project.test}/generic/index.test.js`;
-		if (fss.exists(genericTests)) {
+		if (fss.existsCase(genericTests)) {
 			const esprima = require('esprima');  // eslint-disable-line node/global-require
 
 			const code  = fss.readFile(genericTests, 'utf8');

@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+### Changed
+- Uppercase GitHub community files, readme and license
+- Validate case-sensitivity when checking if a path exists
+- Maintenance update
 
 
 
