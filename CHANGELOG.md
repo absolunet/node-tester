@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+
+
+
+## [4.2.0] - 2021-02-24
 ### Changed
 - Uppercase GitHub community files, readme and license
 - Validate case-sensitivity when checking if a path exists
@@ -530,7 +534,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-[Unreleased]:   https://github.com/absolunet/node-tester/compare/4.1.4...HEAD
+[Unreleased]:   https://github.com/absolunet/node-tester/compare/4.2.0...HEAD
+[4.2.0]:        https://github.com/absolunet/node-tester/compare/4.1.4...4.2.0
 [4.1.4]:        https://github.com/absolunet/node-tester/compare/4.1.3...4.1.4
 [4.1.3]:        https://github.com/absolunet/node-tester/compare/4.1.2...4.1.3
 [4.1.2]:        https://github.com/absolunet/node-tester/compare/4.1.1...4.1.2

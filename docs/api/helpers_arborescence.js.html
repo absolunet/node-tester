@@ -43,7 +43,7 @@
 	
 
 	<header>
-		<p class="package"><a href="../">@absolunet/tester</a><span class="version">4.1.4</span></p>
+		<p class="package"><a href="../">@absolunet/tester</a><span class="version">4.2.0</span></p>
 		<a href="https://github.com/absolunet/node-tester" class="github" data-external="external">View on GitHub</a>
 	</header>
 
@@ -119,9 +119,9 @@ const matrix = (filename, type, fileMatrix) => {
 
 	if (fileMatrix[filename]) {
 		return fss.realpath(fileMatrix[filename]);
-	} else if (fss.exists(typePath)) {
+	} else if (fss.existsCase(typePath)) {
 		return fss.realpath(typePath);
-	} else if (fss.exists(matrixPath)) {
+	} else if (fss.existsCase(matrixPath)) {
 		return fss.realpath(matrixPath);
 	}
 
@@ -140,13 +140,13 @@ const matrix = (filename, type, fileMatrix) => {
 class ArborescenceHelper {
 
 	/**
-	 * Validates if file exists.
+	 * Validates if file exists (case-sensitive).
 	 *
 	 * @param {string} filename - Name of the file.
 	 * @param {string} directoryPath - Absolute directory path to the file.
 	 */
 	fileExists(filename, directoryPath) {
-		const exists = fss.exists(`${directoryPath}/${filename}`);
+		const exists = fss.existsCase(`${directoryPath}/${filename}`);
 		expect(exists, `'${filename}' must exists`).toBeTrue();
 	}
 
@@ -340,23 +340,23 @@ class ArborescenceHelper {
 			}
 
 			if (!ignore.includes(CODEOFCONDUCT)) {
-				test(`Ensure '${readablePath}/code_of_conduct.md' is valid`, () => {
-					this.fileExists('code_of_conduct.md', directoryPath);
-					this.fileIsMatrix('code_of_conduct.md', { directoryPath, repositoryType });
+				test(`Ensure '${readablePath}/CODE_OF_CONDUCT.md' is valid`, () => {
+					this.fileExists('CODE_OF_CONDUCT.md', directoryPath);
+					this.fileIsMatrix('CODE_OF_CONDUCT.md', { directoryPath, repositoryType });
 				});
 			}
 
 			if (!ignore.includes(CONTRIBUTING)) {
-				test(`Ensure '${readablePath}/contributing.md' is valid`, () => {
-					this.fileExists('contributing.md', directoryPath);
-					this.fileIsMatrix('contributing.md', { directoryPath, repositoryType });
+				test(`Ensure '${readablePath}/CONTRIBUTING.md' is valid`, () => {
+					this.fileExists('CONTRIBUTING.md', directoryPath);
+					this.fileIsMatrix('CONTRIBUTING.md', { directoryPath, repositoryType });
 				});
 			}
 
 			if (!ignore.includes(LICENSE)) {
-				test(`Ensure '${readablePath}/license' is valid`, () => {
-					this.fileExists('license', directoryPath);
-					this.fileIsMatrix('license', { directoryPath, repositoryType });
+				test(`Ensure '${readablePath}/LICENSE' is valid`, () => {
+					this.fileExists('LICENSE', directoryPath);
+					this.fileIsMatrix('LICENSE', { directoryPath, repositoryType });
 				});
 			}
 
@@ -380,22 +380,22 @@ class ArborescenceHelper {
 
 			// TODO [>=5.0.0]: Add more tests with marked
 			if (!ignore.includes(README)) {
-				test(`Ensure '${readablePath}/readme.md' is valid`, () => {
-					this.fileExists('readme.md', directoryPath);
+				test(`Ensure '${readablePath}/README.md' is valid`, () => {
+					this.fileExists('README.md', directoryPath);
 				});
 			}
 
 			if (!ignore.includes(SECURITY)) {
-				test(`Ensure '${readablePath}/security.md' is valid`, () => {
-					this.fileExists('security.md', directoryPath);
-					this.fileIsMatrix('security.md', { directoryPath, repositoryType });
+				test(`Ensure '${readablePath}/SECURITY.md' is valid`, () => {
+					this.fileExists('SECURITY.md', directoryPath);
+					this.fileIsMatrix('SECURITY.md', { directoryPath, repositoryType });
 				});
 			}
 
 			if (!ignore.includes(SUPPORT)) {
-				test(`Ensure '${readablePath}/support.md' is valid`, () => {
-					this.fileExists('support.md', directoryPath);
-					this.fileIsMatrix('support.md', { directoryPath, repositoryType });
+				test(`Ensure '${readablePath}/SUPPORT.md' is valid`, () => {
+					this.fileExists('SUPPORT.md', directoryPath);
+					this.fileIsMatrix('SUPPORT.md', { directoryPath, repositoryType });
 				});
 			}
 
