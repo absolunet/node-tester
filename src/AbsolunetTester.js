@@ -1,6 +1,7 @@
 //--------------------------------------------------------
 //-- AbsolunetTester
 //--------------------------------------------------------
+import { createRequire }         from 'module';
 import chalk                     from 'chalk';
 import deepmerge                 from 'deepmerge';
 import minimist                  from 'minimist';
@@ -8,9 +9,11 @@ import spdxLicenseIds            from 'spdx-license-ids';
 import fss                       from '@absolunet/fss';
 import { Joi, validateArgument } from '@absolunet/joi';
 import { terminal }              from '@absolunet/terminal';
-import environment               from './helpers/environment';
-import paths                     from './helpers/paths';
+import environment               from './helpers/environment.js';
+import paths                     from './helpers/paths.js';
 
+
+const require = createRequire(__filename);
 
 const customization = {};
 
@@ -110,7 +113,7 @@ class AbsolunetTester {
 		//-- Check if generic tests are present
 		const genericTests = `${paths.project.test}/generic/index.test.js`;
 		if (fss.existsCase(genericTests)) {
-			const esprima = require('esprima');  // eslint-disable-line node/global-require
+			const esprima = require('esprima');
 
 			const code  = fss.readFile(genericTests, 'utf8');
 			const found = esprima.tokenize(code).some(({ type, value }) => { return type === 'Identifier' && value === 'genericRepositoryTests'; });
@@ -186,7 +189,7 @@ class AbsolunetTester {
 		const repositoryPath = `${paths.tests}/repository`;
 
 		fss.readdir(repositoryPath).forEach((file) => {
-			require(`${repositoryPath}/${file}`)(options);  // eslint-disable-line node/global-require
+			require(`${repositoryPath}/${file}`).default(options);
 		});
 	}
 

@@ -2,8 +2,8 @@
 //-- Jest config
 //--------------------------------------------------------
 import fss         from '@absolunet/fss';
-import environment from '../helpers/environment';
-import runner      from '../helpers/runner';
+import environment from '../helpers/environment.js';
+import runner      from '../helpers/runner/index.js';
 
 
 const runners = [];
@@ -91,4 +91,4 @@ switch (scope) {
 }
 
 
-export { runners as projects };
+export default { projects: runners };

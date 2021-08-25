@@ -2,8 +2,8 @@
 //-- Arborescence helper
 //--------------------------------------------------------
 import fss         from '@absolunet/fss';
-import environment from './environment';
-import paths       from './paths';
+import environment from './environment.js';
+import paths       from './paths.js';
 
 
 const GITHUB_ISSUES  = Symbol('github-issues');

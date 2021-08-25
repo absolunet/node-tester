@@ -4,8 +4,8 @@
 import readPackageJson from 'read-package-json';
 import semver          from 'semver';
 import fss             from '@absolunet/fss';
-import environment     from './environment';
-import paths           from './paths';
+import environment     from './environment.js';
+import paths           from './paths.js';
 
 const MANAGER_SCRIPTS = [
 	['manager:install',        'node manager --task=install'],

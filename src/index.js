@@ -1,7 +1,7 @@
 //--------------------------------------------------------
 //-- @absolunet/tester
 //--------------------------------------------------------
-import AbsolunetTester from './AbsolunetTester';
+import AbsolunetTester from './AbsolunetTester.js';
 
 const tester = new AbsolunetTester();
 
@@ -38,7 +38,7 @@ const tester = new AbsolunetTester();
  *
  * @name Tester
  * @type {AbsolunetTester}
- **/
+ */
 export { AbsolunetTester as Tester };
 
 
@@ -47,5 +47,5 @@ export { AbsolunetTester as Tester };
  *
  * @name tester
  * @type {AbsolunetTester}
- **/
+ */
 export { tester };

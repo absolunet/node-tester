@@ -1,18 +1,16 @@
 //--------------------------------------------------------
 //-- Runner config helper
 //--------------------------------------------------------
-import matchAll    from 'string.prototype.matchall';
-import fss         from '@absolunet/fss';
-import environment from '../environment';
-import paths       from '../paths';
+import { createRequire } from 'module';
+import fss               from '@absolunet/fss';
+import environment       from '../environment.js';
+import paths             from '../paths.js';
 
-// TODO [>=5.0.0]: Remove polyfill
-matchAll.shim();
-
+const require = createRequire(__filename);
 
 
 const JEST_GENERIC_PLUGINS = [
-	require.resolve('jest-expect-message'),
+	require.resolve('@alex_neo/jest-expect-message'),
 	require.resolve('jest-extended')
 ];
 

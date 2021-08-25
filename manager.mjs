@@ -1,11 +1,10 @@
 //--------------------------------------------------------
 //-- Manager
 //--------------------------------------------------------
-'use strict';
-
-const ltsSchedule = require('lts-schedule');
-const fss         = require('@absolunet/fss');
-const { manager } = require('@absolunet/manager');
+import { createRequire } from 'node:module';
+import ltsSchedule       from 'lts-schedule';
+import fss               from '@absolunet/fss';
+import { manager }       from '@absolunet/manager';
 
 
 const getPipelineStep = (name, version) => {
@@ -34,7 +33,8 @@ manager.init({
 			postRun: ({ terminal }) => {
 				terminal.print(`Update Node version in package.json / bitbucket-pipelines.yml / .github/workflows/tests.yaml`).spacer();
 
-				const paths = require('./dist/node/helpers/paths');  // eslint-disable-line node/global-require
+				const require = createRequire(import.meta.url);
+				const paths = require('./dist/node/helpers/paths.js').default;
 				const today = Date.now();
 
 				const lts = Object.entries(ltsSchedule.json)

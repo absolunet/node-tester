@@ -1,8 +1,7 @@
 //--------------------------------------------------------
 //-- Tester - Tests - Unit - Tester
 //--------------------------------------------------------
-
-import { given, when, then } from './Tester.gwt';
+import { given, when, then } from './Tester.gwt.js';
 
 
 beforeEach(() => {

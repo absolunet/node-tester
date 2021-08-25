@@ -4,7 +4,7 @@
 import { exec }       from 'child_process';
 import { pass, fail } from 'create-jest-runner';
 import fss            from '@absolunet/fss';
-import runner         from '../../helpers/runner';
+import runner         from '../../helpers/runner/index.js';
 
 
 export default ({ testPath }) => {

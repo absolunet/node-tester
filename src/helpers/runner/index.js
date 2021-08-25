@@ -3,7 +3,7 @@
 //--------------------------------------------------------
 import chalk                from 'chalk';
 import { createJestRunner } from 'create-jest-runner';
-import RunnerHelperConfig   from './config';
+import RunnerHelperConfig   from './config.js';
 
 
 /**

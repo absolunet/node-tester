@@ -7,7 +7,7 @@
 bitbucket-pipelines.yml
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
-manager.js
+manager.mjs
 SECURITY.md
 SUPPORT.md
 docs
