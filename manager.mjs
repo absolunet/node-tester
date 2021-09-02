@@ -1,7 +1,7 @@
 //--------------------------------------------------------
 //-- Manager
 //--------------------------------------------------------
-import { createRequire } from 'node:module';
+import { createRequire } from 'node:module';  // eslint-disable-line node/no-missing-import
 import ltsSchedule       from 'lts-schedule';
 import fss               from '@absolunet/fss';
 import { manager }       from '@absolunet/manager';
@@ -34,6 +34,7 @@ manager.init({
 				terminal.print(`Update Node version in package.json / bitbucket-pipelines.yml / .github/workflows/tests.yaml`).spacer();
 
 				const require = createRequire(import.meta.url);
+				const environment = require('./dist/node/helpers/environment.js').default;
 				const paths = require('./dist/node/helpers/paths.js').default;
 				const today = Date.now();
 
@@ -51,7 +52,7 @@ manager.init({
 				//-- package.json
 				const packageFile = `${paths.root}/package.json`;
 				const packageData = fss.readJson(packageFile);
-				packageData.engines.node = `>= ${lts[lts.length - 1]}`;
+				packageData.engines.node = `>= ${environment.LTS_VERSIONS[lts[lts.length - 1]]}`;
 				fss.writeJson(packageFile, packageData, { space: 2 });
 
 

@@ -65,11 +65,12 @@ class RunnerHelperConfig {
 	 */
 	get lintJS() {
 		return {
-			displayName: 'Standards: Lint JS',
-			runner:      `${paths.runners}/lint-js`,
-			rootDir:     paths.project.root,
-			testMatch:   ['**/*.js'],
-			globals:     this.globals
+			displayName:          'Standards: Lint JS',
+			runner:               `${paths.runners}/lint-js`,
+			rootDir:              paths.project.root,
+			moduleFileExtensions: ['js', 'cjs', 'mjs'],
+			testMatch:            ['**/*.{js,cjs,mjs}'],
+			globals:              this.globals
 		};
 	}
 

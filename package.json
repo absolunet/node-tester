@@ -29,7 +29,7 @@
     "url": "https://github.com/absolunet/node-tester/issues"
   },
   "engines": {
-    "node": ">= 12"
+    "node": ">= 12.20.0"
   },
   "main": "dist/node",
   "scripts": {
@@ -71,19 +71,19 @@
     "@alex_neo/jest-expect-message": "^1.0.5",
     "@babel/core": "^7.15.0",
     "@babel/preset-env": "^7.15.0",
-    "babel-jest": "^27.0.6",
+    "babel-jest": "^27.1.0",
     "chalk": "^4.1.2",
-    "create-jest-runner": "^0.8.0",
+    "create-jest-runner": "^0.9.0",
     "deepmerge": "^4.2.2",
     "eclint": "^2.8.1",
     "esprima": "^4.0.1",
     "gulp-reporter": "^2.10.0",
-    "jest": "^27.0.6",
+    "jest": "^27.1.0",
     "jest-extended": "^0.11.5",
     "marked": "^3.0.2",
     "minimist": "^1.2.5",
     "pkg-dir": "^5.0.0",
-    "read-package-json": "^4.0.0",
+    "read-package-json": "^4.1.1",
     "semver": "^7.3.5",
     "spdx-license-ids": "^3.0.10",
     "vinyl-fs": "^3.0.3",

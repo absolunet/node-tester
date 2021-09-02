@@ -11,6 +11,12 @@
  */
 
 /**
+ * Type of Node.js resolver: 'module', 'commonjs'.
+ *
+ * @typedef {string} NodeType
+ */
+
+/**
  * Type of test: 'standards', 'unit', 'feature', 'integration', 'endtoend'.
  *
  * @typedef {string} TestType

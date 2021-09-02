@@ -94,6 +94,7 @@ class AbsolunetTester {
 	 * @param {object} options - Project options.
 	 * @param {RepositoryType} options.repositoryType - Type of repository.
 	 * @param {PackageType} options.packageType - Type of package.
+	 * @param {NodeType} [options.nodeType="module"] - Type of Node.js resolver.
 	 *
 	 * @throws {Error} If scope is invalid.
 	 *
@@ -104,9 +105,12 @@ class AbsolunetTester {
 	 * });
 	 */
 	init(options = {}) {
+		options.nodeType = options.nodeType || environment.NODE_TYPE.module;
+
 		validateArgument('options', options, Joi.object({
 			repositoryType: Joi.string().valid(...Object.values(environment.REPOSITORY_TYPE)).required(),
-			packageType:    Joi.string().valid(...Object.values(environment.PACKAGE_TYPE)).required()
+			packageType:    Joi.string().valid(...Object.values(environment.PACKAGE_TYPE)).required(),
+			nodeType:       Joi.string().valid(...Object.values(environment.NODE_TYPE)).required()
 		}));
 
 

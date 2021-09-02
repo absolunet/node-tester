@@ -45,21 +45,21 @@ const extractEntries = (filename) => {
 };
 
 
-const matrix = (filename, type, fileMatrix) => {
-	const cleaned    = filename.replace(/^(?<prefix>(?<remove>[\w./-])+\/)?\.(?<filename>[\w./-]+)/u, `$<prefix>$<filename>`);
-	const rootPath   = `${paths.root}/${filename}`;
-	const matrixPath = `${paths.matrix}/root/${cleaned}`;
-	const typePath   = `${paths.matrix}/${type}/${cleaned}`;
+const matrix = (filename, type, nodeType, fileMatrix) => {
+	const cleaned      = filename.replace(/^(?<prefix>(?<remove>[\w./-])+\/)?\.(?<filename>[\w./-]+)/u, `$<prefix>$<filename>`);
+	const matrixPath   = `${paths.matrix}/root/${cleaned}`;
+	const typePath     = `${paths.matrix}/${type}/${cleaned}`;
+	const commonjsPath = `${paths.matrix}/commonjs/${cleaned}`;
 
 	if (fileMatrix[filename]) {
 		return fss.realpath(fileMatrix[filename]);
+	} else if (nodeType === environment.NODE_TYPE.commonjs && fss.existsCase(commonjsPath)) {
+		return fss.realpath(commonjsPath);
 	} else if (fss.existsCase(typePath)) {
 		return fss.realpath(typePath);
-	} else if (fss.existsCase(matrixPath)) {
-		return fss.realpath(matrixPath);
 	}
 
-	return fss.realpath(rootPath);
+	return fss.realpath(matrixPath);
 };
 
 
@@ -92,10 +92,11 @@ class ArborescenceHelper {
 	 * @param {object} parameters - Parameters.
 	 * @param {string} parameters.directoryPath - Absolute directory path to the file.
 	 * @param {RepositoryType} parameters.repositoryType - Type of repository.
+	 * @param {NodeType} parameters.nodeType - Type of Node.js resolver.
 	 */
-	fileIsMatrix(filename, { directoryPath, repositoryType }) {
+	fileIsMatrix(filename, { directoryPath, repositoryType, nodeType }) {
 		const content       = fss.readFile(`${directoryPath}/${filename}`, 'utf8');
-		const matrixContent = fss.readFile(matrix(filename, repositoryType, this.fileMatrix), 'utf8');
+		const matrixContent = fss.readFile(matrix(filename, repositoryType, nodeType, this.fileMatrix), 'utf8');
 		expect(content, `'${filename}' must be identical to matrix`).toBe(matrixContent);
 	}
 
@@ -107,10 +108,11 @@ class ArborescenceHelper {
 	 * @param {object} parameters - Parameters.
 	 * @param {string} parameters.directoryPath - Absolute directory path to the file.
 	 * @param {RepositoryType} parameters.repositoryType - Type of repository.
+	 * @param {NodeType} parameters.nodeType - Type of Node.js resolver.
 	 */
-	fileContainsMatrix(filename, { directoryPath, repositoryType }) {
+	fileContainsMatrix(filename, { directoryPath, repositoryType, nodeType }) {
 		const entries       = extractEntries(`${directoryPath}/${filename}`);
-		const matrixEntries = extractEntries(matrix(filename, repositoryType, this.fileMatrix));
+		const matrixEntries = extractEntries(matrix(filename, repositoryType, nodeType, this.fileMatrix));
 		expect(entries, `'${filename}' must contain matrix`).toIncludeAllMembers(matrixEntries);
 	}
 
@@ -121,68 +123,75 @@ class ArborescenceHelper {
 	 * @param {object} [parameters] - Parameters.
 	 * @param {string} [parameters.root=paths.project.root] - Root directory of the package.
 	 * @param {RepositoryType} [parameters.repositoryType=environment.repositoryType] - Type of repository.
+	 * @param {NodeType} [parameters.nodeType=environment.nodeType] - Type of Node.js resolver.
 	 * @param {object<string>} [parameters.fileMatrix] - Files matrix overwrites.
 	 */
-	validate({ root = paths.project.root, repositoryType = environment.repositoryType, fileMatrix = {} } = {}) {
+	validate({ root = paths.project.root, repositoryType = environment.repositoryType, nodeType = environment.nodeType, fileMatrix = {} } = {}) {
 		this.fileMatrix = fileMatrix;
 
 		describe(`Validate arborescence`, () => {
 			const directoryPath = fss.realpath(root);
 			const readablePath  = environment.getReadablePath(directoryPath);
 			const ignore        = IGNORE[repositoryType];
+			const ltsVersions   = Object.keys(environment.LTS_VERSIONS)
+				.map((value) => { return Number(value); })
+				.sort()
+				.reverse()
+			;
 
 
 			if (!ignore.includes(GITHUB_ISSUES)) {
 				test(`Ensure '${readablePath}/.github/ISSUE_TEMPLATE' is valid`, () => {
 					this.fileExists('.github/ISSUE_TEMPLATE/bug_report.md', directoryPath);
-					this.fileIsMatrix('.github/ISSUE_TEMPLATE/bug_report.md', { directoryPath, repositoryType });
+					this.fileIsMatrix('.github/ISSUE_TEMPLATE/bug_report.md', { directoryPath, repositoryType, nodeType });
 
 					this.fileExists('.github/ISSUE_TEMPLATE/feature_request.md', directoryPath);
-					this.fileIsMatrix('.github/ISSUE_TEMPLATE/feature_request.md', { directoryPath, repositoryType });
+					this.fileIsMatrix('.github/ISSUE_TEMPLATE/feature_request.md', { directoryPath, repositoryType, nodeType });
 
 					this.fileExists('.github/ISSUE_TEMPLATE/vulnerability_report.md', directoryPath);
-					this.fileIsMatrix('.github/ISSUE_TEMPLATE/vulnerability_report.md', { directoryPath, repositoryType });
+					this.fileIsMatrix('.github/ISSUE_TEMPLATE/vulnerability_report.md', { directoryPath, repositoryType, nodeType });
 				});
 			}
 
 			if (!ignore.includes(GITHUB_PR)) {
 				test(`Ensure '${readablePath}/.github/pull_request_template.md' is valid`, () => {
 					this.fileExists('.github/pull_request_template.md', directoryPath);
-					this.fileIsMatrix('.github/pull_request_template.md', { directoryPath, repositoryType });
+					this.fileIsMatrix('.github/pull_request_template.md', { directoryPath, repositoryType, nodeType });
 				});
 			}
 
 			if (!ignore.includes(EDITORCONFIG)) {
 				test(`Ensure '${readablePath}/.editorconfig' is valid`, () => {
 					this.fileExists('.editorconfig', directoryPath);
+					this.fileIsMatrix('.editorconfig', { directoryPath, repositoryType, nodeType });
 				});
 			}
 
 			if (!ignore.includes(ESLINTIGNORE)) {
 				test(`Ensure '${readablePath}/.eslintignore' is valid`, () => {
 					this.fileExists('.eslintignore', directoryPath);
-					this.fileContainsMatrix('.eslintignore', { directoryPath, repositoryType });
+					this.fileContainsMatrix('.eslintignore', { directoryPath, repositoryType, nodeType });
 				});
 			}
 
 			if (!ignore.includes(ESLINTRC)) {
 				test(`Ensure '${readablePath}/.eslintrc.yaml' is valid`, () => {
 					this.fileExists('.eslintrc.yaml', directoryPath);
-					this.fileContainsMatrix('.eslintrc.yaml', { directoryPath, repositoryType });
+					this.fileContainsMatrix('.eslintrc.yaml', { directoryPath, repositoryType, nodeType });
 				});
 			}
 
 			if (!ignore.includes(GITIGNORE)) {
 				test(`Ensure '${readablePath}/.gitignore' is valid`, () => {
 					this.fileExists('.gitignore', directoryPath);
-					this.fileContainsMatrix('.gitignore', { directoryPath, repositoryType });
+					this.fileContainsMatrix('.gitignore', { directoryPath, repositoryType, nodeType });
 				});
 			}
 
 			if (!ignore.includes(NPMIGNORE)) {
 				test(`Ensure '${readablePath}/.npmignore' is valid`, () => {
 					this.fileExists('.npmignore', directoryPath);
-					this.fileContainsMatrix('.npmignore', { directoryPath, repositoryType });
+					this.fileContainsMatrix('.npmignore', { directoryPath, repositoryType, nodeType });
 				});
 			}
 
@@ -202,7 +211,7 @@ class ArborescenceHelper {
 										matrix: {
 											os: ['ubuntu-latest', 'macos-latest'],
 											node_version: [
-												...environment.LTS_VERSIONS.filter((version) => {
+												...ltsVersions.filter((version) => {
 													return version >= environment.nodeVersion;
 												})
 											]
@@ -259,7 +268,7 @@ class ArborescenceHelper {
 							'default': [{
 								parallel: [
 									stepDefinition('latest'),
-									...environment.LTS_VERSIONS
+									...ltsVersions
 										.filter((version) => {
 											return version >= environment.nodeVersion;
 										})
@@ -276,21 +285,21 @@ class ArborescenceHelper {
 			if (!ignore.includes(CODEOFCONDUCT)) {
 				test(`Ensure '${readablePath}/CODE_OF_CONDUCT.md' is valid`, () => {
 					this.fileExists('CODE_OF_CONDUCT.md', directoryPath);
-					this.fileIsMatrix('CODE_OF_CONDUCT.md', { directoryPath, repositoryType });
+					this.fileIsMatrix('CODE_OF_CONDUCT.md', { directoryPath, repositoryType, nodeType });
 				});
 			}
 
 			if (!ignore.includes(CONTRIBUTING)) {
 				test(`Ensure '${readablePath}/CONTRIBUTING.md' is valid`, () => {
 					this.fileExists('CONTRIBUTING.md', directoryPath);
-					this.fileIsMatrix('CONTRIBUTING.md', { directoryPath, repositoryType });
+					this.fileIsMatrix('CONTRIBUTING.md', { directoryPath, repositoryType, nodeType });
 				});
 			}
 
 			if (!ignore.includes(LICENSE)) {
 				test(`Ensure '${readablePath}/LICENSE' is valid`, () => {
 					this.fileExists('LICENSE', directoryPath);
-					this.fileIsMatrix('LICENSE', { directoryPath, repositoryType });
+					this.fileIsMatrix('LICENSE', { directoryPath, repositoryType, nodeType });
 				});
 			}
 
@@ -301,8 +310,10 @@ class ArborescenceHelper {
 			}
 
 			if (!ignore.includes(MANAGER)) {
-				test(`Ensure '${readablePath}/manager.js' is valid`, () => {
-					this.fileExists('manager.js', directoryPath);
+				const extension = nodeType === environment.NODE_TYPE.commonjs ? 'mjs' : 'js';
+
+				test(`Ensure '${readablePath}/manager.${extension}' is valid`, () => {
+					this.fileExists(`manager.${extension}`, directoryPath);
 				});
 			}
 
@@ -322,14 +333,14 @@ class ArborescenceHelper {
 			if (!ignore.includes(SECURITY)) {
 				test(`Ensure '${readablePath}/SECURITY.md' is valid`, () => {
 					this.fileExists('SECURITY.md', directoryPath);
-					this.fileIsMatrix('SECURITY.md', { directoryPath, repositoryType });
+					this.fileIsMatrix('SECURITY.md', { directoryPath, repositoryType, nodeType });
 				});
 			}
 
 			if (!ignore.includes(SUPPORT)) {
 				test(`Ensure '${readablePath}/SUPPORT.md' is valid`, () => {
 					this.fileExists('SUPPORT.md', directoryPath);
-					this.fileIsMatrix('SUPPORT.md', { directoryPath, repositoryType });
+					this.fileIsMatrix('SUPPORT.md', { directoryPath, repositoryType, nodeType });
 				});
 			}
 
@@ -349,10 +360,6 @@ class ArborescenceHelper {
 			if (!ignore.includes(SOURCE)) {
 				test(`Ensure '${readablePath}/src/*' is valid`, () => {
 					this.fileExists('src/index.js', directoryPath);
-					this.fileExists('src/.eslintrc.yaml', directoryPath);
-
-					// TODO [>=5.0.0]: Verify order and that 2nd config is node or browser
-					this.fileContainsMatrix('src/.eslintrc.yaml', { directoryPath, repositoryType });
 				});
 			}
 
@@ -360,7 +367,7 @@ class ArborescenceHelper {
 				test(`Ensure '${readablePath}/test/*' is valid`, () => {
 					this.fileExists('test/index.js', directoryPath);
 					this.fileExists('test/.eslintrc.yaml', directoryPath);
-					this.fileContainsMatrix('test/.eslintrc.yaml', { directoryPath, repositoryType });
+					this.fileContainsMatrix('test/.eslintrc.yaml', { directoryPath, repositoryType, nodeType });
 				});
 			}
 		});

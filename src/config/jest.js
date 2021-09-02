@@ -7,8 +7,8 @@ import runner      from '../helpers/runner/index.js';
 
 
 const runners = [];
-const { repositoryType, packageType, scope, customization } = JSON.parse(process.env[environment.JEST_CLI_KEY]);  // eslint-disable-line node/no-process-env
-runner.config.globals = { repositoryType, packageType, customization };
+const { repositoryType, packageType, nodeType, scope, customization } = JSON.parse(process.env[environment.JEST_CLI_KEY]);  // eslint-disable-line node/no-process-env
+runner.config.globals = { repositoryType, packageType, nodeType, customization };
 
 
 const STANDARDS = [
