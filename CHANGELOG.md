@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Define and validate a minimum version for each Node.js LTS
 
 ### Changed
+- ESLint config update to 3.0.0-beta.2
 - Check files solely against matrix and not package files
 - Maintenance update
 

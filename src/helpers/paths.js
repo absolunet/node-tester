@@ -2,8 +2,8 @@
 //-- Paths
 //--------------------------------------------------------
 import { createRequire } from 'module';
-import pkgDir            from 'pkg-dir';
 import fss               from '@absolunet/fss';
+import pkgDir            from 'pkg-dir';
 
 const require = createRequire(__filename);
 

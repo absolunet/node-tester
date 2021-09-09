@@ -1,10 +1,10 @@
 //--------------------------------------------------------
 //-- Manager
 //--------------------------------------------------------
-import { createRequire } from 'node:module';  // eslint-disable-line node/no-missing-import
-import ltsSchedule       from 'lts-schedule';
+import { createRequire } from 'node:module';
 import fss               from '@absolunet/fss';
-import { manager }       from '@absolunet/manager';
+import { manager }       from '@absolunet/manager'; // eslint-disable-line import/no-unresolved
+import ltsSchedule       from 'lts-schedule';
 
 
 const getPipelineStep = (name, version) => {

@@ -2,13 +2,13 @@
 //-- AbsolunetTester
 //--------------------------------------------------------
 import { createRequire }         from 'module';
+import fss                       from '@absolunet/fss';
+import { Joi, validateArgument } from '@absolunet/joi';
+import { terminal }              from '@absolunet/terminal';
 import chalk                     from 'chalk';
 import deepmerge                 from 'deepmerge';
 import minimist                  from 'minimist';
 import spdxLicenseIds            from 'spdx-license-ids';
-import fss                       from '@absolunet/fss';
-import { Joi, validateArgument } from '@absolunet/joi';
-import { terminal }              from '@absolunet/terminal';
 import environment               from './helpers/environment.js';
 import paths                     from './helpers/paths.js';
 
@@ -193,7 +193,7 @@ class AbsolunetTester {
 		const repositoryPath = `${paths.tests}/repository`;
 
 		fss.readdir(repositoryPath).forEach((file) => {
-			require(`${repositoryPath}/${file}`).default(options);
+			require(`${repositoryPath}/${file}`).default(options);  // eslint-disable-line import/no-dynamic-require
 		});
 	}
 

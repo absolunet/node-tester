@@ -2,12 +2,12 @@
 //-- Lint Bash runner - Run
 //--------------------------------------------------------
 import { exec }       from 'child_process';
-import { pass, fail } from 'create-jest-runner';
 import fss            from '@absolunet/fss';
+import { pass, fail } from 'create-jest-runner';
 import runner         from '../../helpers/runner/index.js';
 
 
-export default ({ testPath }) => {
+const lintBashRunner = ({ testPath }) => {
 
 	const testResult = runner.initTestResult({ testPath, title: 'bash -n' });
 
@@ -36,3 +36,6 @@ export default ({ testPath }) => {
 	;
 
 };
+
+
+export default lintBashRunner;

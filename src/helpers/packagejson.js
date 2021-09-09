@@ -1,9 +1,9 @@
 //--------------------------------------------------------
 //-- package.json helper
 //--------------------------------------------------------
+import fss             from '@absolunet/fss';
 import readPackageJson from 'read-package-json';
 import semver          from 'semver';
-import fss             from '@absolunet/fss';
 import environment     from './environment.js';
 import paths           from './paths.js';
 

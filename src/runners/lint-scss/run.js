@@ -6,7 +6,7 @@ import stylelint            from 'stylelint';
 import runner               from '../../helpers/runner/index.js';
 
 
-export default ({ testPath }) => {
+const lintSCSSRunner = ({ testPath }) => {
 	const testResult = runner.initTestResult({ testPath, title: 'stylelint' });
 
 	return stylelint.lint({
@@ -37,3 +37,6 @@ export default ({ testPath }) => {
 	;
 
 };
+
+
+export default lintSCSSRunner;

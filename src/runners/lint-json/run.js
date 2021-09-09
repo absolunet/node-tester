@@ -9,7 +9,7 @@ const require = createRequire(__filename);
 const JSON_CONFIG = require.resolve('@absolunet/eslint-config-json');
 
 
-export default ({ testPath }) => {
+const lintJSONRunner = ({ testPath }) => {
 	return eslint.run(testPath, {
 		baseConfig:               { 'extends': JSON_CONFIG },
 		resolvePluginsRelativeTo: JSON_CONFIG,
@@ -17,3 +17,6 @@ export default ({ testPath }) => {
 		useEslintrc:              false
 	});
 };
+
+
+export default lintJSONRunner;

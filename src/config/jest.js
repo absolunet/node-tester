@@ -90,5 +90,7 @@ switch (scope) {
 
 }
 
+const config = { projects: runners };
 
-export default { projects: runners };
+
+export default config;

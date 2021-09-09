@@ -1,8 +1,8 @@
 //--------------------------------------------------------
 //-- Environment
 //--------------------------------------------------------
-import semver from 'semver';
 import fss    from '@absolunet/fss';
+import semver from 'semver';
 import paths  from './paths.js';
 
 

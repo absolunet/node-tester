@@ -33,19 +33,21 @@ const tester = new AbsolunetTester();
  * }
  */
 
-/**
- * Class definition of Tester.
- *
- * @name Tester
- * @type {AbsolunetTester}
- */
-export { AbsolunetTester as Tester };
+export {
 
+	/**
+	 * Class definition of Tester.
+	 *
+	 * @name Tester
+	 * @type {AbsolunetTester}
+	 */
+	AbsolunetTester as Tester,
 
-/**
- * Instance of Tester.
- *
- * @name tester
- * @type {AbsolunetTester}
- */
-export { tester };
+	/**
+	 * Instance of Tester.
+	 *
+	 * @name tester
+	 * @type {AbsolunetTester}
+	 */
+	tester
+};

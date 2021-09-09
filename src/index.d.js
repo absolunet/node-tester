@@ -1,3 +1,4 @@
+// eslint-disable-line import/unambiguous
 /**
  * Type of repository: 'single-package', 'multi-package', 'sub-package'.
  *

@@ -8,7 +8,7 @@ import vfs                  from 'vinyl-fs';
 import runner               from '../../helpers/runner/index.js';
 
 
-export default ({ testPath }) => {
+const lintFileStylesRunner = ({ testPath }) => {
 
 	const testResult = runner.initTestResult({ testPath, title: 'EditorConfig' });
 
@@ -44,3 +44,6 @@ export default ({ testPath }) => {
 	;
 
 };
+
+
+export default lintFileStylesRunner;

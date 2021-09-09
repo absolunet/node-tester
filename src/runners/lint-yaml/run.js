@@ -6,7 +6,7 @@ import yamlLint       from 'yaml-lint';
 import runner         from '../../helpers/runner/index.js';
 
 
-export default ({ testPath }) => {
+const lintYAMLRunner = ({ testPath }) => {
 
 	const testResult = runner.initTestResult({ testPath, title: 'YAML Lint' });
 
@@ -20,3 +20,6 @@ export default ({ testPath }) => {
 	;
 
 };
+
+
+export default lintYAMLRunner;
