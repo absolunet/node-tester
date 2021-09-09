@@ -3,9 +3,9 @@
 //--------------------------------------------------------
 import semver       from 'semver';
 import fss          from '@absolunet/fss';
-import arborescence from '../../helpers/arborescence';
-import environment  from '../../helpers/environment';
-import paths        from '../../helpers/paths';
+import arborescence from '../../helpers/arborescence.js';
+import environment  from '../../helpers/environment.js';
+import paths        from '../../helpers/paths.js';
 
 
 export default () => {
@@ -29,7 +29,7 @@ export default () => {
 		});
 
 	} else {
-		describe.skip();
+		describe.skip('', () => { /**/ });
 	}
 
 };

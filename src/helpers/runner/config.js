@@ -1,18 +1,16 @@
 //--------------------------------------------------------
 //-- Runner config helper
 //--------------------------------------------------------
-import matchAll    from 'string.prototype.matchall';
-import fss         from '@absolunet/fss';
-import environment from '../environment';
-import paths       from '../paths';
+import { createRequire } from 'module';
+import fss               from '@absolunet/fss';
+import environment       from '../environment.js';
+import paths             from '../paths.js';
 
-// TODO [>=5.0.0]: Remove polyfill
-matchAll.shim();
-
+const require = createRequire(__filename);
 
 
 const JEST_GENERIC_PLUGINS = [
-	require.resolve('jest-expect-message'),
+	require.resolve('@alex_neo/jest-expect-message'),
 	require.resolve('jest-extended')
 ];
 
@@ -67,11 +65,12 @@ class RunnerHelperConfig {
 	 */
 	get lintJS() {
 		return {
-			displayName: 'Standards: Lint JS',
-			runner:      `${paths.runners}/lint-js`,
-			rootDir:     paths.project.root,
-			testMatch:   ['**/*.js'],
-			globals:     this.globals
+			displayName:          'Standards: Lint JS',
+			runner:               `${paths.runners}/lint-js`,
+			rootDir:              paths.project.root,
+			moduleFileExtensions: ['js', 'cjs', 'mjs'],
+			testMatch:            ['**/*.{js,cjs,mjs}'],
+			globals:              this.globals
 		};
 	}
 

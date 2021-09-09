@@ -14,4 +14,3 @@ docs
 src
 test
 !dist/**
-!matrix/**

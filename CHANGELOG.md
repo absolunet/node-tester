@@ -10,6 +10,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+### Added
+- Validate ESM and CommonJS packages
+- Validate `.editorconfig` file
+- Define and validate a minimum version for each Node.js LTS
+
+### Changed
+- Check files solely against matrix and not package files
+- Maintenance update
 
 
 

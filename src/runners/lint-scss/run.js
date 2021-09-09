@@ -2,8 +2,8 @@
 //-- Lint SCSS runner - Run
 //--------------------------------------------------------
 import { pass, fail, skip } from 'create-jest-runner';
-import stylelint            from 'stylelint';  // eslint-disable-line node/no-missing-import
-import runner               from '../../helpers/runner';
+import stylelint            from 'stylelint';
+import runner               from '../../helpers/runner/index.js';
 
 
 export default ({ testPath }) => {

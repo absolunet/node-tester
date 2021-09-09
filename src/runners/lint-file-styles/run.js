@@ -5,7 +5,7 @@ import { pass, fail, skip } from 'create-jest-runner';
 import eclint               from 'eclint';
 import reporter             from 'gulp-reporter';
 import vfs                  from 'vinyl-fs';
-import runner               from '../../helpers/runner';
+import runner               from '../../helpers/runner/index.js';
 
 
 export default ({ testPath }) => {

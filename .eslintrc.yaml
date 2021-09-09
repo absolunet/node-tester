@@ -1,1 +1,9 @@
-extends: '@absolunet/node'
+extends:
+  - '@absolunet/test'
+  - '@absolunet/node-package'
+
+# Disabled because this is a CommonJS package
+rules:
+  unicorn/import-index: [error, { ignoreImports: true }]
+  unicorn/prefer-module: [off]
+  unicorn/prefer-node-protocol: [off]

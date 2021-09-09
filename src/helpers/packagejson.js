@@ -4,8 +4,8 @@
 import readPackageJson from 'read-package-json';
 import semver          from 'semver';
 import fss             from '@absolunet/fss';
-import environment     from './environment';
-import paths           from './paths';
+import environment     from './environment.js';
+import paths           from './paths.js';
 
 const MANAGER_SCRIPTS = [
 	['manager:install',        'node manager --task=install'],
@@ -17,6 +17,18 @@ const MANAGER_SCRIPTS = [
 	['manager:rebuild',        'node manager --task=rebuild'],
 	['manager:publish',        'node manager --task=publish'],
 	['manager:publish:unsafe', 'node manager --task=publish:unsafe']
+];
+
+const MANAGER_COMMONJS_SCRIPTS = [
+	['manager:install',        'node manager.mjs --task=install'],
+	['manager:outdated',       'node manager.mjs --task=outdated'],
+	['manager:build',          'node manager.mjs --task=build'],
+	['manager:watch',          'node manager.mjs --task=watch'],
+	['manager:documentation',  'node manager.mjs --task=documentation'],
+	['manager:prepare',        'node manager.mjs --task=prepare'],
+	['manager:rebuild',        'node manager.mjs --task=rebuild'],
+	['manager:publish',        'node manager.mjs --task=publish'],
+	['manager:publish:unsafe', 'node manager.mjs --task=publish:unsafe']
 ];
 
 const TEST_SCRIPTS = [
@@ -104,8 +116,9 @@ class PackageJsonHelper {
 	 * @param {string} [parameters.directoryPath=paths.project.root] - Path to the package.json file.
 	 * @param {RepositoryType} [parameters.repositoryType=environment.repositoryType] - Type of repository.
 	 * @param {PackageType} [parameters.packageType=environment.packageType] - Type of package.
+	 * @param {NodeType} [parameters.nodeType=environment.nodeType] - Type of Node.js resolver.
 	 */
-	validatePackage({ directoryPath = paths.project.root, repositoryType = environment.repositoryType /* , packageType = environment.packageType */ } = {}) {
+	validatePackage({ directoryPath = paths.project.root, repositoryType = environment.repositoryType /* , packageType = environment.packageType */, nodeType = environment.nodeType } = {}) {
 		describe(`Validate ${environment.getReadablePath(directoryPath)}/package.json`, () => {
 
 			const escapedScope      = environment.packageCustomization.nameScope.replace('/', '\\/');
@@ -152,16 +165,38 @@ class PackageJsonHelper {
 
 
 			test('Ensure functional fields are valid', () => {
-				expect({ main: reference.config.main, browser: reference.config.browser }, 'Main or browser must be defined').toSatisfy(({ main, browser }) => {
-					return (typeof main === 'string' && main !== '') || (typeof browser === 'string' && browser !== '');
+				expect({
+					exportsConfig: reference.config.exports,
+					main:          reference.config.main,
+					browser:       reference.config.browser
+				}, 'Entry point must be defined').toSatisfy(({ exportsConfig, main, browser }) => {
+
+					return (typeof exportsConfig === 'object' && typeof exportsConfig['.'] === 'string' && exportsConfig['.'] !== '') ||
+					       (typeof main === 'string' && main !== '') ||
+								 (typeof browser === 'string' && browser !== '')
+					;
 				});
 
-				if (reference.config.main) {
+				// Node.js
+				if (reference.config.exports || reference.config.main) {
 					expect(reference.config.engines, 'Engines must be valid').toContainAnyEntries([
-						...environment.LTS_VERSIONS.map((version) => {
+						...Object.values(environment.LTS_VERSIONS).map((version) => {
 							return ['node', `>= ${version}`];
 						})
 					]);
+
+					// CommonJS
+					if (nodeType === environment.NODE_TYPE.commonjs) {
+						expect(reference.config.type, 'Type must be valid').not.toBe('module');
+						expect(reference.config.main, 'Main must be defined').not.toBeEmpty();
+						expect(reference.config.exports, 'Exports must not be defined').toBeUndefined();
+
+					// ESM
+					} else {
+						expect(reference.config.type, 'Type must be valid').toBe('module');
+						expect(reference.config.exports, 'Exports must be defined').not.toBeEmpty();
+						expect(reference.config.main, 'Main must not be defined').toBeUndefined();
+					}
 				}
 
 				expect(reference.config, 'Files must not be defined').not.toContainKey('files');
@@ -173,7 +208,11 @@ class PackageJsonHelper {
 				let scripts = TEST_SCRIPTS;
 
 				if (repositoryType === environment.REPOSITORY_TYPE.singlePackage) {
-					scripts = [...scripts, ...MANAGER_SCRIPTS];
+					if (nodeType === environment.NODE_TYPE.commonjs) {
+						scripts = [...scripts, ...MANAGER_COMMONJS_SCRIPTS];
+					} else {
+						scripts = [...scripts, ...MANAGER_SCRIPTS];
+					}
 				}
 
 				expect(reference.config.scripts, 'Scripts must be valid').toContainEntries(scripts);
@@ -220,7 +259,7 @@ class PackageJsonHelper {
 
 			test('Ensure functional fields are valid', () => {
 				expect(reference.config.engines, 'Engines must be valid').toContainAnyEntries([
-					...environment.LTS_VERSIONS.map((version) => {
+					...Object.values(environment.LTS_VERSIONS).map((version) => {
 						return ['node', `>= ${version}`];
 					})
 				]);

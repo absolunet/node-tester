@@ -1,7 +1,10 @@
 //--------------------------------------------------------
 //-- Lint JSON runner - Run
 //--------------------------------------------------------
-import eslint from '../../helpers/eslint';
+import { createRequire } from 'module';
+import eslint            from '../../helpers/eslint.js';
+
+const require = createRequire(__filename);
 
 const JSON_CONFIG = require.resolve('@absolunet/eslint-config-json');
 

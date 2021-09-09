@@ -4,8 +4,8 @@
 import marked      from 'marked';
 import semver      from 'semver';
 import fss         from '@absolunet/fss';
-import environment from '../../helpers/environment';
-import paths       from '../../helpers/paths';
+import environment from '../../helpers/environment.js';
+import paths       from '../../helpers/paths.js';
 
 
 const extractValues = (raw, pattern) => {

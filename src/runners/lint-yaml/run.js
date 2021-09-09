@@ -3,7 +3,7 @@
 //--------------------------------------------------------
 import { pass, fail } from 'create-jest-runner';
 import yamlLint       from 'yaml-lint';
-import runner         from '../../helpers/runner';
+import runner         from '../../helpers/runner/index.js';
 
 
 export default ({ testPath }) => {

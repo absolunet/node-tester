@@ -1,7 +1,7 @@
 //--------------------------------------------------------
 //-- Repository - Arborescence tests
 //--------------------------------------------------------
-import arborescence from '../../helpers/arborescence';
+import arborescence from '../../helpers/arborescence.js';
 
 
 export default (options) => {
