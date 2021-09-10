@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+
+
+
+## [5.0.0-beta.1] - 2021-09-10
 ### Added
 - Validate ESM and CommonJS packages
 - Validate `.editorconfig` file
@@ -543,7 +547,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-[Unreleased]:   https://github.com/absolunet/node-tester/compare/4.2.0...HEAD
+[Unreleased]:   https://github.com/absolunet/node-tester/compare/5.0.0-beta.1...HEAD
+[5.0.0-beta.1]: https://github.com/absolunet/node-tester/compare/4.2.0...5.0.0-beta.1
 [4.2.0]:        https://github.com/absolunet/node-tester/compare/4.1.4...4.2.0
 [4.1.4]:        https://github.com/absolunet/node-tester/compare/4.1.3...4.1.4
 [4.1.3]:        https://github.com/absolunet/node-tester/compare/4.1.2...4.1.3
