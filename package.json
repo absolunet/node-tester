@@ -50,8 +50,8 @@
     "test:endtoend": "node test --scope=endtoend"
   },
   "devDependencies": {
-    "@absolunet/manager": "2.1.0",
-    "@absolunet/tester": "4.2.0",
+    "@absolunet/manager": "3.0.0-beta.1",
+    "@absolunet/tester-fixed": "npm:@absolunet/tester@4.2.0",
     "lts-schedule": "2.2.0"
   },
   "dependencies": {
@@ -70,7 +70,7 @@
     "@absolunet/terminal": "^3.1.0",
     "@alex_neo/jest-expect-message": "^1.0.5",
     "@babel/core": "^7.15.5",
-    "@babel/preset-env": "^7.15.4",
+    "@babel/preset-env": "^7.15.6",
     "babel-jest": "^27.1.1",
     "chalk": "^4.1.2",
     "create-jest-runner": "^0.9.0",

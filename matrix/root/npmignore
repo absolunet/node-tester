@@ -1,9 +1,10 @@
-.DS_Store
 .github
 .editorconfig
 .eslintignore
 .eslintrc.yaml
 .gitignore
+.prettierignore
+.prettierrc.cjs
 bitbucket-pipelines.yml
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
@@ -14,3 +15,4 @@ docs
 src
 test
 !dist/**
+.DS_Store

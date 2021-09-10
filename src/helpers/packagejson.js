@@ -220,10 +220,14 @@ class PackageJsonHelper {
 
 
 			test('Ensure dependencies are valid', () => {
-				const dependencies = [`@absolunet/tester`];
+				const dependencies = [];
+				const fixedTester  = reference.config.name === '@absolunet/tester'  ? '-fixed' : '';
+				const fixedManager = reference.config.name === '@absolunet/manager' ? '-fixed' : '';
+
+				dependencies.push(`@absolunet/tester${fixedTester}`);
 
 				if (repositoryType === environment.REPOSITORY_TYPE.singlePackage) {
-					dependencies.push('@absolunet/manager');
+					dependencies.push(`@absolunet/manager${fixedManager}`);
 				}
 
 				expect(reference.config.devDependencies, 'devDependencies must be valid').toContainKeys(dependencies);
