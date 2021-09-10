@@ -13,6 +13,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+## [5.0.0-beta.1] - 2021-09-10
+### Added
+- Validate ESM and CommonJS packages
+- Validate `.editorconfig` file
+- Define and validate a minimum version for each Node.js LTS
+
+### Changed
+- ESLint config update to 3.0.0-beta.2
+- Check files solely against matrix and not package files
+- Maintenance update
+
+
+
 ## [4.2.0] - 2021-02-24
 ### Changed
 - Uppercase GitHub community files, readme and license
@@ -534,7 +547,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-[Unreleased]:   https://github.com/absolunet/node-tester/compare/4.2.0...HEAD
+[Unreleased]:   https://github.com/absolunet/node-tester/compare/5.0.0-beta.1...HEAD
+[5.0.0-beta.1]: https://github.com/absolunet/node-tester/compare/4.2.0...5.0.0-beta.1
 [4.2.0]:        https://github.com/absolunet/node-tester/compare/4.1.4...4.2.0
 [4.1.4]:        https://github.com/absolunet/node-tester/compare/4.1.3...4.1.4
 [4.1.3]:        https://github.com/absolunet/node-tester/compare/4.1.2...4.1.3

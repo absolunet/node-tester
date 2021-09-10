@@ -1,6 +1,7 @@
 //--------------------------------------------------------
 //-- Tester - Tests - Unit - Tester - GWT
 //--------------------------------------------------------
+import { createRequire } from 'module';
 
 const given = {};
 const when  = {};
@@ -41,8 +42,9 @@ const mockedTerminal = {
 //--------------------------------------------------------
 
 given.tester = () => {
-	const Tester = require('../../dist/node/AbsolunetTester'); // eslint-disable-line node/global-require
-	tester = new Tester();
+	const require = createRequire(__filename);
+	const Tester = require('../../dist/node/AbsolunetTester.js');
+	tester = new Tester.default();
 };
 
 given.emptyData = () => {

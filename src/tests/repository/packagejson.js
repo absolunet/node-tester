@@ -1,11 +1,11 @@
 //--------------------------------------------------------
 //-- Multi package - package.json tests
 //--------------------------------------------------------
-import environment from '../../helpers/environment';
-import packagejson from '../../helpers/packagejson';
+import environment from '../../helpers/environment.js';
+import packagejson from '../../helpers/packagejson.js';
 
 
-export default () => {
+const packagejsonTests = () => {
 
 	//-- Multi package
 	if (environment.repositoryType === environment.REPOSITORY_TYPE.multiPackage) {
@@ -17,3 +17,6 @@ export default () => {
 	}
 
 };
+
+
+export default packagejsonTests;

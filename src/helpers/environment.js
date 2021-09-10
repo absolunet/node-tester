@@ -1,15 +1,10 @@
 //--------------------------------------------------------
 //-- Environment
 //--------------------------------------------------------
-import fromEntries from 'object.fromentries';
-import fss         from '@absolunet/fss';
-import paths       from './paths';
+import fss    from '@absolunet/fss';
+import semver from 'semver';
+import paths  from './paths.js';
 
-
-// TODO [>=5.0.0]: Remove polyfill
-if (!Object.fromEntries) {
-	fromEntries.shim();
-}
 
 /**
  * Environment.
@@ -66,6 +61,21 @@ class EnvironmentHelper {
 		return {
 			simple: 'simple',
 			ioc:    'ioc'
+		};
+	}
+
+
+	/**
+	 * Types of Node.js resolver.
+	 *
+	 * @type {object<string, NodeType>}
+	 * @property {NodeType} module - ESM.
+	 * @property {NodeType} commonjs - CommonJS.
+	 */
+	 get NODE_TYPE() {
+		return {
+			module:   'module',
+			commonjs: 'commonjs'
 		};
 	}
 
@@ -138,7 +148,10 @@ class EnvironmentHelper {
 	 * @type {Array<number>}
 	 */
 	get LTS_VERSIONS() {
-		return fss.readYaml(`${paths.root}/.github/workflows/tests.yaml`).jobs.build.strategy.matrix.node_version;
+		return {
+			14: '14.13.1',
+			12: '12.20.0'  // Introduction of module.createRequire()
+		};
 	}
 
 
@@ -194,6 +207,16 @@ class EnvironmentHelper {
 
 
 	/**
+	 * Current Node.js type.
+	 *
+	 * @type {NodeType}
+	 */
+	 get nodeType() {
+		return global[this.JEST_GLOBALS_KEY].nodeType;
+	}
+
+
+	/**
 	 * Current repository version.
 	 *
 	 * @type {string}
@@ -209,7 +232,7 @@ class EnvironmentHelper {
 	 * @type {number}
 	 */
 	get nodeVersion() {
-		return Number(fss.readJson(`${paths.project.root}/package.json`).engines.node.slice(2));
+		return Number(semver.minVersion(fss.readJson(`${paths.project.root}/package.json`).engines.node).major);
 	}
 
 

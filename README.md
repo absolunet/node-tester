@@ -35,7 +35,7 @@ In your `./package.json` file add
 
 In a `./test/index.js` file
 ```js
-const tester = require('@absolunet/tester');
+import { tester } from '@absolunet/tester';
 
 tester.init({
 	repositoryType: 'single-package',

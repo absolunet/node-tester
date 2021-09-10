@@ -1,11 +1,11 @@
 //--------------------------------------------------------
 //-- Repository - Changelog tests
 //--------------------------------------------------------
+import fss         from '@absolunet/fss';
 import marked      from 'marked';
 import semver      from 'semver';
-import fss         from '@absolunet/fss';
-import environment from '../../helpers/environment';
-import paths       from '../../helpers/paths';
+import environment from '../../helpers/environment.js';
+import paths       from '../../helpers/paths.js';
 
 
 const extractValues = (raw, pattern) => {
@@ -62,7 +62,7 @@ const parseFile = (file) => {
 
 
 
-export default () => {
+const changelogTests = () => {
 
 	//-- Not subpackage
 	if (environment.repositoryType !== environment.REPOSITORY_TYPE.subPackage) {
@@ -110,3 +110,6 @@ export default () => {
 	}
 
 };
+
+
+export default changelogTests;

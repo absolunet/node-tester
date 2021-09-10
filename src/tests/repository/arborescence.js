@@ -1,9 +1,12 @@
 //--------------------------------------------------------
 //-- Repository - Arborescence tests
 //--------------------------------------------------------
-import arborescence from '../../helpers/arborescence';
+import arborescence from '../../helpers/arborescence.js';
 
 
-export default (options) => {
+const arborescenceTests = (options) => {
 	arborescence.validate(options);
 };
+
+
+export default arborescenceTests;

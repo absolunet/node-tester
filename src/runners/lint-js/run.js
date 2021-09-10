@@ -1,9 +1,12 @@
 //--------------------------------------------------------
 //-- Lint JS runner - Run
 //--------------------------------------------------------
-import eslint from '../../helpers/eslint';
+import eslint from '../../helpers/eslint.js';
 
 
-export default ({ testPath }) => {
+const lintJSRunner = ({ testPath }) => {
 	return eslint.run(testPath);
 };
+
+
+export default lintJSRunner;

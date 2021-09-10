@@ -1,14 +1,14 @@
 //--------------------------------------------------------
 //-- Repository - lerna.json tests
 //--------------------------------------------------------
-import semver       from 'semver';
 import fss          from '@absolunet/fss';
-import arborescence from '../../helpers/arborescence';
-import environment  from '../../helpers/environment';
-import paths        from '../../helpers/paths';
+import semver       from 'semver';
+import arborescence from '../../helpers/arborescence.js';
+import environment  from '../../helpers/environment.js';
+import paths        from '../../helpers/paths.js';
 
 
-export default () => {
+const learnjsonTests = () => {
 
 		//-- Multi package
 	if (environment.repositoryType === environment.REPOSITORY_TYPE.multiPackage) {
@@ -29,7 +29,10 @@ export default () => {
 		});
 
 	} else {
-		describe.skip();
+		describe.skip('', () => { /**/ });
 	}
 
 };
+
+
+export default learnjsonTests;
