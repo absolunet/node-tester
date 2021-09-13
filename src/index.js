@@ -1,14 +1,9 @@
 //--------------------------------------------------------
 //-- @absolunet/tester
 //--------------------------------------------------------
-import AbsolunetTester from './AbsolunetTester.js';
+import AbsolunetTester from "./AbsolunetTester.js";
 
 const tester = new AbsolunetTester();
-
-
-
-
-
 
 /**
  * Exports a default instance of the tester and also the main class.
@@ -34,7 +29,6 @@ const tester = new AbsolunetTester();
  */
 
 export {
-
 	/**
 	 * Class definition of Tester.
 	 *
@@ -42,12 +36,11 @@ export {
 	 * @type {AbsolunetTester}
 	 */
 	AbsolunetTester as Tester,
-
 	/**
 	 * Instance of Tester.
 	 *
 	 * @name tester
 	 * @type {AbsolunetTester}
 	 */
-	tester
+	tester,
 };
