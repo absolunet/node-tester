@@ -32,7 +32,7 @@ const TEST           = Symbol('test');
 const IGNORE = {
 	[environment.REPOSITORY_TYPE.singlePackage]: [],
 	[environment.REPOSITORY_TYPE.multiPackage]:  [NPMIGNORE, DOCUMENTATION, DISTRIBUTION, SOURCE],
-	[environment.REPOSITORY_TYPE.subPackage]:    [GITHUB_ISSUES, GITHUB_PR, EDITORCONFIG, GITIGNORE, GITHUB_ACTIONS, PIPELINES, CHANGELOG, CODEOFCONDUCT, CONTRIBUTING, MANAGER, SECURITY, SUPPORT, DOCUMENTATION]
+	[environment.REPOSITORY_TYPE.subPackage]:    [GITHUB_ISSUES, GITHUB_PR, EDITORCONFIG, ESLINTRC, GITIGNORE, GITHUB_ACTIONS, PIPELINES, CHANGELOG, CODEOFCONDUCT, CONTRIBUTING, MANAGER, SECURITY, SUPPORT, DOCUMENTATION]
 };
 
 
@@ -46,17 +46,25 @@ const extractEntries = (filename) => {
 
 
 const matrix = (filename, type, nodeType, fileMatrix) => {
-	const cleaned      = filename.replace(/^(?<prefix>(?<remove>[\w./-])+\/)?\.(?<filename>[\w./-]+)/u, `$<prefix>$<filename>`);
-	const matrixPath   = `${paths.matrix}/root/${cleaned}`;
-	const typePath     = `${paths.matrix}/${type}/${cleaned}`;
-	const commonjsPath = `${paths.matrix}/commonjs/${cleaned}`;
+	const cleaned    = filename.replace(/^(?<prefix>(?<remove>[\w./-])+\/)?\.(?<filename>[\w./-]+)/u, `$<prefix>$<filename>`);
+	const matrixPath = `${paths.matrix}/root/${cleaned}`;
+	const typePath   = `${paths.matrix}/${type}/${cleaned}`;
 
+	// If custom matrix
 	if (fileMatrix[filename]) {
 		return fss.realpath(fileMatrix[filename]);
-	} else if (nodeType === environment.NODE_TYPE.commonjs && fss.existsCase(commonjsPath)) {
-		return fss.realpath(commonjsPath);
+
+	// If type - CommonJS
+	} else if (nodeType === environment.NODE_TYPE.commonjs && fss.existsCase(`${typePath}-${nodeType}`)) {
+		return fss.realpath(`${typePath}-${nodeType}`);
+
+	// If type
 	} else if (fss.existsCase(typePath)) {
 		return fss.realpath(typePath);
+
+	// If root - CommonJS
+	} else if (nodeType === environment.NODE_TYPE.commonjs && fss.existsCase(`${matrixPath}-${nodeType}`)) {
+		return fss.realpath(`${matrixPath}-${nodeType}`);
 	}
 
 	return fss.realpath(matrixPath);

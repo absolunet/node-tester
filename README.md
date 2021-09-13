@@ -91,12 +91,12 @@ By interacting with this repository, organization, or community you agree to abi
 
 [npm-badge]:          https://img.shields.io/npm/v/@absolunet/tester?style=flat-square
 [dependencies-badge]: https://img.shields.io/david/absolunet/node-tester?style=flat-square
-[tests-badge]:        https://img.shields.io/github/workflow/status/absolunet/node-tester/tests/master?label=tests&style=flat-square
+[tests-badge]:        https://img.shields.io/github/workflow/status/absolunet/node-tester/tests/production?label=tests&style=flat-square
 [npms-badge]:         https://badges.npms.io/%40absolunet%2Ftester.svg?style=flat-square
 [license-badge]:      https://img.shields.io/badge/license-MIT-green?style=flat-square
 
 [npm-url]:          https://www.npmjs.com/package/@absolunet/tester
 [dependencies-url]: https://david-dm.org/absolunet/node-tester
-[tests-url]:        https://github.com/absolunet/node-tester/actions?query=workflow%3Atests+branch%3Amaster
+[tests-url]:        https://github.com/absolunet/node-tester/actions?query=workflow%3Atests+branch%3Aproduction
 [npms-url]:         https://npms.io/search?q=%40absolunet%2Ftester
 [license-url]:      https://opensource.org/licenses/MIT

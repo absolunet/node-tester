@@ -242,8 +242,9 @@ class PackageJsonHelper {
 	 *
 	 * @param {string} [parameters] - Parameters.
 	 * @param {string} [parameters.directoryPath=paths.project.root] - Path to the package.json file.
+	 * @param {NodeType} [parameters.nodeType=environment.nodeType] - Type of Node.js resolver.
 	 */
-	validateMulti({ directoryPath = paths.project.root } = {}) {
+	validateMulti({ directoryPath = paths.project.root, nodeType = environment.nodeType } = {}) {
 		describe(`Validate ${environment.getReadablePath(directoryPath)}/package.json`, () => {
 
 			const reference = {};
@@ -271,7 +272,9 @@ class PackageJsonHelper {
 
 
 			test('Ensure scripts are valid', () => {
-				expect(reference.config.scripts, 'Scripts must be valid').toContainEntries([...MANAGER_SCRIPTS, ...TEST_SCRIPTS, ['postinstall', 'npm run manager:install']]);
+				const managerScripts = nodeType === environment.NODE_TYPE.commonjs ? MANAGER_COMMONJS_SCRIPTS : MANAGER_SCRIPTS;
+
+				expect(reference.config.scripts, 'Scripts must be valid').toContainEntries([...managerScripts, ...TEST_SCRIPTS, ['postinstall', 'npm run manager:install']]);
 			});
 
 
