@@ -1,12 +1,12 @@
 //--------------------------------------------------------
 //-- Tester
 //--------------------------------------------------------
-'use strict';  // eslint-disable-line strict
+"use strict"; // eslint-disable-line strict
 
-const { tester } = require('@absolunet/tester-fixed');
+const { tester } = require("@absolunet/tester-fixed");
 
 tester.init({
-	repositoryType: 'single-package',
-	packageType:    'simple',
-	nodeType:       'commonjs'
+	repositoryType: "single-package",
+	packageType: "simple",
+	nodeType: "commonjs",
 });

@@ -1,31 +1,24 @@
 //--------------------------------------------------------
 //-- Paths
 //--------------------------------------------------------
-import { createRequire } from 'module';
-import fss               from '@absolunet/fss';
-import pkgDir            from 'pkg-dir';
+import { createRequire } from "module";
+import fss from "@absolunet/fss";
+import pkgDir from "pkg-dir";
 
 const require = createRequire(__filename);
 
-
 const __ = {};
-__.root        = pkgDir.sync(__dirname);
-__.code        = `${__.root}/dist/node`;
+__.root = pkgDir.sync(__dirname);
+__.code = `${__.root}/dist/node`;
 __.projectRoot = fss.realpath(`.`);
-__.jestRoot    = pkgDir.sync(require.resolve('jest'));
+__.jestRoot = pkgDir.sync(require.resolve("jest"));
 
-
-
-
-
-
- /**
-  * Internal and project's paths.
-  *
-  * @hideconstructor
-  */
+/**
+ * Internal and project's paths.
+ *
+ * @hideconstructor
+ */
 class PathsHelper {
-
 	/**
 	 * Jest binary path.
 	 *
@@ -44,7 +37,6 @@ class PathsHelper {
 		return __.root;
 	}
 
-
 	/**
 	 * Matrix root path.
 	 *
@@ -53,7 +45,6 @@ class PathsHelper {
 	get matrix() {
 		return `${__.root}/matrix`;
 	}
-
 
 	/**
 	 * Config root path.
@@ -64,7 +55,6 @@ class PathsHelper {
 		return `${__.code}/config`;
 	}
 
-
 	/**
 	 * Runners root path.
 	 *
@@ -73,7 +63,6 @@ class PathsHelper {
 	get runners() {
 		return `${__.code}/runners`;
 	}
-
 
 	/**
 	 * Tests root path.
@@ -84,7 +73,6 @@ class PathsHelper {
 		return `${__.code}/tests`;
 	}
 
-
 	/**
 	 * Transformers root path.
 	 *
@@ -93,7 +81,6 @@ class PathsHelper {
 	get transformers() {
 		return `${__.code}/transformers`;
 	}
-
 
 	/**
 	 * Current project paths.
@@ -105,13 +92,11 @@ class PathsHelper {
 	 */
 	get project() {
 		return {
-			root:        __.projectRoot,
+			root: __.projectRoot,
 			subpackages: `${__.projectRoot}/packages`,
-			test:        `${__.projectRoot}/test`
+			test: `${__.projectRoot}/test`,
 		};
 	}
-
 }
-
 
 export default new PathsHelper();

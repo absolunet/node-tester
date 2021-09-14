@@ -1,4 +1,3 @@
-.DS_Store
 .github
 .editorconfig
 .eslintignore
@@ -14,3 +13,4 @@ docs
 src
 test
 !dist/**
+.DS_Store
