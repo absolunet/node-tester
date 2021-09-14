@@ -12,6 +12,7 @@ const MANAGER_SCRIPTS = [
 	["manager:outdated", "node manager --task=outdated"],
 	["manager:build", "node manager --task=build"],
 	["manager:watch", "node manager --task=watch"],
+	["manager:fix", "node manager --task=fix"],
 	["manager:documentation", "node manager --task=documentation"],
 	["manager:prepare", "node manager --task=prepare"],
 	["manager:rebuild", "node manager --task=rebuild"],
@@ -24,6 +25,7 @@ const MANAGER_COMMONJS_SCRIPTS = [
 	["manager:outdated", "node manager.mjs --task=outdated"],
 	["manager:build", "node manager.mjs --task=build"],
 	["manager:watch", "node manager.mjs --task=watch"],
+	["manager:fix", "node manager.mjs --task=fix"],
 	["manager:documentation", "node manager.mjs --task=documentation"],
 	["manager:prepare", "node manager.mjs --task=prepare"],
 	["manager:rebuild", "node manager.mjs --task=rebuild"],
@@ -136,7 +138,6 @@ class PackageJsonHelper {
 			this.validateIntegrity(reference, directoryPath);
 
 			test("Ensure mandatory identification fields are valid", () => {
-				// TODO [>=5.0.0]: Make special check for packageType IoC
 				expect(reference.config.name, "Name must be valid").toMatch(namePattern);
 				expect(reference.config.version, "Version must be valid").toBe(semver.valid(reference.config.version));
 				expect(reference.config.license, "License must be valid").toBe(environment.packageCustomization.license);

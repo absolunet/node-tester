@@ -12,6 +12,8 @@ const ESLINTIGNORE = Symbol("eslintignore");
 const ESLINTRC = Symbol("eslintrc");
 const GITIGNORE = Symbol("gitignore");
 const NPMIGNORE = Symbol("npmignore");
+const PRETTIERRC = Symbol("prettierrc");
+const PRETTIERIGNORE = Symbol("prettierignore");
 const GITHUB_ACTIONS = Symbol("github-actions");
 const PIPELINES = Symbol("pipelines");
 const CHANGELOG = Symbol("changelog");
@@ -37,6 +39,8 @@ const IGNORE = {
 		EDITORCONFIG,
 		ESLINTRC,
 		GITIGNORE,
+		PRETTIERRC,
+		PRETTIERIGNORE,
 		GITHUB_ACTIONS,
 		PIPELINES,
 		CHANGELOG,
@@ -214,6 +218,20 @@ class ArborescenceHelper {
 				});
 			}
 
+			if (!ignore.includes(PRETTIERRC)) {
+				test(`Ensure '${readablePath}/.prettierrc.cjs' is valid`, () => {
+					this.fileExists(".prettierrc.cjs", directoryPath);
+					this.fileContainsMatrix(".prettierrc.cjs", { directoryPath, repositoryType, nodeType });
+				});
+			}
+
+			if (!ignore.includes(PRETTIERIGNORE)) {
+				test(`Ensure '${readablePath}/.prettierignore' is valid`, () => {
+					this.fileExists(".prettierignore", directoryPath);
+					this.fileContainsMatrix(".prettierignore", { directoryPath, repositoryType, nodeType });
+				});
+			}
+
 			if (
 				!ignore.includes(GITHUB_ACTIONS) &&
 				environment.packageCustomization.ciEngine[environment.CI_ENGINE.githubActions].enabled === true
@@ -355,7 +373,6 @@ class ArborescenceHelper {
 				});
 			}
 
-			// TODO [>=5.0.0]: Add more tests with marked
 			if (!ignore.includes(README)) {
 				test(`Ensure '${readablePath}/README.md' is valid`, () => {
 					this.fileExists("README.md", directoryPath);

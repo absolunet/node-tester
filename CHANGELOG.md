@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+### Added
+- Validate Prettier formatting and configuration
+
+### Changed
+- Maintenance update
+
 ### Fixed
 - Fix selection process for file matrix 
 - Allow multi-packages to be CommonJS
