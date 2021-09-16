@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>index.d.js - @absolunet/tester API documentation</title>
+	<title>PrettierHelper - @absolunet/tester API documentation</title>
 
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<meta http-equiv="cleartype" content="on">
@@ -54,49 +54,214 @@
 
 		<div id="main">
 		
-			<h1 class="page-title">index.d.js</h1>
+			<h1 class="page-title">PrettierHelper</h1>
 		
 
 			
 
 
 
+
+<section>
+
+<div>
     
-    <section>
-        <article>
-            <pre id="line" class="line-numbers"><code class="language-js">// eslint-disable-line import/unambiguous
-/**
- * Type of repository: 'single-package', 'multi-package', 'sub-package'.
- *
- * @typedef {string} RepositoryType
- */
+        </h2>
+        
+            <div class="class-description">Prettier helper.</div>
+        
+    
+</div>
 
-/**
- * Type of package: 'simple', 'ioc'.
- *
- * @typedef {string} PackageType
- */
+<article>
+    
 
-/**
- * Type of Node.js resolver: 'module', 'commonjs'.
- *
- * @typedef {string} NodeType
- */
+    
 
-/**
- * Type of test: 'standards', 'unit', 'feature', 'integration', 'endtoend'.
- *
- * @typedef {string} TestType
- */
+    
 
-/**
- * Type of CI engine: 'pipeline', 'github-actions'.
- *
- * @typedef {string} CIEngine
- */
-</code></pre>
-        </article>
-    </section>
+    
+    
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+<div class="method">
+
+    
+
+    <h4 class="name" id="run"><span class="type-signature">(async) </span>run<span class="signature">(testPath)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="helpers_prettier.js.html#line-23">helpers/prettier.js:23</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description">
+    Parse the package.json.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>testPath</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">File to lint.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Jest <a href="https://github.com/facebook/jest/blob/4d3c1a187bd429fd8611f6b0f19e4aa486fa2a85/packages/jest-test-result/src/types.ts#L103-L135">TestResult</a> object.
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">TestResult</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+</div>
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

@@ -1,5 +1,5 @@
 //--------------------------------------------------------
-//-- Lint JS runner
+//-- Check Prettier runner
 //--------------------------------------------------------
 import runner from "../../helpers/runner/index.js";
 

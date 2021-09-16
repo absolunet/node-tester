@@ -1,17 +1,19 @@
 //--------------------------------------------------------
 //-- Jest config
 //--------------------------------------------------------
-import fss         from '@absolunet/fss';
-import environment from '../helpers/environment.js';
-import runner      from '../helpers/runner/index.js';
-
+import fss from "@absolunet/fss";
+import environment from "../helpers/environment.js";
+import runner from "../helpers/runner/index.js";
 
 const runners = [];
-const { repositoryType, packageType, nodeType, scope, customization } = JSON.parse(process.env[environment.JEST_CLI_KEY]);  // eslint-disable-line node/no-process-env
+const { repositoryType, packageType, nodeType, scope, customization } = JSON.parse(
+	// eslint-disable-next-line node/no-process-env
+	process.env[environment.JEST_CLI_KEY]
+);
 runner.config.globals = { repositoryType, packageType, nodeType, customization };
 
-
 const STANDARDS = [
+	runner.config.checkPrettier,
 	runner.config.lintJS,
 	runner.config.lintJSON,
 	runner.config.lintYAML,
@@ -19,40 +21,27 @@ const STANDARDS = [
 	runner.config.lintSCSS,
 	runner.config.lintFileStyles(repositoryType),
 	runner.config.genericTests,
-	runner.config.projectStandardsTests
+	runner.config.projectStandardsTests,
 ];
 
-const UNIT = [
-	runner.config.projectUnitTests
-];
+const UNIT = [runner.config.projectUnitTests];
 
-const FEATURE = [
-	runner.config.projectFeatureTests
-];
+const FEATURE = [runner.config.projectFeatureTests];
 
-const INTEGRATION = [
-	runner.config.projectIntegrationTests
-];
+const INTEGRATION = [runner.config.projectIntegrationTests];
 
-const ENDTOEND = [
-	runner.config.projectEndtoendTests
-];
-
+const ENDTOEND = [runner.config.projectEndtoendTests];
 
 const addRunners = (...configs) => {
-	runners.push(configs.filter(({ rootDir }) => {
-		return fss.existsCase(rootDir);
-	}));
+	runners.push(
+		configs.filter(({ rootDir }) => {
+			return fss.existsCase(rootDir);
+		})
+	);
 };
-
-
-
-
-
 
 //-- Scope
 switch (scope) {
-
 	case environment.TEST_ALL:
 		addRunners(...STANDARDS, ...UNIT, ...FEATURE, ...INTEGRATION, ...ENDTOEND);
 		break;
@@ -86,11 +75,9 @@ switch (scope) {
 		break;
 
 	default:
-		throw new Error('No scope defined');
-
+		throw new Error("No scope defined");
 }
 
 const config = { projects: runners };
-
 
 export default config;

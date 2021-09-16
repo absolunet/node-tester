@@ -1,10 +1,9 @@
 //--------------------------------------------------------
 //-- Environment
 //--------------------------------------------------------
-import fss    from '@absolunet/fss';
-import semver from 'semver';
-import paths  from './paths.js';
-
+import fss from "@absolunet/fss";
+import semver from "semver";
+import paths from "./paths.js";
 
 /**
  * Environment.
@@ -12,16 +11,14 @@ import paths  from './paths.js';
  * @hideconstructor
  */
 class EnvironmentHelper {
-
 	/**
 	 * Temporary env variable to pass custom config to Jest.
 	 *
 	 * @type {string}
 	 */
 	get JEST_CLI_KEY() {
-		return '__ABSOLUNET_TESTER_JEST_CONFIG__';
+		return "__ABSOLUNET_TESTER_JEST_CONFIG__";
 	}
-
 
 	/**
 	 * Temporary global variable to use in Jest globals config.
@@ -29,9 +26,8 @@ class EnvironmentHelper {
 	 * @type {string}
 	 */
 	get JEST_GLOBALS_KEY() {
-		return '__ABSOLUNET_TESTER_JEST_GLOBALS__';
+		return "__ABSOLUNET_TESTER_JEST_GLOBALS__";
 	}
-
 
 	/**
 	 * Types of repository.
@@ -43,12 +39,11 @@ class EnvironmentHelper {
 	 */
 	get REPOSITORY_TYPE() {
 		return {
-			singlePackage: 'single-package',
-			multiPackage:  'multi-package',
-			subPackage:    'sub-package'
+			singlePackage: "single-package",
+			multiPackage: "multi-package",
+			subPackage: "sub-package",
 		};
 	}
-
 
 	/**
 	 * Types of package.
@@ -59,11 +54,10 @@ class EnvironmentHelper {
 	 */
 	get PACKAGE_TYPE() {
 		return {
-			simple: 'simple',
-			ioc:    'ioc'
+			simple: "simple",
+			ioc: "ioc",
 		};
 	}
-
 
 	/**
 	 * Types of Node.js resolver.
@@ -72,13 +66,12 @@ class EnvironmentHelper {
 	 * @property {NodeType} module - ESM.
 	 * @property {NodeType} commonjs - CommonJS.
 	 */
-	 get NODE_TYPE() {
+	get NODE_TYPE() {
 		return {
-			module:   'module',
-			commonjs: 'commonjs'
+			module: "module",
+			commonjs: "commonjs",
 		};
 	}
-
 
 	/**
 	 * Types of test.
@@ -92,14 +85,13 @@ class EnvironmentHelper {
 	 */
 	get TEST_TYPE() {
 		return {
-			standards:   'standards',
-			unit:        'unit',
-			feature:     'feature',
-			integration: 'integration',
-			endtoend:    'endtoend'
+			standards: "standards",
+			unit: "unit",
+			feature: "feature",
+			integration: "integration",
+			endtoend: "endtoend",
 		};
 	}
-
 
 	/**
 	 * Types of IoC test.
@@ -111,11 +103,12 @@ class EnvironmentHelper {
 	 * @property {TestType} endtoend - End-to-end tests.
 	 */
 	get TEST_TYPE_IOC() {
-		return Object.fromEntries(Object.entries(this.TEST_TYPE).filter(([, value]) => {
-			return value !== this.TEST_TYPE.standards;
-		}));
+		return Object.fromEntries(
+			Object.entries(this.TEST_TYPE).filter(([, value]) => {
+				return value !== this.TEST_TYPE.standards;
+			})
+		);
 	}
-
 
 	/**
 	 * All tests identifier.
@@ -123,9 +116,8 @@ class EnvironmentHelper {
 	 * @type {string}
 	 */
 	get TEST_ALL() {
-		return 'all';
+		return "all";
 	}
-
 
 	/**
 	 * Types of CI engine.
@@ -136,11 +128,10 @@ class EnvironmentHelper {
 	 */
 	get CI_ENGINE() {
 		return {
-			pipelines:     'pipelines',
-			githubActions: 'github-actions'
+			pipelines: "pipelines",
+			githubActions: "github-actions",
 		};
 	}
-
 
 	/**
 	 * Node.js LTS versions.
@@ -149,11 +140,10 @@ class EnvironmentHelper {
 	 */
 	get LTS_VERSIONS() {
 		return {
-			14: '14.13.1',
-			12: '12.20.0'  // Introduction of module.createRequire()
+			14: "14.13.1",
+			12: "12.20.0", // Introduction of module.createRequire()
 		};
 	}
-
 
 	/**
 	 * List of subpackages and their path.
@@ -162,11 +152,11 @@ class EnvironmentHelper {
 	 */
 	get projectSubpackages() {
 		if (fss.existsCase(paths.project.subpackages)) {
-			const rawList = fss.scandir(paths.project.subpackages, 'dir', { fullPath: true });
+			const rawList = fss.scandir(paths.project.subpackages, "dir", { fullPath: true });
 
 			const list = {};
 			for (const path of rawList) {
-				list[path.split('/').pop()] = path;
+				list[path.split("/").pop()] = path;
 			}
 
 			return list;
@@ -174,7 +164,6 @@ class EnvironmentHelper {
 
 		return {};
 	}
-
 
 	/**
 	 * Get package customization.
@@ -185,7 +174,6 @@ class EnvironmentHelper {
 		return global[this.JEST_GLOBALS_KEY].customization;
 	}
 
-
 	/**
 	 * Current repository type.
 	 *
@@ -194,7 +182,6 @@ class EnvironmentHelper {
 	get repositoryType() {
 		return global[this.JEST_GLOBALS_KEY].repositoryType;
 	}
-
 
 	/**
 	 * Current package type.
@@ -205,16 +192,14 @@ class EnvironmentHelper {
 		return global[this.JEST_GLOBALS_KEY].packageType;
 	}
 
-
 	/**
 	 * Current Node.js type.
 	 *
 	 * @type {NodeType}
 	 */
-	 get nodeType() {
+	get nodeType() {
 		return global[this.JEST_GLOBALS_KEY].nodeType;
 	}
-
 
 	/**
 	 * Current repository version.
@@ -222,9 +207,10 @@ class EnvironmentHelper {
 	 * @type {string}
 	 */
 	get version() {
-		return fss.readJson(`${paths.project.root}/${this.repositoryType === this.REPOSITORY_TYPE.multiPackage ? 'lerna' : 'package'}.json`).version;
+		return fss.readJson(
+			`${paths.project.root}/${this.repositoryType === this.REPOSITORY_TYPE.multiPackage ? "lerna" : "package"}.json`
+		).version;
 	}
-
 
 	/**
 	 * Current repository Node.js version.
@@ -234,7 +220,6 @@ class EnvironmentHelper {
 	get nodeVersion() {
 		return Number(semver.minVersion(fss.readJson(`${paths.project.root}/package.json`).engines.node).major);
 	}
-
 
 	/**
 	 * Get a readable relative path from an absolute path.
@@ -246,13 +231,11 @@ class EnvironmentHelper {
 		if (absolutePath.startsWith(paths.project.root)) {
 			const relativePath = absolutePath.slice(paths.project.root.length + 1);
 
-			return relativePath === '' ? '.' : `./${relativePath}`;
+			return relativePath === "" ? "." : `./${relativePath}`;
 		}
 
 		return absolutePath;
 	}
-
 }
-
 
 export default new EnvironmentHelper();
