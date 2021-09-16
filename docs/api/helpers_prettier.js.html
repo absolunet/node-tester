@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>index.d.js - @absolunet/tester API documentation</title>
+	<title>helpers/prettier.js - @absolunet/tester API documentation</title>
 
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<meta http-equiv="cleartype" content="on">
@@ -54,7 +54,7 @@
 
 		<div id="main">
 		
-			<h1 class="page-title">index.d.js</h1>
+			<h1 class="page-title">helpers/prettier.js</h1>
 		
 
 			
@@ -64,36 +64,54 @@
     
     <section>
         <article>
-            <pre id="line" class="line-numbers"><code class="language-js">// eslint-disable-line import/unambiguous
-/**
- * Type of repository: 'single-package', 'multi-package', 'sub-package'.
- *
- * @typedef {string} RepositoryType
- */
+            <pre id="line" class="line-numbers"><code class="language-js">//--------------------------------------------------------
+//-- Prettier helper
+//--------------------------------------------------------
+import path from "path";
+import fsp from "@absolunet/fsp";
+import { pass, fail, skip } from "create-jest-runner";
+import findUp from "find-up";
+import prettier from "prettier";
+import runner from "./runner/index.js";
 
 /**
- * Type of package: 'simple', 'ioc'.
+ * Prettier helper.
  *
- * @typedef {string} PackageType
+ * @hideconstructor
  */
+class PrettierHelper {
+	/**
+	 * Parse the package.json.
+	 *
+	 * @param {string} testPath - File to lint.
+	 * @returns {TestResult} Jest {@link https://github.com/facebook/jest/blob/4d3c1a187bd429fd8611f6b0f19e4aa486fa2a85/packages/jest-test-result/src/types.ts#L103-L135 TestResult} object.
+	 */
+	async run(testPath) {
+		const testResult = runner.initTestResult({ testPath, title: "Prettier" });
 
-/**
- * Type of Node.js resolver: 'module', 'commonjs'.
- *
- * @typedef {string} NodeType
- */
+		const ignorePath = await findUp(".prettierignore", { cwd: path.dirname(testPath) });
+		const { ignored } = await prettier.getFileInfo(testPath, { ignorePath });
 
-/**
- * Type of test: 'standards', 'unit', 'feature', 'integration', 'endtoend'.
- *
- * @typedef {string} TestType
- */
+		if (ignored) {
+			return skip(testResult());
+		}
 
-/**
- * Type of CI engine: 'pipeline', 'github-actions'.
- *
- * @typedef {string} CIEngine
- */
+		const config = await prettier.resolveConfig(testPath);
+		config.filepath = testPath;
+
+		const content = await fsp.readFile(testPath, "utf8");
+
+		const valid = await prettier.check(content, config);
+
+		if (!valid) {
+			return fail(testResult(runner.formatError("File has not been formatted with Prettier.")));
+		}
+
+		return pass(testResult());
+	}
+}
+
+export default new PrettierHelper();
 </code></pre>
         </article>
     </section>
