@@ -13,6 +13,7 @@ const { repositoryType, packageType, nodeType, scope, customization } = JSON.par
 runner.config.globals = { repositoryType, packageType, nodeType, customization };
 
 const STANDARDS = [
+	runner.config.checkPrettier,
 	runner.config.lintJS,
 	runner.config.lintJSON,
 	runner.config.lintYAML,

@@ -45,6 +45,22 @@ class RunnerHelperConfig {
 	/* eslint-disable unicorn/prevent-abbreviations */
 
 	/**
+	 * Configuration for checking files with Prettier.
+	 *
+	 * @type {object}
+	 */
+	get checkPrettier() {
+		return {
+			displayName: "Standards: Check Prettier",
+			runner: `${paths.runners}/check-prettier`,
+			rootDir: paths.project.root,
+			moduleFileExtensions: ["js", "cjs", "mjs"],
+			testMatch: ["**/*.{js,cjs,mjs}"],
+			globals: this.globals,
+		};
+	}
+
+	/**
 	 * Configuration for linting JavaScript files.
 	 *
 	 * @type {object}
