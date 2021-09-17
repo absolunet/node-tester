@@ -51,7 +51,7 @@
     "test:endtoend": "node test --scope=endtoend"
   },
   "devDependencies": {
-    "@absolunet/manager": "3.0.0-beta.3",
+    "@absolunet/manager": "3.0.0-beta.4",
     "@absolunet/tester-fixed": "npm:@absolunet/tester@5.0.0-beta.3",
     "lts-schedule": "2.2.0"
   },
@@ -110,8 +110,5 @@
     "stylelint": "^13.13.1",
     "vinyl-fs": "^3.0.3",
     "yaml-lint": "^1.2.4"
-  },
-  "peerDependencies": {
-    "@absolunet/prettier-core": "^0.2.0"
   }
 }
