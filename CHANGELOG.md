@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+
+
+
+## [5.0.0-beta.3] - 2021-09-17
 ### Changed
 - ESLint config update to 3.0.0-beta.4
 - Maintenance update
@@ -570,7 +574,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-[Unreleased]:   https://github.com/absolunet/node-tester/compare/5.0.0-beta.2...HEAD
+[Unreleased]:   https://github.com/absolunet/node-tester/compare/5.0.0-beta.3...HEAD
+[5.0.0-beta.3]: https://github.com/absolunet/node-tester/compare/5.0.0-beta.2...5.0.0-beta.3
 [5.0.0-beta.2]: https://github.com/absolunet/node-tester/compare/5.0.0-beta.1...5.0.0-beta.2
 [5.0.0-beta.1]: https://github.com/absolunet/node-tester/compare/4.2.0...5.0.0-beta.1
 [4.2.0]:        https://github.com/absolunet/node-tester/compare/4.1.4...4.2.0
