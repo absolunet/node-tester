@@ -1,6 +1,6 @@
 {
   "name": "@absolunet/tester",
-  "version": "5.0.0-beta.3",
+  "version": "5.0.0-beta.4",
   "description": "Test suite for Node.js projects",
   "definition": "",
   "homepage": "https://documentation.absolunet.com/node-tester",
@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "@absolunet/manager": "3.0.0-beta.4",
-    "@absolunet/tester-fixed": "npm:@absolunet/tester@5.0.0-beta.3",
+    "@absolunet/tester-fixed": "npm:@absolunet/tester@5.0.0-beta.4",
     "lts-schedule": "2.2.0"
   },
   "dependencies": {
