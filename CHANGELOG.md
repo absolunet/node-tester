@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [Unreleased]
+### Changed
+- ESLint config update to 3.0.0-beta.4
+- Maintenance update
+
+### Fixed
+- Add direct dependencies for npm@6
 
 
 
